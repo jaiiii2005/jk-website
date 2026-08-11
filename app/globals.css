@@ -89,6 +89,13 @@ html.lenis, html.lenis body { height: auto; }
 }
 .shine:hover::before { left: 140%; }
 
+/* MOBILE PERFORMANCE: blur + many infinite animations are expensive on phones.
+   Lighten the heaviest bits on small screens so scrolling stays smooth. */
+@media (max-width: 768px) {
+  .bokeh-orb { animation: none !important; filter: blur(26px) !important; opacity: 0.5 !important; }
+  .kenburns { animation-duration: 26s !important; }
+}
+
 /* slow continuous spin (e.g. the 360° badge) */
 .spin-slow { animation: jkspin 18s linear infinite; }
 @keyframes jkspin { to { transform: rotate(360deg); } }

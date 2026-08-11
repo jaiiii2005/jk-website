@@ -75,8 +75,8 @@ export default function Stats() {
         animate={{ opacity: [0.6, 0.95, 0.6], scale: [1, 1.06, 1] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
-      {/* 3. drifting embers */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {/* 3. drifting embers (desktop only — heavy on phones) */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden hidden md:block">
         {[...Array(16)].map((_, i) => (
           <span
             key={i}
@@ -102,8 +102,8 @@ export default function Stats() {
           animation: "jkslide 7s linear infinite",
         }}
       />
-      {/* 5. film grain */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.12] mix-blend-overlay" style={{ backgroundImage: GRAIN }} />
+      {/* 5. film grain (desktop only — mix-blend is heavy on phones) */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.12] mix-blend-overlay hidden md:block" style={{ backgroundImage: GRAIN }} />
       {/* 6. vignette */}
       <div className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(120% 120% at 50% 50%, transparent 55%, rgba(10,6,20,0.6) 100%)" }} />
 

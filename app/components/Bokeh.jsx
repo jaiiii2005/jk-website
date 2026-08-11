@@ -18,6 +18,7 @@ export default function Bokeh({ tone = "dark" }) {
       {ORBS.map((o, i) => (
         <span
           key={i}
+          className="bokeh-orb"
           style={{
             position: "absolute",
             left: o.x,
