@@ -51,7 +51,7 @@ const POINTS = [
 
 export default function TrustStrip() {
   return (
-    <section className="relative bg-cream text-ink overflow-hidden">
+    <section className="cv-auto relative bg-cream text-ink overflow-hidden">
       {/* living background — drifting light, same family as Services */}
       <Bokeh tone="light" />
       {/* slow moving sheen so the band never feels dead */}
@@ -92,7 +92,7 @@ export default function TrustStrip() {
               whileInView={{ opacity: 1, y: 0, rotate: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="group rounded-2xl border border-ink/10 bg-white/70 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-jkred/50 hover:bg-white hover:shadow-xl hover:shadow-jkblue/10"
+              className="group rounded-2xl border border-ink/10 bg-white/80 md:bg-white/70 p-6 md:backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-jkred/50 hover:bg-white hover:shadow-xl hover:shadow-jkblue/10"
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.4, rotate: -25 }}

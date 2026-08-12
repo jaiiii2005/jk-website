@@ -89,12 +89,23 @@ html.lenis, html.lenis body { height: auto; }
 }
 .shine:hover::before { left: 140%; }
 
-/* MOBILE PERFORMANCE: blur + many infinite animations are expensive on phones.
-   Lighten the heaviest bits on small screens so scrolling stays smooth. */
+/* MOBILE PERFORMANCE: blur + blend-mode + many infinite animations are expensive
+   on phones. Strip the heaviest bits on small screens so scrolling stays smooth. */
 @media (max-width: 768px) {
-  .bokeh-orb { animation: none !important; filter: blur(26px) !important; opacity: 0.5 !important; }
+  .bokeh-orb { animation: none !important; filter: blur(22px) !important; opacity: 0.4 !important; mix-blend-mode: normal !important; }
+  .bokeh-extra { display: none !important; }   /* keep only a few orbs per section */
   .kenburns { animation-duration: 26s !important; }
+  .marquee { animation-duration: 60s !important; }
 }
+
+/* Skip rendering off-screen sections entirely — big, cheap mobile win.
+   `auto` remembers the real height after first paint, so no scroll jump. */
+.cv-auto { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+
+/* Native anchor scrolling when Lenis is off (touch devices). Lenis overrides
+   this on desktop via its own class, so behaviour there is unchanged. */
+html { scroll-behavior: smooth; }
+:where(section, main)[id] { scroll-margin-top: 72px; }
 
 /* slow continuous spin (e.g. the 360° badge) */
 .spin-slow { animation: jkspin 18s linear infinite; }

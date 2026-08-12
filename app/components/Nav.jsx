@@ -40,7 +40,7 @@ export default function Nav() {
     <>
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-          solid ? "bg-jkblue-deep/85 backdrop-blur-md py-3 shadow-lg shadow-black/20" : "py-5"
+          solid ? "bg-jkblue-deep/95 md:bg-jkblue-deep/85 md:backdrop-blur-md py-3 shadow-lg shadow-black/20" : "py-5"
         }`}
       >
         <nav className="mx-auto max-w-7xl px-5 flex items-center justify-between">
@@ -74,7 +74,7 @@ export default function Nav() {
         </nav>
 
         {open && (
-          <div className="md:hidden mt-3 mx-4 rounded-2xl bg-jkblue-deep/95 backdrop-blur p-4 flex flex-col gap-1">
+          <div className="md:hidden mt-3 mx-4 rounded-2xl bg-jkblue-deep p-4 flex flex-col gap-1">
             {LINKS.map(([label, href]) => (
               <a
                 key={href}
@@ -96,7 +96,7 @@ export default function Nav() {
       <a
         href="#top"
         aria-label="Back to top"
-        className={`fixed bottom-5 left-5 z-[70] flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-jkblue-deep/80 text-cream backdrop-blur transition-all duration-300 hover:bg-jkred ${
+        className={`fixed bottom-5 left-5 z-[70] flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-jkblue-deep/90 md:backdrop-blur text-cream transition-all duration-300 hover:bg-jkred ${
           showTop ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 translate-y-3"
         }`}
       >

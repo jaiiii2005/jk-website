@@ -37,7 +37,7 @@ function Fifty() {
 
 export default function Values() {
   return (
-    <section id="values" className="relative overflow-hidden bg-cream text-ink">
+    <section id="values" className="cv-auto relative overflow-hidden bg-cream text-ink">
       <Bokeh tone="light" />
       <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:py-28 grid md:grid-cols-2 gap-12 items-center">
         {/* the 50 */}

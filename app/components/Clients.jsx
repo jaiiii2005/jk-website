@@ -1,12 +1,11 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Reveal from "./Reveal";
 import Bokeh from "./Bokeh";
 
 // 111 client logos extracted from the creds deck.
 const LOGOS = Array.from({ length: 111 }, (_, i) => `/clients/client-${String(i + 1).padStart(2, "0")}.png`);
-
-const rows = [LOGOS.slice(0, 37), LOGOS.slice(37, 74), LOGOS.slice(74, 111)];
 
 function Chip({ src }) {
   return (
@@ -17,11 +16,14 @@ function Chip({ src }) {
   );
 }
 
-function Row({ items, reverse, duration }) {
+function Row({ items, reverse, duration, run }) {
   const doubled = [...items, ...items]; // seamless loop
   return (
     <div className="flex overflow-hidden py-1.5">
-      <div className={`marquee ${reverse ? "marquee-rev" : ""}`} style={{ animationDuration: `${duration}s` }}>
+      <div
+        className={`marquee ${reverse ? "marquee-rev" : ""}`}
+        style={{ animationDuration: `${duration}s`, animationPlayState: run ? "running" : "paused" }}
+      >
         {doubled.map((src, i) => <Chip key={i} src={src} />)}
       </div>
     </div>
@@ -29,8 +31,25 @@ function Row({ items, reverse, duration }) {
 }
 
 export default function Clients() {
+  const ref = useRef(null);
+  const [run, setRun] = useState(true);     // pause the marquee when off-screen
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    setMobile(window.matchMedia("(max-width: 768px)").matches);
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setRun(e.isIntersecting), { rootMargin: "150px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Far fewer logos per row on phones — 3×16 instead of 3×37 (halves the DOM/GPU load).
+  const per = mobile ? 16 : 37;
+  const rows = [LOGOS.slice(0, per), LOGOS.slice(per, per * 2), LOGOS.slice(per * 2, per * 3)];
+
   return (
-    <section id="clients" className="relative overflow-hidden bg-cream text-ink">
+    <section id="clients" ref={ref} className="cv-auto relative overflow-hidden bg-cream text-ink">
       {/* deep blue -> cream blend so it flows from Leadership */}
       <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-jkblue-deep to-cream -translate-y-px" />
       <Bokeh tone="light" />
@@ -57,9 +76,9 @@ export default function Clients() {
 
         {/* three flowing rows */}
         <div className="relative flex flex-col gap-4">
-          <Row items={rows[0]} reverse={false} duration={70} />
-          <Row items={rows[1]} reverse={true} duration={58} />
-          <Row items={rows[2]} reverse={false} duration={82} />
+          <Row items={rows[0]} reverse={false} duration={70} run={run} />
+          <Row items={rows[1]} reverse={true} duration={58} run={run} />
+          <Row items={rows[2]} reverse={false} duration={82} run={run} />
 
           {/* edge fades — brands emerge & vanish */}
           <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-cream to-transparent" />

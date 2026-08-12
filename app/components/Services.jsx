@@ -37,7 +37,7 @@ const SERVICES = [
 
 export default function Services() {
   return (
-    <section id="services" className="relative bg-cream text-ink overflow-hidden">
+    <section id="services" className="cv-auto relative bg-cream text-ink overflow-hidden">
       <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-jkblue-deep to-cream -translate-y-px" />
       <Bokeh tone="light" />
 
