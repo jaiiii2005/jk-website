@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Bokeh from "./Bokeh";
 
 // Compact "why JK" credibility band — the last nudge before the enquiry form.
+// Frictionless: same lean content, but alive (living bg + animated icons), and tight.
 const POINTS = [
   {
     title: "50 years of trust",
@@ -50,9 +52,21 @@ const POINTS = [
 export default function TrustStrip() {
   return (
     <section className="relative bg-cream text-ink overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 py-20 md:py-24">
+      {/* living background — drifting light, same family as Services */}
+      <Bokeh tone="light" />
+      {/* slow moving sheen so the band never feels dead */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-40"
+        style={{
+          background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.5) 50%, transparent 60%)",
+          backgroundSize: "300% 100%",
+          animation: "jkslide 9s linear infinite",
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 md:py-20">
         <motion.p
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
@@ -61,11 +75,11 @@ export default function TrustStrip() {
           WHY BRANDS CHOOSE JK
         </motion.p>
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.05 }}
-          className="text-center font-display h-lg font-extrabold max-w-3xl mx-auto mb-14"
+          className="text-center font-display h-lg font-extrabold max-w-3xl mx-auto mb-12"
         >
           Fifty years of being the name brands <span className="text-grad">count on</span>.
         </motion.h2>
@@ -74,17 +88,23 @@ export default function TrustStrip() {
           {POINTS.map((p, i) => (
             <motion.div
               key={p.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 34, rotate: -1.5 }}
+              whileInView={{ opacity: 1, y: 0, rotate: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="group rounded-2xl border border-ink/10 bg-white/70 p-6 transition-all duration-300 hover:-translate-y-2 hover:border-jkred/50 hover:bg-white hover:shadow-xl hover:shadow-jkblue/10"
+              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="group rounded-2xl border border-ink/10 bg-white/70 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-jkred/50 hover:bg-white hover:shadow-xl hover:shadow-jkblue/10"
             >
-              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-jkblue/5 text-jkblue transition-all duration-300 group-hover:bg-jkred/10 group-hover:text-jkred">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.4, rotate: -25 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: i * 0.1 + 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+                className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-jkblue/5 text-jkblue transition-all duration-300 group-hover:bg-jkred/10 group-hover:text-jkred group-hover:scale-110"
+              >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
                   {p.icon}
                 </svg>
-              </div>
+              </motion.div>
               <h3 className="font-display text-lg font-bold text-ink group-hover:text-jkblue">{p.title}</h3>
               <p className="mt-2 text-sm text-ink/55 leading-relaxed">{p.desc}</p>
             </motion.div>
