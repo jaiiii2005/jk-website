@@ -57,7 +57,7 @@ function Stat({ to, suffix, label, delay }) {
 
 export default function Stats() {
   return (
-    <section className="relative overflow-hidden text-cream">
+    <section id="stats" className="relative overflow-hidden text-cream">
       {/* 1. slowly-drifting cinematic gradient */}
       <div
         className="jkcine absolute inset-0"

@@ -18,7 +18,6 @@ export default function Hero() {
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "35%"]);
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
   const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const ghostY = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
 
   return (
     <section
@@ -74,7 +73,7 @@ export default function Hero() {
           transition={{ delay: 1.1, duration: 0.8 }}
           className="mt-9 flex flex-wrap gap-4"
         >
-          <a href="#services" className="rounded-full bg-jkred px-7 py-3.5 font-semibold text-white hover:bg-red-600 transition shadow-lg shadow-jkred/30">
+          <a href="#work" className="rounded-full bg-jkred px-7 py-3.5 font-semibold text-white hover:bg-red-600 transition shadow-lg shadow-jkred/30">
             Explore our work
           </a>
           <a href="#contact" className="rounded-full border border-cream/30 px-7 py-3.5 font-semibold text-cream hover:bg-cream/10 transition">
@@ -85,7 +84,7 @@ export default function Hero() {
 
       {/* scroll cue */}
       <motion.a
-        href="#values"
+        href="#stats"
         style={{ opacity: fade }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-cream/60 text-xs tracking-[0.3em]"
       >
