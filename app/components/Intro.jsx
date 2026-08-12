@@ -1,8 +1,13 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+
+// Play the opening only once per browser session — refreshes and revisits
+// skip straight to the site (frictionless for exhibitions & repeat viewers).
+const SEEN_KEY = "jk_intro_seen";
+const markSeen = () => { try { sessionStorage.setItem(SEEN_KEY, "1"); } catch {} };
 
 // Opening: JK present → the real "50" FORMS in place, revealed along the infinity
 // path (no visible line) → tagline TYPES in → restrained shine → panel lifts.
@@ -32,9 +37,19 @@ export default function Intro() {
   const gloss = useRef(null);
   const [phase, setPhase] = useState("form");
   const [gone, setGone] = useState(false);
+  const seen = useRef(false);
+
+  // Repeat visit this session → hide before paint (no flash of the intro).
+  useLayoutEffect(() => {
+    if (typeof window !== "undefined" && sessionStorage.getItem(SEEN_KEY)) {
+      seen.current = true;
+      setGone(true);
+    }
+  }, []);
 
   useGSAP(
     () => {
+      if (seen.current) return; // already played this session — don't animate
       const rlen = reveal.current.getTotalLength();
       gsap.set(reveal.current, { strokeDasharray: rlen, strokeDashoffset: rlen });
       gsap.set(glow.current, { opacity: 0, scale: 0.7 });
@@ -55,6 +70,7 @@ export default function Intro() {
   const liftOut = () => {
     if (phase === "lifting") return;
     setPhase("lifting");
+    markSeen();
     gsap.to(root.current, { yPercent: -100, duration: 1.0, ease: "power4.inOut", delay: 0.5, onComplete: () => setGone(true) });
   };
 
@@ -62,6 +78,7 @@ export default function Intro() {
     gsap.killTweensOf("*");
     if (phase === "lifting") return;
     setPhase("lifting");
+    markSeen();
     gsap.to(root.current, { yPercent: -100, duration: 0.6, ease: "power4.inOut", onComplete: () => setGone(true) });
   };
 
