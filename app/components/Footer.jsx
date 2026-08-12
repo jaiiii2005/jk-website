@@ -12,6 +12,39 @@ const LINKS = [
   ["Leadership", "#leadership"], ["Partners", "#clients"], ["Contact", "#contact"],
 ];
 
+// TODO(Sir): confirm the real office address, official email & social profile URLs.
+const CONTACT = {
+  address: "Kolkata, West Bengal, India",
+  phone: "+91 98300 25496",
+  phoneRaw: "919830025496",
+  email: "info@jkadvertising.co.in",
+};
+
+// Social links — replace the "#" placeholders with JK's real profile URLs.
+const SOCIALS = [
+  {
+    name: "LinkedIn",
+    href: "#",
+    icon: <path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05 4.02 0 4.76 2.65 4.76 6.1V21H18.3v-5.5c0-1.31-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21H10z" />,
+  },
+  {
+    name: "Instagram",
+    href: "#",
+    icon: (
+      <>
+        <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" strokeWidth="1.8" />
+        <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="1.8" />
+        <circle cx="17.3" cy="6.7" r="1.2" />
+      </>
+    ),
+  },
+  {
+    name: "Facebook",
+    href: "#",
+    icon: <path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.3-.04-1.3-.13-2.46-.13-2.43 0-4.1 1.48-4.1 4.2v2.34H7.7V13h2.74v8z" />,
+  },
+];
+
 export default function Footer() {
   const ctaRef = useRef(null);
   const inView = useInView(ctaRef, { once: true, amount: 0.25 });
@@ -68,6 +101,22 @@ export default function Footer() {
 
         {/* quick enquiry — sends straight to WhatsApp */}
         <ContactForm />
+
+        {/* direct contact details */}
+        <motion.div {...show(0.6)} className="mt-14 grid gap-4 sm:grid-cols-3 max-w-3xl mx-auto text-left">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="text-copper text-[11px] tracking-[0.25em] mb-2">VISIT US</p>
+            <p className="text-sm text-cream/85 leading-relaxed">{CONTACT.address}</p>
+          </div>
+          <a href={`tel:+${CONTACT.phoneRaw}`} className="group rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-jkred/50 hover:bg-white/10">
+            <p className="text-copper text-[11px] tracking-[0.25em] mb-2">CALL US</p>
+            <p className="text-sm text-cream/85 group-hover:text-white">{CONTACT.phone}</p>
+          </a>
+          <a href={`mailto:${CONTACT.email}`} className="group rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-jkred/50 hover:bg-white/10">
+            <p className="text-copper text-[11px] tracking-[0.25em] mb-2">EMAIL US</p>
+            <p className="text-sm text-cream/85 group-hover:text-white break-all">{CONTACT.email}</p>
+          </a>
+        </motion.div>
       </div>
 
       {/* footer bar */}
@@ -79,6 +128,20 @@ export default function Footer() {
             <p className="mt-4 max-w-xs text-sm text-cream/55 leading-relaxed">
               The largest OOH media owner in the East. We make brands converse — for 50 years and counting.
             </p>
+            <div className="mt-5 flex gap-3">
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.name}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.name}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-cream/70 transition hover:border-jkred hover:bg-jkred hover:text-white"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">{s.icon}</svg>
+                </a>
+              ))}
+            </div>
           </div>
 
           <div>

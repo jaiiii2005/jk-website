@@ -9,6 +9,7 @@ import Innovation from "./components/Innovation";
 import Values from "./components/Values";
 import Leadership from "./components/Leadership";
 import Clients from "./components/Clients";
+import TrustStrip from "./components/TrustStrip";
 import Footer from "./components/Footer";
 
 // Lean, client-oriented flow (still fully dynamic):
@@ -28,6 +29,7 @@ export default function Home() {
         <Values />
         <Leadership />
         <Clients />
+        <TrustStrip />
       </main>
       <Footer />
     </>
