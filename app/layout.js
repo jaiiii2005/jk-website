@@ -2,6 +2,7 @@ import { Sora, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "./components/SmoothScroll";
 import WhatsAppButton from "./components/WhatsAppButton";
+import ScrollProgress from "./components/ScrollProgress";
 
 const sora = Sora({
   variable: "--font-sora",
@@ -43,6 +44,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${sora.variable} ${inter.variable}`}>
       <body>
+        <ScrollProgress />
         <SmoothScroll>{children}</SmoothScroll>
         <WhatsAppButton />
       </body>
