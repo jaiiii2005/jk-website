@@ -6,6 +6,7 @@ import About from "./components/About";
 import Reach from "./components/Reach";
 import Services from "./components/Services";
 import Work from "./components/Work";
+import Process from "./components/Process";
 import Innovation from "./components/Innovation";
 import Values from "./components/Values";
 import Leadership from "./components/Leadership";
@@ -27,6 +28,7 @@ export default function Home() {
         <Reach />
         <Services />
         <Work />
+        <Process />
         <Innovation />
         <Values />
         <Leadership />
