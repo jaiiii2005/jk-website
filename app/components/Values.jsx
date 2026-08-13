@@ -38,6 +38,8 @@ function Fifty() {
 export default function Values() {
   return (
     <section id="values" className="cv-auto relative overflow-hidden bg-cream text-ink">
+      {/* deep blue -> cream blend so it flows from Innovation */}
+      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-jkblue-deep to-cream -translate-y-px" />
       <Bokeh tone="light" />
       <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:py-28 grid md:grid-cols-2 gap-12 items-center">
         {/* the 50 */}

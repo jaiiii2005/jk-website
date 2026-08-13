@@ -50,7 +50,7 @@ export default function Nav() {
             <img src="/logo-light.png" alt="JK Advertising — 50 Years" className="h-9 w-auto" />
           </a>
 
-          <div className="hidden md:flex items-center gap-5 lg:gap-6">
+          <div className="hidden lg:flex items-center gap-5 xl:gap-6">
             {LINKS.map(([label, href]) => {
               const isActive = active === href.slice(1);
               return (
@@ -69,13 +69,13 @@ export default function Nav() {
             </a>
           </div>
 
-          <button className="md:hidden text-cream text-2xl leading-none" onClick={() => setOpen((o) => !o)} aria-label="Menu">
+          <button className="lg:hidden text-cream text-2xl leading-none" onClick={() => setOpen((o) => !o)} aria-label="Menu">
             {open ? "✕" : "☰"}
           </button>
         </nav>
 
         {open && (
-          <div className="md:hidden mt-3 mx-4 rounded-2xl bg-jkblue-deep p-4 flex flex-col gap-1">
+          <div className="lg:hidden mt-3 mx-4 rounded-2xl bg-jkblue-deep p-4 flex flex-col gap-1">
             {LINKS.map(([label, href]) => (
               <a
                 key={href}

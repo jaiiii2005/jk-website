@@ -45,8 +45,6 @@ export default function Innovation() {
 
   return (
     <section id="innovation" ref={ref} className="relative bg-jkblue-deep text-cream overflow-hidden">
-      {/* cream -> deep blue blend */}
-      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-cream to-jkblue-deep -translate-y-px" />
       <Bokeh tone="dark" />
       <motion.span
         style={{ y: ghostY }}

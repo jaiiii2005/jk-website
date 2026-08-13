@@ -22,8 +22,6 @@ export default function About() {
 
   return (
     <section id="about" ref={ref} className="relative bg-jkblue-deep text-cream overflow-hidden">
-      {/* cream -> deep blue blend at the top */}
-      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-cream to-jkblue-deep -translate-y-px" />
       <Bokeh tone="dark" />
       {/* drifting OOH silhouettes */}
       <motion.div style={{ x: ghostX }} className="absolute inset-0">
