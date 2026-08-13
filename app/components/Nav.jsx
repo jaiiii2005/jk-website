@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 const LINKS = [
   ["About", "#about"],
+  ["Reach", "#reach"],
   ["Services", "#services"],
   ["Work", "#work"],
   ["Innovation", "#innovation"],
@@ -49,7 +50,7 @@ export default function Nav() {
             <img src="/logo-light.png" alt="JK Advertising — 50 Years" className="h-9 w-auto" />
           </a>
 
-          <div className="hidden md:flex items-center gap-7">
+          <div className="hidden md:flex items-center gap-5 lg:gap-6">
             {LINKS.map(([label, href]) => {
               const isActive = active === href.slice(1);
               return (
