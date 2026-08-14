@@ -12,12 +12,12 @@ const LINKS = [
   ["Leadership", "#leadership"], ["Partners", "#clients"], ["Contact", "#contact"],
 ];
 
-// TODO(Sir): confirm the real office address, official email & social profile URLs.
+// Real details from Nimesh Shah's card. TODO(Sir): social profile URLs still needed.
 const CONTACT = {
-  address: "Kolkata, West Bengal, India",
+  address: "12C Sarat Bose Road, Kolkata – 700020",
   phone: "+91 98300 25496",
   phoneRaw: "919830025496",
-  email: "info@jkadvertising.co.in",
+  email: "kolkata@jkad.in",
 };
 
 // Social links — replace the "#" placeholders with JK's real profile URLs.
