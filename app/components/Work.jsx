@@ -22,11 +22,6 @@ const GRID = [
   { src: "/work-4.jpg", brand: "High-Street Media", meta: "OUTDOOR · KOLKATA" },
 ];
 
-const wipe = {
-  initial: { clipPath: "inset(0 0 100% 0)", opacity: 0 },
-  inView: { clipPath: "inset(0 0 0% 0)", opacity: 1 },
-};
-
 export default function Work() {
   return (
     <section id="work" className="relative bg-jkblue-deep text-cream overflow-hidden">
@@ -45,10 +40,9 @@ export default function Work() {
 
         {/* big featured billboard */}
         <motion.figure
-          variants={wipe}
-          initial="initial"
-          whileInView="inView"
-          viewport={{ once: true, amount: 0.25 }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="group relative mb-6 overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-black/40"
         >
@@ -71,11 +65,10 @@ export default function Work() {
           {GRID.map((w, i) => (
             <motion.figure
               key={w.src}
-              variants={wipe}
-              initial="initial"
-              whileInView="inView"
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.8, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.7, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="group relative overflow-hidden rounded-2xl border border-white/10"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
