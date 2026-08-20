@@ -97,7 +97,7 @@ export default function Work() {
                   src={w.src}
                   alt={w.brand}
                   loading="lazy"
-                  className="aspect-[4/5] w-full object-cover grayscale transition-[transform,filter] duration-[900ms] ease-out group-hover:scale-110 group-hover:grayscale-0"
+                  className="aspect-[4/5] w-full object-cover transition-[transform,filter] duration-[900ms] ease-out lg:grayscale group-hover:scale-110 lg:group-hover:grayscale-0"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-jkblue-deep/95 via-jkblue-deep/10 to-transparent" />
                 <figcaption className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
