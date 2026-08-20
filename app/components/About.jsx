@@ -34,18 +34,18 @@ export default function About() {
         </Reveal>
 
         <Reveal delay={0.05}>
-          <h2 className="font-display h-xl font-extrabold max-w-4xl">
+          <h2
+            className="font-display font-extrabold max-w-5xl"
+            style={{ fontSize: "clamp(2.5rem,6.5vw,5.5rem)", lineHeight: 0.95, letterSpacing: "-0.02em" }}
+          >
             We don&rsquo;t put up displays. <br className="hidden sm:block" />
             We make <span className="text-grad">brands converse.</span>
           </h2>
         </Reveal>
 
         <Reveal delay={0.1}>
-          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-cream/75">
-            Out-of-home isn&rsquo;t about a hoarding on a wall — it&rsquo;s about starting a
-            conversation with the right audience, in the right place, at the right moment. For
-            50 years we&rsquo;ve turned Kolkata&rsquo;s streets, stations and skylines into a
-            stage where brands and people meet.
+          <p className="mt-8 max-w-xl text-xl sm:text-2xl leading-snug text-cream/70">
+            Not a hoarding on a wall — a conversation with the right audience, in the right place.
           </p>
         </Reveal>
 
