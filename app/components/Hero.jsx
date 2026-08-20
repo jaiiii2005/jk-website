@@ -41,7 +41,10 @@ export default function Hero() {
           50 YEARS · FORGING AHEAD
         </motion.p>
 
-        <h1 className="font-display font-extrabold h-mega">
+        <h1
+          className="font-display font-extrabold"
+          style={{ fontSize: "clamp(3rem,10vw,8.5rem)", lineHeight: 0.9, letterSpacing: "-0.03em" }}
+        >
           {HEAD.map((w, i) => (
             <span key={i} className="inline-block overflow-hidden align-bottom mr-[0.25em]">
               <motion.span custom={i} variants={rise} initial="hidden" animate="show" className="inline-block">
@@ -52,7 +55,7 @@ export default function Hero() {
           <br />
           <span className="inline-block overflow-hidden align-bottom">
             <motion.span custom={3} variants={rise} initial="hidden" animate="show" className="inline-block text-grad">
-              Converse
+              Converse.
             </motion.span>
           </span>
         </h1>
@@ -61,10 +64,9 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 0.8 }}
-          className="mt-7 max-w-xl text-cream/75 text-lg leading-relaxed"
+          className="mt-8 text-cream/70 text-lg sm:text-xl tracking-wide"
         >
-          The largest OOH media owner in the East. For five decades we&rsquo;ve turned
-          Kolkata&rsquo;s streets into conversations between brands and the people who matter.
+          The largest OOH network in the East.
         </motion.p>
 
         <motion.div
