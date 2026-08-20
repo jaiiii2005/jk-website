@@ -1,6 +1,7 @@
 import Intro from "./components/Intro";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
+import TextMarquee from "./components/TextMarquee";
 import Stats from "./components/Stats";
 import About from "./components/About";
 import Reach from "./components/Reach";
@@ -23,6 +24,7 @@ export default function Home() {
       <Nav />
       <main id="top">
         <Hero />
+        <TextMarquee />
         <Stats />
         <About />
         <Reach />
