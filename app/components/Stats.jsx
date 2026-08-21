@@ -45,7 +45,7 @@ function Stat({ to, suffix, label }) {
     >
       <div
         className="font-display font-extrabold leading-none tabular-nums text-ink whitespace-nowrap"
-        style={{ fontSize: "clamp(3rem,8vw,6.5rem)", letterSpacing: "-0.03em" }}
+        style={{ fontSize: "clamp(2.25rem,4vw,4rem)", letterSpacing: "-0.02em" }}
       >
         {fmt(n)}<span className="text-copper">{suffix}</span>
       </div>
