@@ -1,71 +1,83 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
 import Reveal from "./Reveal";
 
-// Services as PHOTO cards (the pattern all top OOH sites use) — each service is a
-// real billboard image with the name laid over it. Hover = zoom. Image-led, clean.
+// Interactive service switcher (Bright Outdoor style): a dark panel on the cream
+// page — active service detail on the left, a big filled/outlined word list on
+// the right. Hover (or tap) a service to make it active.
 const SERVICES = [
-  ["Outdoor Advertising", "/work/w-audi.jpg"],
-  ["Digital OOH", "/work-2.jpg"],
-  ["Unipoles", "/work/w-stylebaazar.jpg"],
-  ["Branding", "/work/w-idee.jpg"],
-  ["In-shop Branding", "/work-3.jpg"],
-  ["Corporate Events", "/hero-1.jpg"],
-  ["Rural Promotions", "/work-4.jpg"],
-  ["Printing", "/work/w-joi-clean.jpg"],
-  ["Digital Wall Painting", "/work-1.jpg"],
-  ["Innovations", "/work/w-idee.jpg"],
+  { name: "Outdoor Hoardings", tag: "OUTDOOR", desc: "Landmark hoardings & billboards across the East." },
+  { name: "Digital OOH", tag: "DIGITAL", desc: "LED & programmatic screens at prime junctions." },
+  { name: "Unipoles", tag: "UNIPOLE", desc: "High-rise landmark unipoles that own the skyline." },
+  { name: "Transit & Airport", tag: "TRANSIT", desc: "Airport, metro & transit media that moves with the crowd." },
+  { name: "In-shop Branding", tag: "RETAIL", desc: "Point-of-sale visibility, right where buying happens." },
+  { name: "Rural Promotions", tag: "RURAL", desc: "Reaching audiences far beyond the metros." },
+  { name: "Innovations", tag: "FIRST-OF-ITS-KIND", desc: "OOH firsts — like a live radio studio inside a billboard." },
 ];
 
 export default function Services() {
+  const [active, setActive] = useState(0);
+  const a = SERVICES[active];
+
   return (
     <section id="services" className="cv-auto relative bg-cream text-ink overflow-hidden">
+      {/* deep blue -> cream blend so it flows from Reach */}
       <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-jkblue-deep to-cream -translate-y-px" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:py-32">
-        <div className="mb-14">
-          <Reveal><p className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-4">OUR COMPETENCIES</p></Reveal>
-          <Reveal delay={0.05}>
-            <h2 className="font-display font-extrabold" style={{ fontSize: "clamp(2.5rem,7vw,6rem)", lineHeight: 0.95, letterSpacing: "-0.02em" }}>
-              A <span className="text-grad">360°</span> partner.
-            </h2>
-          </Reveal>
-        </div>
+        <Reveal><p className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-8">OUR SERVICES</p></Reveal>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-          {SERVICES.map(([name, img], i) => (
-            <motion.div
-              key={name + i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.55, delay: (i % 5) * 0.06, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative overflow-hidden rounded-2xl aspect-[4/5]"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={img}
-                alt={name}
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/25 to-transparent transition-opacity duration-300 group-hover:from-jkblue-deep/90" />
-              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-                <span className="font-display text-xs font-bold text-copper tabular-nums">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="mt-1 font-display text-base sm:text-lg font-bold leading-tight text-cream">
-                  {name}
+        {/* dark panel */}
+        <Reveal delay={0.05}>
+          <div className="grid lg:grid-cols-2 gap-8 rounded-3xl bg-ink text-cream p-8 sm:p-12 lg:p-14 shadow-2xl shadow-jkblue/20">
+            {/* left — active service detail */}
+            <div className="flex flex-col justify-between min-h-[280px]">
+              <div>
+                <p key={a.tag} className="text-copper tracking-[0.35em] text-xs mb-4">{a.tag}</p>
+                <h3
+                  key={a.name}
+                  className="font-display font-extrabold leading-[0.95]"
+                  style={{ fontSize: "clamp(2.25rem,4.5vw,3.75rem)", letterSpacing: "-0.02em" }}
+                >
+                  {a.name}
                 </h3>
+                <p key={a.desc} className="mt-5 max-w-sm text-cream/70 leading-relaxed">{a.desc}</p>
               </div>
-              {/* hover corner arrow */}
-              <span className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-jkred text-white text-sm opacity-0 -translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                →
-              </span>
-            </motion.div>
-          ))}
-        </div>
+
+              <a href="#contact" className="group mt-8 inline-flex items-center gap-4">
+                <span className="flex h-14 w-14 items-center justify-center rounded-full border border-cream/30 text-lg transition-all duration-300 group-hover:bg-jkred group-hover:border-jkred">
+                  →
+                </span>
+                <span className="text-sm font-semibold tracking-wide">Enquire</span>
+              </a>
+            </div>
+
+            {/* right — big word list */}
+            <div className="flex flex-col items-start lg:items-end justify-center">
+              {SERVICES.map((s, i) => {
+                const on = i === active;
+                return (
+                  <button
+                    key={s.name}
+                    onMouseEnter={() => setActive(i)}
+                    onFocus={() => setActive(i)}
+                    onClick={() => setActive(i)}
+                    className="block text-left lg:text-right font-display font-extrabold uppercase leading-[1.05] transition-colors duration-200"
+                    style={{
+                      fontSize: "clamp(1.5rem,3.6vw,3rem)",
+                      letterSpacing: "-0.01em",
+                      color: on ? "#f6efdf" : "transparent",
+                      WebkitTextStroke: on ? "0" : "1px rgba(246,239,223,0.45)",
+                    }}
+                  >
+                    {s.name}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
