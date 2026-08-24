@@ -3,7 +3,6 @@ import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Stats from "./components/Stats";
 import About from "./components/About";
-import ScrollStatement from "./components/ScrollStatement";
 import Reach from "./components/Reach";
 import Services from "./components/Services";
 import Work from "./components/Work";
@@ -25,7 +24,6 @@ export default function Home() {
         <Hero />
         <Stats />
         <About />
-        <ScrollStatement />
         <Reach />
         <Services />
         <Work />

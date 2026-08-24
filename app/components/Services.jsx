@@ -47,7 +47,17 @@ export default function Services() {
             >
               <div>
                 <p className="tracking-[0.4em] text-xs font-bold text-cream/70 mb-6">{a.tag}</p>
-                <h2 className="font-display font-extrabold leading-[0.95]" style={{ fontSize: "clamp(2.5rem,4vw,4rem)", letterSpacing: "-0.02em" }}>
+                <h2
+                  className="font-display font-extrabold leading-[0.95]"
+                  style={{
+                    fontSize: "clamp(2.5rem,4vw,4rem)",
+                    letterSpacing: "-0.02em",
+                    backgroundImage: "linear-gradient(90deg,#ffffff 0%,#ffd9a8 50%,#00a8d6 100%)",
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    color: "transparent",
+                  }}
+                >
                   {a.name}
                 </h2>
               </div>
@@ -64,19 +74,36 @@ export default function Services() {
                   {SERVICES.map((s, i) => {
                     const on = i === active;
                     return (
-                      <div key={s.name} className="flex items-center" style={{ height: ITEM }}>
+                      <motion.div
+                        key={s.name}
+                        className="flex items-center"
+                        style={{ height: ITEM }}
+                        animate={{ x: on ? 0 : 56, opacity: on ? 1 : 0.9 }}
+                        transition={{ type: "spring", stiffness: 160, damping: 22 }}
+                      >
                         <span
-                          className="font-display font-extrabold uppercase whitespace-nowrap leading-none pl-6 transition-all duration-300"
-                          style={{
-                            fontSize: "clamp(2.25rem,4.5vw,4.25rem)",
-                            letterSpacing: "-0.02em",
-                            color: on ? "#f6efdf" : "transparent",
-                            WebkitTextStroke: on ? "0" : "1.4px rgba(246,239,223,0.5)",
-                          }}
+                          className="font-display font-extrabold uppercase whitespace-nowrap leading-none pl-6"
+                          style={
+                            on
+                              ? {
+                                  fontSize: "clamp(2.25rem,4.5vw,4.25rem)",
+                                  letterSpacing: "-0.02em",
+                                  backgroundImage: "linear-gradient(90deg,#ffffff 0%,#ffd9a8 45%,#00a8d6 100%)",
+                                  WebkitBackgroundClip: "text",
+                                  backgroundClip: "text",
+                                  color: "transparent",
+                                }
+                              : {
+                                  fontSize: "clamp(2.25rem,4.5vw,4.25rem)",
+                                  letterSpacing: "-0.02em",
+                                  color: "transparent",
+                                  WebkitTextStroke: "1.4px rgba(246,239,223,0.5)",
+                                }
+                          }
                         >
                           {s.name}
                         </span>
-                      </div>
+                      </motion.div>
                     );
                   })}
                 </motion.div>
