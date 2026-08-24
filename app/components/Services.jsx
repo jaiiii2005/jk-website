@@ -52,10 +52,12 @@ export default function Services() {
                   style={{
                     fontSize: "clamp(2.5rem,4vw,4rem)",
                     letterSpacing: "-0.02em",
-                    backgroundImage: "linear-gradient(90deg,#ffffff 0%,#ffd9a8 50%,#00a8d6 100%)",
+                    backgroundImage: "linear-gradient(90deg,#ffffff,#ffd9a8,#00a8d6,#5b52ff,#ffd9a8,#ffffff)",
+                    backgroundSize: "220% 100%",
                     WebkitBackgroundClip: "text",
                     backgroundClip: "text",
                     color: "transparent",
+                    animation: "jkslide 3.2s linear infinite",
                   }}
                 >
                   {a.name}
@@ -88,10 +90,12 @@ export default function Services() {
                               ? {
                                   fontSize: "clamp(2.25rem,4.5vw,4.25rem)",
                                   letterSpacing: "-0.02em",
-                                  backgroundImage: "linear-gradient(90deg,#ffffff 0%,#ffd9a8 45%,#00a8d6 100%)",
+                                  backgroundImage: "linear-gradient(90deg,#ffffff,#ffd9a8,#00a8d6,#5b52ff,#ffd9a8,#ffffff)",
+                                  backgroundSize: "220% 100%",
                                   WebkitBackgroundClip: "text",
                                   backgroundClip: "text",
                                   color: "transparent",
+                                  animation: "jkslide 3.2s linear infinite",
                                 }
                               : {
                                   fontSize: "clamp(2.25rem,4.5vw,4.25rem)",
