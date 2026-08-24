@@ -1,143 +1,135 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import Reveal from "./Reveal";
 
-// Pinned, scroll-driven case-study showcase (OUTFRONT style). The names are big
-// and bleed off the right edge, roll continuously with scroll, and the centred
-// one fills white while the rest stay outlined; the photo + story change with it.
-const CASES = [
-  { brand: "AUDI A4", img: "/work/w-audi.jpg", line: "Front and centre on Kolkata’s busiest flyover.", tags: ["Kolkata", "Hoarding"] },
-  { brand: "STYLE BAAZAR", img: "/work/w-stylebaazar.jpg", line: "Fashion, larger than life — right across the city.", tags: ["Kolkata", "Hoarding"] },
-  { brand: "JOI YOGURT", img: "/work/w-joi-clean.jpg", line: "Launched India’s first Nolen Gur probiotic, outdoors.", tags: ["Kolkata", "Product Launch"] },
-  { brand: "IDEE EYEWEAR", img: "/work/w-idee.jpg", line: "Premium eyewear, at eye level in the terminal.", tags: ["Kolkata", "Airport Media"] },
-  { brand: "RED FM 93.5", img: "/work-2.jpg", line: "A live radio studio — built inside a billboard.", tags: ["Kolkata", "Innovation"] },
+// Cinematic, image-led showcase: one big featured billboard + an editorial grid.
+// Grid photos sit muted and burst into colour on hover; a "View" label follows
+// the cursor over the gallery (desktop) — the interaction language of top OOH sites.
+const FEATURE = {
+  src: "/work/w-audi.jpg",
+  brand: "Audi A4",
+  meta: "HOARDING · KOLKATA",
+  line: "Some see what’s there. We see beyond.",
+};
+
+const GRID = [
+  { src: "/work/w-stylebaazar.jpg", brand: "Style Baazar", meta: "HOARDING · KOLKATA" },
+  { src: "/work/w-joi-clean.jpg", brand: "JOI Yogurt", meta: "HOARDING · KOLKATA" },
+  { src: "/work/w-idee.jpg", brand: "IDEE Eyewear", meta: "AIRPORT MEDIA · KOLKATA" },
+  { src: "/work-2.jpg", brand: "Landmark OOH", meta: "OUTDOOR · KOLKATA" },
+  { src: "/work-3.jpg", brand: "Prime Site", meta: "OUTDOOR · KOLKATA" },
+  { src: "/work-4.jpg", brand: "High-Street Media", meta: "OUTDOOR · KOLKATA" },
 ];
 
-const ITEM = 120; // px per name row
-const N = CASES.length;
-
 export default function Work() {
-  const ref = useRef(null);
-  const [active, setActive] = useState(0);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const [touch, setTouch] = useState(false);
+  const [active, setActive] = useState(false);
+  const mx = useMotionValue(-200);
+  const my = useMotionValue(-200);
+  const x = useSpring(mx, { stiffness: 350, damping: 30, mass: 0.4 });
+  const y = useSpring(my, { stiffness: 350, damping: 30, mass: 0.4 });
 
-  // continuous roll — the whole name column slides with scroll
-  const listY = useTransform(scrollYProgress, [0, 1], [-ITEM / 2, -ITEM / 2 - (N - 1) * ITEM]);
+  useEffect(() => {
+    setTouch(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
 
-  useMotionValueEvent(scrollYProgress, "change", (p) => {
-    setActive(Math.min(N - 1, Math.max(0, Math.round(p * (N - 1)))));
-  });
-
-  const a = CASES[active];
+  const onMove = (e) => { mx.set(e.clientX); my.set(e.clientY); };
 
   return (
-    <section id="work" className="relative bg-jkblue-deep text-cream">
-      {/* ===== desktop: pinned scroll experience ===== */}
-      <div ref={ref} className="hidden lg:block" style={{ height: `${N * 110}vh` }}>
-        <div className="sticky top-0 h-screen overflow-hidden">
-          {/* full-bleed photo with slow zoom + crossfade */}
-          <div className="absolute inset-0">
-            {CASES.map((c, i) => (
-              <motion.img
-                key={c.img}
-                src={c.img}
-                alt={c.brand}
-                className="absolute inset-0 h-full w-full object-cover"
-                animate={{ opacity: i === active ? 1 : 0, scale: i === active ? 1.08 : 1 }}
-                transition={{ opacity: { duration: 0.7 }, scale: { duration: 6, ease: "easeOut" } }}
-              />
-            ))}
-            <div className="absolute inset-0 bg-gradient-to-r from-jkblue-deep via-jkblue-deep/75 to-jkblue-deep/25" />
-            <div className="absolute inset-0 bg-gradient-to-t from-jkblue-deep/80 to-transparent" />
-          </div>
+    <section id="work" className="relative bg-jkblue-deep text-cream overflow-hidden">
+      {/* cream -> deep blue blend so it flows from Services */}
+      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-cream to-jkblue-deep -translate-y-px" />
 
-          {/* left — active case story */}
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 26 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute left-0 top-1/2 z-10 max-w-[44%] -translate-y-1/2 px-8 lg:px-14"
-          >
-            <p className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-5">OUR WORK</p>
-            <div className="flex gap-2 mb-5">
-              {a.tags.map((t) => (
-                <span key={t} className="rounded-full border border-cream/25 px-3 py-1 text-xs text-cream/80">{t}</span>
-              ))}
-            </div>
-            <h2 className="font-display font-extrabold leading-[1.05]" style={{ fontSize: "clamp(1.75rem,2.8vw,2.75rem)", letterSpacing: "-0.02em" }}>
-              {a.line}
+      <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:py-32">
+        <div className="mb-14">
+          <Reveal><p className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-4">OUR WORK</p></Reveal>
+          <Reveal delay={0.05}>
+            <h2 className="font-display font-extrabold" style={{ fontSize: "clamp(2.5rem,7vw,6rem)", lineHeight: 0.95, letterSpacing: "-0.02em" }}>
+              Campaigns that <span className="text-grad">turned heads.</span>
             </h2>
-            <a href="#contact" className="group mt-9 inline-flex items-center gap-4">
-              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-cream/40 text-lg transition-all duration-300 group-hover:bg-jkred group-hover:border-jkred">→</span>
-              <span className="text-sm font-semibold tracking-wide">Read full case</span>
-            </a>
-          </motion.div>
+          </Reveal>
+        </div>
 
-          {/* right — big rolling name list that bleeds off the edge */}
-          <div className="absolute inset-y-0 left-[44%] right-0 z-10 overflow-hidden">
-            <div className="absolute inset-x-0 top-1/2">
-              <motion.div style={{ y: listY }}>
-                {CASES.map((c, i) => {
-                  const on = i === active;
-                  return (
-                    <div key={c.brand} className="flex items-center" style={{ height: ITEM }}>
-                      <span
-                        className="font-display font-extrabold uppercase whitespace-nowrap leading-none transition-all duration-300 pl-4"
-                        style={{
-                          fontSize: "clamp(2.75rem,6.5vw,6rem)",
-                          letterSpacing: "-0.02em",
-                          color: on ? "#f6efdf" : "transparent",
-                          WebkitTextStroke: on ? "0" : "1.4px rgba(246,239,223,0.38)",
-                          opacity: on ? 1 : 0.75,
-                        }}
-                      >
-                        {c.brand}
-                      </span>
-                    </div>
-                  );
-                })}
-              </motion.div>
-            </div>
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-jkblue-deep to-transparent" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-jkblue-deep to-transparent" />
-          </div>
+        {/* gallery — cursor "View" label tracks the mouse here */}
+        <div
+          onMouseMove={touch ? undefined : onMove}
+          onMouseEnter={() => !touch && setActive(true)}
+          onMouseLeave={() => setActive(false)}
+          className={touch ? "" : "lg:cursor-none"}
+        >
+          {/* big featured billboard */}
+          <motion.figure
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="group relative mb-6 overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-black/40"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={FEATURE.src}
+              alt={FEATURE.brand}
+              className="aspect-[16/10] sm:aspect-[16/7] w-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-jkblue-deep via-jkblue-deep/20 to-transparent" />
+            <figcaption className="absolute inset-x-0 bottom-0 p-6 sm:p-10">
+              <p className="text-copper text-xs tracking-[0.3em] mb-2">{FEATURE.meta}</p>
+              <h3 className="font-display text-3xl sm:text-5xl font-extrabold">{FEATURE.brand}</h3>
+              <p className="mt-2 text-cream/75 max-w-lg">{FEATURE.line}</p>
+            </figcaption>
+          </motion.figure>
 
-          {/* progress dots */}
-          <div className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 flex gap-2">
-            {CASES.map((_, i) => (
-              <span key={i} className="h-1.5 rounded-full transition-all duration-300" style={{ width: i === active ? 28 : 8, background: i === active ? "var(--color-jkred)" : "rgba(255,255,255,0.3)" }} />
+          {/* editorial grid — grayscale until hover */}
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {GRID.map((w, i) => (
+              <motion.figure
+                key={w.src}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.7, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative overflow-hidden rounded-2xl border border-white/10"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={w.src}
+                  alt={w.brand}
+                  loading="lazy"
+                  className="aspect-[4/5] w-full object-cover transition-[transform,filter] duration-[900ms] ease-out lg:grayscale group-hover:scale-110 lg:group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-jkblue-deep/95 via-jkblue-deep/10 to-transparent" />
+                <figcaption className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+                  <p className="text-copper text-[10px] tracking-[0.3em] mb-1">{w.meta}</p>
+                  <h3 className="font-display text-lg sm:text-xl font-bold leading-tight">{w.brand}</h3>
+                </figcaption>
+              </motion.figure>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* ===== mobile: simple stacked case cards ===== */}
-      <div className="lg:hidden mx-auto max-w-2xl px-6 py-20">
-        <Reveal><p className="text-copper tracking-[0.4em] text-xs mb-8">OUR WORK</p></Reveal>
-        <div className="space-y-6">
-          {CASES.map((c) => (
-            <Reveal key={c.brand}>
-              <div className="relative overflow-hidden rounded-2xl">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={c.img} alt={c.brand} loading="lazy" className="aspect-[4/3] w-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-jkblue-deep via-jkblue-deep/20 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-5">
-                  <div className="flex gap-2 mb-2">
-                    {c.tags.map((t) => (
-                      <span key={t} className="rounded-full border border-cream/25 px-2.5 py-0.5 text-[10px] text-cream/80">{t}</span>
-                    ))}
-                  </div>
-                  <h3 className="font-display text-2xl font-extrabold">{c.brand}</h3>
-                  <p className="mt-1 text-sm text-cream/75">{c.line}</p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
+        <div className="mt-12 text-center">
+          <a href="#contact" className="inline-block rounded-full bg-jkred px-8 py-4 font-semibold text-white shadow-lg shadow-jkred/30 transition hover:bg-red-600">
+            Your brand, next →
+          </a>
         </div>
       </div>
+
+      {/* cursor-follow "View" label (desktop only) */}
+      {!touch && (
+        <motion.div
+          aria-hidden
+          style={{ x, y }}
+          animate={{ opacity: active ? 1 : 0, scale: active ? 1 : 0.5 }}
+          transition={{ duration: 0.2 }}
+          className="pointer-events-none fixed left-0 top-0 z-[60]"
+        >
+          <span className="-ml-8 -mt-4 flex h-16 w-16 items-center justify-center rounded-full bg-jkred text-[11px] font-bold uppercase tracking-wider text-white shadow-lg shadow-jkred/40">
+            View
+          </span>
+        </motion.div>
+      )}
     </section>
   );
 }
