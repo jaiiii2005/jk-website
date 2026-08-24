@@ -4,9 +4,10 @@ import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import Reveal from "./Reveal";
 
-// Pinned, scroll-driven service switcher (Bright Outdoor style): a bold red panel
-// that locks while you scroll — the active service (label + big title + Read More)
-// sits left, a big filled/outlined service list rolls on the right.
+// Pinned service switcher with kinetic-typography motion: the whole name stack is
+// tilted and gets pulled DIAGONALLY through the viewport by scroll — vertical roll
+// + horizontal drift + rotation shift + tiny scale, with each line drifting at a
+// slightly different speed (parallax). Active name = flowing gradient fill.
 const SERVICES = [
   { tag: "OUTDOOR", name: "Outdoor Hoardings" },
   { tag: "DIGITAL", name: "Digital OOH" },
@@ -20,11 +21,48 @@ const SERVICES = [
 const ITEM = 96;
 const N = SERVICES.length;
 
+const GRAD = {
+  fontSize: "clamp(2.25rem,4.5vw,4.25rem)",
+  letterSpacing: "-0.02em",
+  backgroundImage: "linear-gradient(90deg,#ffffff,#ffd9a8,#00a8d6,#5b52ff,#ffd9a8,#ffffff)",
+  backgroundSize: "220% 100%",
+  WebkitBackgroundClip: "text",
+  backgroundClip: "text",
+  color: "transparent",
+  animation: "jkslide 3.2s linear infinite",
+};
+const OUTLINE = {
+  fontSize: "clamp(2.25rem,4.5vw,4.25rem)",
+  letterSpacing: "-0.02em",
+  color: "transparent",
+  WebkitTextStroke: "1.4px rgba(246,239,223,0.5)",
+};
+
+// One line — drifts horizontally at its own speed (parallax) as you scroll.
+function ServiceLine({ progress, i, total, name, active }) {
+  const center = (total - 1) / 2;
+  const lineX = useTransform(progress, [0, 1], [(i - center) * 34, -(i - center) * 34]);
+  return (
+    <motion.div className="flex items-center" style={{ height: ITEM, x: lineX }}>
+      <span className="font-display font-extrabold uppercase whitespace-nowrap leading-none pl-6" style={active ? GRAD : OUTLINE}>
+        {name}
+      </span>
+    </motion.div>
+  );
+}
+
 export default function Services() {
   const ref = useRef(null);
   const [active, setActive] = useState(0);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+
+  // vertical roll
   const listY = useTransform(scrollYProgress, [0, 1], [-ITEM / 2, -ITEM / 2 - (N - 1) * ITEM]);
+  // diagonal pull: rotation shift + horizontal drift + tiny scale — all scrubbed
+  const rot = useTransform(scrollYProgress, [0, 1], [-6, -1.5]);
+  const groupX = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.93, 1.07]);
+
   useMotionValueEvent(scrollYProgress, "change", (p) => {
     setActive(Math.min(N - 1, Math.max(0, Math.round(p * (N - 1)))));
   });
@@ -33,8 +71,8 @@ export default function Services() {
 
   return (
     <section id="services" className="relative bg-cream text-ink">
-      {/* ===== desktop: pinned scroll switcher ===== */}
-      <div ref={ref} className="hidden lg:block" style={{ height: `${N * 80}vh` }}>
+      {/* ===== desktop: pinned kinetic switcher ===== */}
+      <div ref={ref} className="hidden lg:block" style={{ height: `${N * 85}vh` }}>
         <div className="sticky top-0 flex h-screen items-center justify-center px-6 py-10">
           <div className="relative grid h-[80vh] w-full max-w-7xl grid-cols-2 overflow-hidden rounded-3xl bg-jkred text-cream shadow-2xl shadow-jkred/25">
             {/* left — active service */}
@@ -69,47 +107,15 @@ export default function Services() {
               </a>
             </motion.div>
 
-            {/* right — rolling service list */}
+            {/* right — diagonally pulled kinetic name stack */}
             <div className="relative overflow-hidden">
               <div className="absolute inset-x-0 top-1/2">
-                <motion.div style={{ y: listY }}>
-                  {SERVICES.map((s, i) => {
-                    const on = i === active;
-                    return (
-                      <motion.div
-                        key={s.name}
-                        className="flex items-center"
-                        style={{ height: ITEM }}
-                        animate={{ x: on ? 0 : 56, opacity: on ? 1 : 0.9 }}
-                        transition={{ type: "spring", stiffness: 160, damping: 22 }}
-                      >
-                        <span
-                          className="font-display font-extrabold uppercase whitespace-nowrap leading-none pl-6"
-                          style={
-                            on
-                              ? {
-                                  fontSize: "clamp(2.25rem,4.5vw,4.25rem)",
-                                  letterSpacing: "-0.02em",
-                                  backgroundImage: "linear-gradient(90deg,#ffffff,#ffd9a8,#00a8d6,#5b52ff,#ffd9a8,#ffffff)",
-                                  backgroundSize: "220% 100%",
-                                  WebkitBackgroundClip: "text",
-                                  backgroundClip: "text",
-                                  color: "transparent",
-                                  animation: "jkslide 3.2s linear infinite",
-                                }
-                              : {
-                                  fontSize: "clamp(2.25rem,4.5vw,4.25rem)",
-                                  letterSpacing: "-0.02em",
-                                  color: "transparent",
-                                  WebkitTextStroke: "1.4px rgba(246,239,223,0.5)",
-                                }
-                          }
-                        >
-                          {s.name}
-                        </span>
-                      </motion.div>
-                    );
-                  })}
+                <motion.div style={{ rotate: rot, x: groupX, scale }} className="origin-center will-change-transform">
+                  <motion.div style={{ y: listY }}>
+                    {SERVICES.map((s, i) => (
+                      <ServiceLine key={s.name} progress={scrollYProgress} i={i} total={N} name={s.name} active={i === active} />
+                    ))}
+                  </motion.div>
                 </motion.div>
               </div>
               <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-jkred to-transparent" />
