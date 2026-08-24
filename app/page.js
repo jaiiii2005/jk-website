@@ -11,7 +11,6 @@ import Values from "./components/Values";
 import Leadership from "./components/Leadership";
 import Clients from "./components/Clients";
 import TrustStrip from "./components/TrustStrip";
-import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 
 // Lean, client-oriented flow (still fully dynamic):
@@ -33,7 +32,6 @@ export default function Home() {
         <Leadership />
         <Clients />
         <TrustStrip />
-        <FAQ />
       </main>
       <Footer />
     </>
