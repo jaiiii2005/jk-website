@@ -1,20 +1,20 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useMotionValue, useSpring, useTransform, useMotionValueEvent } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useMotionValue, useSpring, useTransform, useMotionValueEvent } from "framer-motion";
 import Reveal from "./Reveal";
 
 // Cursor-gated kinetic service switcher: hover the text and the wheel drives the
 // diagonal typography (page stays put); move off and the page scrolls normally.
 // At the ends of the list the wheel is released so you never get trapped.
 const SERVICES = [
-  { tag: "OUTDOOR", name: "Outdoor Hoardings" },
-  { tag: "DIGITAL", name: "Digital OOH" },
-  { tag: "UNIPOLE", name: "Unipoles" },
-  { tag: "TRANSIT", name: "Transit & Airport" },
-  { tag: "RETAIL", name: "In-shop Branding" },
-  { tag: "RURAL", name: "Rural Promotions" },
-  { tag: "INNOVATION", name: "Innovations" },
+  { tag: "OUTDOOR", name: "Outdoor Hoardings", desc: "Landmark hoardings & billboards across the East." },
+  { tag: "DIGITAL", name: "Digital OOH", desc: "LED & programmatic screens at prime junctions." },
+  { tag: "UNIPOLE", name: "Unipoles", desc: "High-rise landmark unipoles that own the skyline." },
+  { tag: "TRANSIT", name: "Transit & Airport", desc: "Media that moves with the crowd — metro, transit & airport." },
+  { tag: "RETAIL", name: "In-shop Branding", desc: "Point-of-sale visibility, right where buying happens." },
+  { tag: "RURAL", name: "Rural Promotions", desc: "Reaching audiences far beyond the metros." },
+  { tag: "INNOVATION", name: "Innovations", desc: "OOH firsts — like a live radio studio inside a billboard." },
 ];
 
 const ITEM = 96;
@@ -148,26 +148,58 @@ export default function Services() {
         </div>
       </div>
 
-      {/* ===== mobile: bold stacked list ===== */}
-      <div className="lg:hidden px-6 py-20">
-        <div className="rounded-3xl bg-jkred text-cream p-8">
-          <Reveal><p className="tracking-[0.4em] text-xs font-bold text-cream/70 mb-8">OUR SERVICES</p></Reveal>
-          <div className="divide-y divide-cream/15">
-            {SERVICES.map((s) => (
-              <Reveal key={s.name}>
-                <div className="py-4">
-                  <p className="text-[10px] tracking-[0.3em] text-cream/60 mb-1">{s.tag}</p>
-                  <h3 className="font-display text-2xl font-extrabold">{s.name}</h3>
-                </div>
-              </Reveal>
-            ))}
+      {/* ===== mobile: scroll-driven kinetic switcher ===== */}
+      <MobileKinetic />
+    </section>
+  );
+}
+
+// Mobile version: the page's own (touch) scroll cycles the services — each one
+// crossfades in with the flowing gradient. No wheel/cursor needed.
+function MobileKinetic() {
+  const ref = useRef(null);
+  const [active, setActive] = useState(0);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  useMotionValueEvent(scrollYProgress, "change", (p) => {
+    setActive(Math.min(N - 1, Math.max(0, Math.round(p * (N - 1)))));
+  });
+  const a = SERVICES[active];
+
+  return (
+    <div ref={ref} className="lg:hidden px-6" style={{ height: `${N * 55}vh` }}>
+      <div className="sticky top-0 flex h-screen items-center py-16">
+        <div className="flex min-h-[62vh] w-full flex-col justify-between overflow-hidden rounded-3xl bg-jkred text-cream p-8">
+          <p className="tracking-[0.4em] text-[11px] font-bold text-cream/60">OUR SERVICES</p>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -22 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <p className="tracking-[0.3em] text-[10px] font-bold text-cream/70 mb-3">{a.tag}</p>
+              <h3 className="font-display font-extrabold leading-[0.95]" style={{ ...GRAD, fontSize: "clamp(2.25rem,11vw,3.5rem)" }}>
+                {a.name}
+              </h3>
+              <p className="mt-4 max-w-xs text-cream/80">{a.desc}</p>
+            </motion.div>
+          </AnimatePresence>
+
+          <div>
+            <div className="mb-6 flex gap-1.5">
+              {SERVICES.map((_, i) => (
+                <span key={i} className="h-1 rounded-full transition-all duration-300" style={{ width: i === active ? 24 : 8, background: i === active ? "#f6efdf" : "rgba(246,239,223,0.4)" }} />
+              ))}
+            </div>
+            <a href="#contact" className="inline-flex items-center gap-3 text-sm font-semibold">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/50">→</span>
+              Read More
+            </a>
           </div>
-          <a href="#contact" className="mt-8 inline-flex items-center gap-3 text-sm font-semibold">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-cream/50">→</span>
-            Read More
-          </a>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
