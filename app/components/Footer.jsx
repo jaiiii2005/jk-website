@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Bokeh from "./Bokeh";
-import RotatingWord from "./RotatingWord";
 import MagneticButton from "./MagneticButton";
 import ContactForm from "./ContactForm";
 
@@ -61,20 +60,26 @@ export default function Footer() {
 
       {/* CTA */}
       <div ref={ctaRef} className="relative z-10 mx-auto max-w-7xl px-6 pt-28 md:pt-40 pb-20 text-center">
-        <motion.p {...show(0)} className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-6">
-          LET&rsquo;S TALK
-        </motion.p>
-
-        <motion.h2 {...show(0.1)} className="font-display h-mega font-extrabold leading-[1.05]">
-          Let&rsquo;s make<br className="sm:hidden" /> brands{" "}
-          <RotatingWord
-            words={["converse.", "connect.", "convert.", "be seen."]}
-            className="grad-flow"
-          />
+        <motion.h2 {...show(0)} className="font-display font-extrabold leading-[0.95]" style={{ fontSize: "clamp(2.75rem,9vw,7.5rem)", letterSpacing: "-0.03em" }}>
+          <span className="inline-flex flex-wrap items-center justify-center gap-x-[0.25em] gap-y-3">
+            <span>LET&rsquo;S</span>
+            <motion.a
+              href="#enquiry"
+              initial={{ opacity: 0, y: 30, scale: 0.8 }}
+              animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+              transition={{ duration: 0.6, delay: 0.25, ease: [0.34, 1.56, 0.64, 1] }}
+              whileHover={{ scale: 1.05 }}
+              className="inline-flex items-center rounded-full bg-jkred px-[0.5em] py-[0.08em] text-white shadow-xl shadow-jkred/40 transition-colors hover:bg-red-600"
+            >
+              Connect
+            </motion.a>
+            <span>WITH</span>
+          </span>
+          <span className="block text-grad">JK ADVERTISING</span>
         </motion.h2>
 
-        <motion.p {...show(0.25)} className="mt-8 max-w-xl mx-auto text-lg text-cream/70">
-          Fifty years of turning streets into conversations. Let&rsquo;s start yours.
+        <motion.p {...show(0.4)} className="mt-8 max-w-xl mx-auto text-lg sm:text-2xl font-semibold uppercase tracking-wide text-cream/80">
+          Become our next success story.
         </motion.p>
 
         <motion.div {...show(0.35)} className="mt-10 flex flex-wrap justify-center gap-4">
@@ -100,7 +105,7 @@ export default function Footer() {
         </motion.p>
 
         {/* quick enquiry — sends straight to WhatsApp */}
-        <ContactForm />
+        <div id="enquiry"><ContactForm /></div>
 
         {/* direct contact details */}
         <motion.div {...show(0.6)} className="mt-14 grid gap-4 sm:grid-cols-3 max-w-3xl mx-auto text-left">
