@@ -89,7 +89,10 @@ export default function Footer() {
   const footRef = useRef(null);
   const ctaRef = useRef(null);
   const inView = useInView(ctaRef, { once: true, amount: 0.25 });
-  const { scrollYProgress } = useScroll({ target: footRef, offset: ["start end", "end start"] });
+  // Footer is the LAST section, so it can never scroll fully past the top —
+  // map progress from "footer enters" to "footer fully in view" so the parallax
+  // actually completes as you reach the bottom of the page.
+  const { scrollYProgress } = useScroll({ target: footRef, offset: ["start end", "end end"] });
   const show = (d) => ({
     initial: { opacity: 0, y: 30 },
     animate: inView ? { opacity: 1, y: 0 } : {},
@@ -106,8 +109,8 @@ export default function Footer() {
           <BillboardLayer key={i} progress={scrollYProgress} {...l} />
         ))}
       </div>
-      <div className="pointer-events-none absolute inset-0 bg-jkblue-deep/80" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-jkblue-deep/55 via-jkblue-deep/78 to-jkblue-deep" />
+      <div className="pointer-events-none absolute inset-0 bg-jkblue-deep/68" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-jkblue-deep/40 via-jkblue-deep/70 to-jkblue-deep" />
 
       {/* CTA */}
       <div ref={ctaRef} className="relative z-10 mx-auto max-w-7xl px-6 pt-28 md:pt-40 pb-20 text-center">
