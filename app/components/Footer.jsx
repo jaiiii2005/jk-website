@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import MagneticButton from "./MagneticButton";
 
 // Replaceable billboard slots. Swap these paths for the real photos later
 // (e.g. "/images/billboards/bb-01.jpg") — the animation/layout stays the same.
@@ -46,10 +45,8 @@ function BillboardLayer({ progress, src, pos, y, x, rot, scale, hideSm }) {
   );
 }
 
-const LINKS = [
-  ["About", "#about"], ["Services", "#services"], ["Innovation", "#innovation"],
-  ["Leadership", "#leadership"], ["Partners", "#clients"], ["Contact", "#contact"],
-];
+const EXPLORE = [["About", "#about"], ["Services", "#services"], ["Work", "#work"], ["Innovation", "#innovation"]];
+const COMPANY = [["Our Reach", "#reach"], ["Leadership", "#leadership"], ["Partners", "#clients"]];
 
 // Real details from Nimesh Shah's card. TODO(Sir): social profile URLs still needed.
 const CONTACT = {
@@ -136,40 +133,54 @@ export default function Footer() {
         <motion.p {...show(0.4)} className="mt-8 max-w-xl mx-auto text-lg sm:text-2xl font-semibold uppercase tracking-wide text-cream/80">
           Become our next success story.
         </motion.p>
-
-        <motion.div {...show(0.35)} className="mt-10 flex flex-wrap justify-center gap-4">
-          <MagneticButton
-            href="tel:+919830025496"
-            className="relative rounded-full bg-jkred px-8 py-4 font-semibold text-white shadow-lg shadow-jkred/40 hover:bg-red-600 inline-block"
-          >
-            <span className="absolute inset-0 rounded-full bg-jkred/60 blur-md animate-pulse -z-10" />
-            📞 Call 98300 25496
-          </MagneticButton>
-          <MagneticButton
-            href="https://wa.me/919830025496"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-cream/30 px-8 py-4 font-semibold text-cream hover:bg-cream/10 inline-block"
-          >
-            💬 WhatsApp us
-          </MagneticButton>
-        </motion.div>
-
-        <motion.p {...show(0.5)} className="mt-6 text-sm text-cream/50">
-          Nimesh Shah · Chief Executive Officer · Kolkata, India
-        </motion.p>
       </div>
 
       {/* footer bar */}
       <div className="relative z-10 border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.1fr_1fr]">
+        <div className="mx-auto max-w-7xl px-6 py-14 grid gap-10 md:grid-cols-2 lg:grid-cols-5">
+          {/* brand */}
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo-light.png" alt="JK Advertising — 50 Years" className="h-10 w-auto" />
             <p className="mt-4 max-w-xs text-sm text-cream/55 leading-relaxed">
-              The largest OOH media owner in the East. We make brands converse — for 50 years and counting.
+              The largest OOH media owner in the East — making brands converse for 50 years.
             </p>
-            <div className="mt-5 flex gap-3">
+          </div>
+
+          {/* Explore */}
+          <div>
+            <p className="font-display font-bold text-sm tracking-wide mb-4">Explore</p>
+            <ul className="space-y-2.5">
+              {EXPLORE.map(([label, href]) => (
+                <li key={href}><a href={href} className="text-sm text-cream/60 hover:text-jkred transition">{label}</a></li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div>
+            <p className="font-display font-bold text-sm tracking-wide mb-4">Company</p>
+            <ul className="space-y-2.5">
+              {COMPANY.map(([label, href]) => (
+                <li key={href}><a href={href} className="text-sm text-cream/60 hover:text-jkred transition">{label}</a></li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <p className="font-display font-bold text-sm tracking-wide mb-4">Contact</p>
+            <ul className="space-y-2.5 text-sm text-cream/60">
+              <li className="leading-relaxed">{CONTACT.address}</li>
+              <li><a href={`tel:+${CONTACT.phoneRaw}`} className="hover:text-jkred transition">{CONTACT.phone}</a></li>
+              <li><a href={`mailto:${CONTACT.email}`} className="hover:text-jkred transition break-all">{CONTACT.email}</a></li>
+            </ul>
+          </div>
+
+          {/* Follow + events */}
+          <div>
+            <p className="font-display font-bold text-sm tracking-wide mb-4">Follow</p>
+            <div className="flex gap-3">
               {SOCIALS.map((s) => (
                 <a
                   key={s.name}
@@ -183,33 +194,12 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-          </div>
-
-          <div>
-            <p className="font-display font-bold text-sm tracking-wide mb-4">Explore</p>
-            <ul className="space-y-2">
-              {LINKS.map(([label, href]) => (
-                <li key={href}>
-                  <a href={href} className="text-sm text-cream/60 hover:text-jkred transition">{label}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <p className="font-display font-bold text-sm tracking-wide mb-4">Contact</p>
-            <ul className="space-y-2 text-sm text-cream/60">
-              <li className="leading-relaxed">{CONTACT.address}</li>
-              <li><a href={`tel:+${CONTACT.phoneRaw}`} className="hover:text-jkred transition">{CONTACT.phone}</a></li>
-              <li><a href={`mailto:${CONTACT.email}`} className="hover:text-jkred transition break-all">{CONTACT.email}</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="font-display font-bold text-sm tracking-wide mb-4">Our events arm</p>
-            <div className="inline-flex items-center rounded-xl bg-white px-4 py-3 shadow-lg">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/lets-eventuate.png" alt="Lets Eventuate" className="h-8 w-auto" />
+            <div className="mt-6">
+              <p className="text-[11px] tracking-[0.2em] text-cream/40 mb-2">EVENTS ARM</p>
+              <div className="inline-flex items-center rounded-xl bg-white px-3 py-2 shadow-lg">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/lets-eventuate.png" alt="Lets Eventuate" className="h-7 w-auto" />
+              </div>
             </div>
           </div>
         </div>
