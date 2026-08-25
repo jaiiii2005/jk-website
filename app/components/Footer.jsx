@@ -1,10 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import Bokeh from "./Bokeh";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import MagneticButton from "./MagneticButton";
 import ContactForm from "./ContactForm";
+
+// Dark billboard collage behind the CTA (real work photos, replaceable later).
+const BG_SHOTS = ["/work/w-audi.jpg", "/work-2.jpg", "/work/w-stylebaazar.jpg", "/work-3.jpg", "/work/w-idee.jpg", "/work-4.jpg"];
 
 const LINKS = [
   ["About", "#about"], ["Services", "#services"], ["Innovation", "#innovation"],
@@ -45,8 +47,11 @@ const SOCIALS = [
 ];
 
 export default function Footer() {
+  const footRef = useRef(null);
   const ctaRef = useRef(null);
   const inView = useInView(ctaRef, { once: true, amount: 0.25 });
+  const { scrollYProgress } = useScroll({ target: footRef, offset: ["start end", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);   // slow background parallax
   const show = (d) => ({
     initial: { opacity: 0, y: 30 },
     animate: inView ? { opacity: 1, y: 0 } : {},
@@ -54,9 +59,18 @@ export default function Footer() {
   });
 
   return (
-    <footer id="contact" className="relative overflow-hidden bg-jkblue-deep text-cream">
-      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-cream to-jkblue-deep -translate-y-px" />
-      <Bokeh tone="dark" />
+    <footer ref={footRef} id="contact" className="relative overflow-hidden bg-jkblue-deep text-cream">
+      <div className="absolute top-0 inset-x-0 z-20 h-40 bg-gradient-to-b from-cream to-jkblue-deep -translate-y-px" />
+
+      {/* dark billboard collage background (parallax) */}
+      <motion.div aria-hidden style={{ y: bgY }} className="pointer-events-none absolute inset-0 grid grid-cols-2 sm:grid-cols-3 scale-125">
+        {BG_SHOTS.map((src, i) => (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img key={i} src={src} alt="" className="h-full w-full object-cover" />
+        ))}
+      </motion.div>
+      <div className="pointer-events-none absolute inset-0 bg-jkblue-deep/82" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-jkblue-deep/60 via-jkblue-deep/80 to-jkblue-deep" />
 
       {/* CTA */}
       <div ref={ctaRef} className="relative z-10 mx-auto max-w-7xl px-6 pt-28 md:pt-40 pb-20 text-center">
