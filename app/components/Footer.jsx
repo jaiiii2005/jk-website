@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import MagneticButton from "./MagneticButton";
-import ContactForm from "./ContactForm";
 
 // Replaceable billboard slots. Swap these paths for the real photos later
 // (e.g. "/images/billboards/bb-01.jpg") — the animation/layout stays the same.
@@ -118,7 +117,9 @@ export default function Footer() {
           <span className="inline-flex flex-wrap items-center justify-center gap-x-[0.25em] gap-y-3">
             <span>LET&rsquo;S</span>
             <motion.a
-              href="#enquiry"
+              href="https://wa.me/919830025496"
+              target="_blank"
+              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 30, scale: 0.8 }}
               animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
               transition={{ duration: 0.6, delay: 0.25, ease: [0.34, 1.56, 0.64, 1] }}
@@ -157,30 +158,11 @@ export default function Footer() {
         <motion.p {...show(0.5)} className="mt-6 text-sm text-cream/50">
           Nimesh Shah · Chief Executive Officer · Kolkata, India
         </motion.p>
-
-        {/* quick enquiry — sends straight to WhatsApp */}
-        <div id="enquiry"><ContactForm /></div>
-
-        {/* direct contact details */}
-        <motion.div {...show(0.6)} className="mt-14 grid gap-4 sm:grid-cols-3 max-w-3xl mx-auto text-left">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-copper text-[11px] tracking-[0.25em] mb-2">VISIT US</p>
-            <p className="text-sm text-cream/85 leading-relaxed">{CONTACT.address}</p>
-          </div>
-          <a href={`tel:+${CONTACT.phoneRaw}`} className="group rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-jkred/50 hover:bg-white/10">
-            <p className="text-copper text-[11px] tracking-[0.25em] mb-2">CALL US</p>
-            <p className="text-sm text-cream/85 group-hover:text-white">{CONTACT.phone}</p>
-          </a>
-          <a href={`mailto:${CONTACT.email}`} className="group rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-jkred/50 hover:bg-white/10">
-            <p className="text-copper text-[11px] tracking-[0.25em] mb-2">EMAIL US</p>
-            <p className="text-sm text-cream/85 group-hover:text-white break-all">{CONTACT.email}</p>
-          </a>
-        </motion.div>
       </div>
 
       {/* footer bar */}
       <div className="relative z-10 border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-12 grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="mx-auto max-w-7xl px-6 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.1fr_1fr]">
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo-light.png" alt="JK Advertising — 50 Years" className="h-10 w-auto" />
@@ -211,6 +193,15 @@ export default function Footer() {
                   <a href={href} className="text-sm text-cream/60 hover:text-jkred transition">{label}</a>
                 </li>
               ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="font-display font-bold text-sm tracking-wide mb-4">Contact</p>
+            <ul className="space-y-2 text-sm text-cream/60">
+              <li className="leading-relaxed">{CONTACT.address}</li>
+              <li><a href={`tel:+${CONTACT.phoneRaw}`} className="hover:text-jkred transition">{CONTACT.phone}</a></li>
+              <li><a href={`mailto:${CONTACT.email}`} className="hover:text-jkred transition break-all">{CONTACT.email}</a></li>
             </ul>
           </div>
 
