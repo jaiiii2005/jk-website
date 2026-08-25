@@ -2,29 +2,53 @@
 
 import { useEffect, useRef, useState } from "react";
 import Reveal from "./Reveal";
-import Bokeh from "./Bokeh";
 
 // 111 client logos extracted from the creds deck.
 const LOGOS = Array.from({ length: 111 }, (_, i) => `/clients/client-${String(i + 1).padStart(2, "0")}.png`);
+const rnd = () => LOGOS[Math.floor(Math.random() * LOGOS.length)];
 
-function Chip({ src }) {
-  return (
-    <div className="shine group mx-2.5 flex h-20 w-40 shrink-0 items-center justify-center rounded-xl border border-ink/10 bg-white px-5 shadow-md shadow-jkblue/5 transition-all duration-300 hover:-translate-y-1.5 hover:scale-105 hover:shadow-xl hover:shadow-jkblue/15 hover:border-jkred/40">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt="Client" loading="lazy" className="max-h-12 max-w-full object-contain" />
-    </div>
-  );
-}
+// One card: a real 3D Y-axis flip that swaps its logo while edge-on, then keeps
+// cycling on its own randomized interval. Only flips while the wall is on-screen.
+function FlipCard({ seed, active }) {
+  // deterministic first faces (avoids hydration mismatch); randomize later, client-side
+  const [faces, setFaces] = useState(() => [LOGOS[(seed * 7) % LOGOS.length], LOGOS[(seed * 7 + 41) % LOGOS.length]]);
+  const [flipped, setFlipped] = useState(false);
 
-function Row({ items, reverse, duration, run }) {
-  const doubled = [...items, ...items]; // seamless loop
+  useEffect(() => {
+    if (!active) return;
+    let t;
+    const tick = () => {
+      setFlipped((f) => {
+        const next = !f;
+        // the face about to come into view gets a fresh logo (it's hidden now, so no pop)
+        setFaces((prev) => { const c = [...prev]; c[next ? 1 : 0] = rnd(); return c; });
+        return next;
+      });
+      t = setTimeout(tick, 2600 + Math.random() * 3600); // staggered, independent
+    };
+    t = setTimeout(tick, 700 + seed * 260 + Math.random() * 500);
+    return () => clearTimeout(t);
+  }, [active, seed]);
+
+  const face = "absolute inset-0 flex items-center justify-center rounded-2xl bg-white p-5 sm:p-7 shadow-xl shadow-black/20";
   return (
-    <div className="flex overflow-hidden py-1.5">
+    <div className="relative aspect-square" style={{ perspective: "1000px" }}>
       <div
-        className={`marquee ${reverse ? "marquee-rev" : ""}`}
-        style={{ animationDuration: `${duration}s`, animationPlayState: run ? "running" : "paused" }}
+        className="relative h-full w-full"
+        style={{
+          transformStyle: "preserve-3d",
+          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          transition: "transform 0.8s cubic-bezier(0.45,0,0.2,1)",
+        }}
       >
-        {doubled.map((src, i) => <Chip key={i} src={src} />)}
+        <div className={face} style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={faces[0]} alt="Client" loading="lazy" className="max-h-14 sm:max-h-16 max-w-full object-contain" />
+        </div>
+        <div className={face} style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={faces[1]} alt="Client" loading="lazy" className="max-h-14 sm:max-h-16 max-w-full object-contain" />
+        </div>
       </div>
     </div>
   );
@@ -32,57 +56,46 @@ function Row({ items, reverse, duration, run }) {
 
 export default function Clients() {
   const ref = useRef(null);
-  const [run, setRun] = useState(true);     // pause the marquee when off-screen
-  const [mobile, setMobile] = useState(false);
+  const [active, setActive] = useState(false);
 
   useEffect(() => {
-    setMobile(window.matchMedia("(max-width: 768px)").matches);
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setRun(e.isIntersecting), { rootMargin: "150px" });
+    const io = new IntersectionObserver(([e]) => setActive(e.isIntersecting), { rootMargin: "120px" });
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
-  // Far fewer logos per row on phones — 3×16 instead of 3×37 (halves the DOM/GPU load).
-  const per = mobile ? 16 : 37;
-  const rows = [LOGOS.slice(0, per), LOGOS.slice(per, per * 2), LOGOS.slice(per * 2, per * 3)];
-
   return (
-    <section id="clients" ref={ref} className="cv-auto relative overflow-hidden bg-cream text-ink">
-      {/* deep blue -> cream blend so it flows from Leadership */}
-      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-jkblue-deep to-cream -translate-y-px" />
-      <Bokeh tone="light" />
+    <section id="clients" ref={ref} className="cv-auto relative overflow-hidden bg-jkblue-deep text-cream">
+      {/* deep-blue blend from Leadership */}
+      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-cream to-jkblue-deep -translate-y-px" />
+      {/* subtle rotating rays (desktop only) */}
+      <div className="pointer-events-none absolute -right-1/3 top-1/2 hidden -translate-y-1/2 opacity-[0.05] md:block">
+        <div className="spin-slow h-[120vh] w-[120vh] rounded-full" style={{ background: "repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 11deg)" }} />
+      </div>
 
-      <div className="relative z-10 py-28 md:py-36">
-        <div className="mx-auto max-w-7xl px-6 text-center mb-14">
-          <Reveal><p className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-5">OUR PARTNERS</p></Reveal>
+      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-24 md:py-32 lg:grid-cols-2 lg:gap-16">
+        {/* left — heading */}
+        <div>
+          <Reveal><p className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-5">WHO WE WORK WITH</p></Reveal>
           <Reveal delay={0.05}>
-            <h2 className="font-display h-xl font-extrabold">
+            <h2 className="font-display font-extrabold" style={{ fontSize: "clamp(2.25rem,5vw,4.5rem)", lineHeight: 0.98, letterSpacing: "-0.02em" }}>
               Trusted by the <span className="text-grad">biggest brands.</span>
             </h2>
           </Reveal>
-          {/* on-brand animated gradient accent line */}
           <Reveal delay={0.1}>
-            <div className="mx-auto mt-6 h-1 w-40 rounded-full bg-[linear-gradient(90deg,#b5713f,#e11b2e,#211c84,#00a8d6,#b5713f)] bg-[length:200%_100%]"
-                 style={{ animation: "jkslide 3s linear infinite" }} />
-          </Reveal>
-          <Reveal delay={0.15}>
-            <p className="mt-6 max-w-xl mx-auto text-ink/60">
-              Five decades of campaigns for the names that shape the market.
+            <p className="mt-6 max-w-md text-cream/70 leading-relaxed">
+              Five decades of campaigns for the names that shape the market — from bold challengers to household giants.
             </p>
           </Reveal>
         </div>
 
-        {/* three flowing rows */}
-        <div className="relative flex flex-col gap-4">
-          <Row items={rows[0]} reverse={false} duration={70} run={run} />
-          <Row items={rows[1]} reverse={true} duration={58} run={run} />
-          <Row items={rows[2]} reverse={false} duration={82} run={run} />
-
-          {/* edge fades — brands emerge & vanish */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-cream to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-40 bg-gradient-to-l from-cream to-transparent" />
+        {/* right — 3×3 flip wall */}
+        <div className="grid grid-cols-3 gap-3 sm:gap-5">
+          {Array.from({ length: 9 }).map((_, i) => (
+            <FlipCard key={i} seed={i} active={active} />
+          ))}
         </div>
       </div>
     </section>
