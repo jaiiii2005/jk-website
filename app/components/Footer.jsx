@@ -5,8 +5,47 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import MagneticButton from "./MagneticButton";
 import ContactForm from "./ContactForm";
 
-// Dark billboard collage behind the CTA (real work photos, replaceable later).
-const BG_SHOTS = ["/work/w-audi.jpg", "/work-2.jpg", "/work/w-stylebaazar.jpg", "/work-3.jpg", "/work/w-idee.jpg", "/work-4.jpg"];
+// Replaceable billboard slots. Swap these paths for the real photos later
+// (e.g. "/images/billboards/bb-01.jpg") — the animation/layout stays the same.
+const SLOTS = [
+  "/work/w-audi.jpg",
+  "/work-2.jpg",
+  "/work/w-stylebaazar.jpg",
+  "/work-3.jpg",
+  "/work/w-idee.jpg",
+  "/work-4.jpg",
+];
+
+// Each billboard is an INDEPENDENT layer with its own scroll-driven motion
+// (different speeds/directions/scale/tilt) → layered parallax, not a flat collage.
+const LAYERS = [
+  { src: SLOTS[0], pos: "left-[1%] top-[6%] w-[34%] h-[40%]",            y: [-50, 55], x: [-18, 12], rot: [-2, 1], scale: [1.06, 1.14] },
+  { src: SLOTS[1], pos: "right-[2%] top-[3%] w-[30%] h-[34%]",           y: [40, -60], x: [12, -16], rot: [2, -1], scale: [1.12, 1.0], hideSm: true },
+  { src: SLOTS[2], pos: "left-[24%] top-[34%] w-[32%] h-[42%]",          y: [-80, 40], x: [6, -12],  rot: [-1, 2], scale: [1.02, 1.12] },
+  { src: SLOTS[3], pos: "right-[5%] bottom-[16%] w-[32%] h-[36%]",       y: [60, -40], x: [-22, 12], rot: [1, -2], scale: [1.1, 1.0], hideSm: true },
+  { src: SLOTS[4], pos: "left-[3%] bottom-[8%] w-[28%] h-[32%]",         y: [-36, 70], x: [-12, 22], rot: [-2, 1], scale: [1.05, 1.14] },
+  { src: SLOTS[5], pos: "right-[26%] top-[48%] w-[26%] h-[30%]",         y: [48, -48], x: [16, -16], rot: [2, 0],  scale: [1.0, 1.1], hideSm: true },
+];
+
+// One moving billboard layer — image drifts inside a clipped frame.
+function BillboardLayer({ progress, src, pos, y, x, rot, scale, hideSm }) {
+  const my = useTransform(progress, [0, 1], y);
+  const mx = useTransform(progress, [0, 1], x);
+  const rotate = useTransform(progress, [0, 1], rot);
+  const sc = useTransform(progress, [0, 1], scale);
+  return (
+    <motion.div
+      className={`absolute overflow-hidden rounded-xl ${pos} ${hideSm ? "hidden md:block" : ""}`}
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <motion.img src={src} alt="" style={{ y: my, x: mx, rotate, scale: sc }} className="h-full w-full object-cover will-change-transform" />
+    </motion.div>
+  );
+}
 
 const LINKS = [
   ["About", "#about"], ["Services", "#services"], ["Innovation", "#innovation"],
@@ -51,7 +90,6 @@ export default function Footer() {
   const ctaRef = useRef(null);
   const inView = useInView(ctaRef, { once: true, amount: 0.25 });
   const { scrollYProgress } = useScroll({ target: footRef, offset: ["start end", "end start"] });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);   // slow background parallax
   const show = (d) => ({
     initial: { opacity: 0, y: 30 },
     animate: inView ? { opacity: 1, y: 0 } : {},
@@ -62,15 +100,14 @@ export default function Footer() {
     <footer ref={footRef} id="contact" className="relative overflow-hidden bg-jkblue-deep text-cream">
       <div className="absolute top-0 inset-x-0 z-20 h-40 bg-gradient-to-b from-cream to-jkblue-deep -translate-y-px" />
 
-      {/* dark billboard collage background (parallax) */}
-      <motion.div aria-hidden style={{ y: bgY }} className="pointer-events-none absolute inset-0 grid grid-cols-2 sm:grid-cols-3 scale-125">
-        {BG_SHOTS.map((src, i) => (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img key={i} src={src} alt="" className="h-full w-full object-cover" />
+      {/* individually-animated billboard layers (parallax, not a flat collage) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        {LAYERS.map((l, i) => (
+          <BillboardLayer key={i} progress={scrollYProgress} {...l} />
         ))}
-      </motion.div>
-      <div className="pointer-events-none absolute inset-0 bg-jkblue-deep/82" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-jkblue-deep/60 via-jkblue-deep/80 to-jkblue-deep" />
+      </div>
+      <div className="pointer-events-none absolute inset-0 bg-jkblue-deep/80" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-jkblue-deep/55 via-jkblue-deep/78 to-jkblue-deep" />
 
       {/* CTA */}
       <div ref={ctaRef} className="relative z-10 mx-auto max-w-7xl px-6 pt-28 md:pt-40 pb-20 text-center">
