@@ -1,60 +1,44 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 
 // 111 client logos extracted from the creds deck.
 const LOGOS = Array.from({ length: 111 }, (_, i) => `/clients/client-${String(i + 1).padStart(2, "0")}.png`);
 const rnd = () => LOGOS[Math.floor(Math.random() * LOGOS.length)];
 
-// One card: real 3D Y-axis flip that swaps its logo while edge-on, lifts/pops
-// during the flip, cycles on its own randomized timer, and flips on hover too.
+// One card: a real 3D Y-axis flip that swaps its logo while edge-on, then keeps
+// cycling on its own randomized interval. Only flips while the wall is on-screen.
 function FlipCard({ seed, active }) {
+  // deterministic first faces (avoids hydration mismatch); randomize later, client-side
   const [faces, setFaces] = useState(() => [LOGOS[(seed * 7) % LOGOS.length], LOGOS[(seed * 7 + 41) % LOGOS.length]]);
   const [flipped, setFlipped] = useState(false);
-  const [lift, setLift] = useState(false);
-  const liftT = useRef(null);
-
-  const doFlip = () => {
-    setFlipped((f) => {
-      const next = !f;
-      setFaces((prev) => { const c = [...prev]; c[next ? 1 : 0] = rnd(); return c; }); // hidden face gets a fresh logo
-      return next;
-    });
-    setLift(true);
-    clearTimeout(liftT.current);
-    liftT.current = setTimeout(() => setLift(false), 820);
-  };
 
   useEffect(() => {
     if (!active) return;
     let t;
-    const tick = () => { doFlip(); t = setTimeout(tick, 2800 + Math.random() * 3600); };
+    const tick = () => {
+      setFlipped((f) => {
+        const next = !f;
+        // the face about to come into view gets a fresh logo (it's hidden now, so no pop)
+        setFaces((prev) => { const c = [...prev]; c[next ? 1 : 0] = rnd(); return c; });
+        return next;
+      });
+      t = setTimeout(tick, 2600 + Math.random() * 3600); // staggered, independent
+    };
     t = setTimeout(tick, 700 + seed * 260 + Math.random() * 500);
     return () => clearTimeout(t);
   }, [active, seed]);
 
-  useEffect(() => () => clearTimeout(liftT.current), []);
-
-  const face = "shine absolute inset-0 flex items-center justify-center rounded-2xl bg-white p-5 sm:p-7";
+  const face = "absolute inset-0 flex items-center justify-center rounded-2xl bg-white p-5 sm:p-7 shadow-xl shadow-black/20";
   return (
-    <motion.div
-      className="relative aspect-square"
-      style={{ perspective: "1100px" }}
-      initial={{ opacity: 0, scale: 0.82, y: 24 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.55, delay: seed * 0.06, ease: [0.22, 1, 0.36, 1] }}
-      onMouseEnter={() => active && doFlip()}
-    >
+    <div className="relative aspect-square" style={{ perspective: "1000px" }}>
       <div
-        className="relative h-full w-full rounded-2xl"
+        className="relative h-full w-full"
         style={{
           transformStyle: "preserve-3d",
-          transform: `${flipped ? "rotateY(180deg)" : "rotateY(0deg)"} scale(${lift ? 1.07 : 1})`,
-          transition: "transform 0.82s cubic-bezier(0.45,0,0.2,1)",
-          boxShadow: lift ? "0 34px 70px rgba(0,0,0,0.45)" : "0 12px 30px rgba(0,0,0,0.25)",
+          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          transition: "transform 0.8s cubic-bezier(0.45,0,0.2,1)",
         }}
       >
         <div className={face} style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
@@ -66,7 +50,7 @@ function FlipCard({ seed, active }) {
           <img src={faces[1]} alt="Client" loading="lazy" className="max-h-14 sm:max-h-16 max-w-full object-contain" />
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
