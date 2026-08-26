@@ -12,8 +12,7 @@ const W = [
 export default function HomeWorkStrip() {
   return (
     <section className="relative bg-jkblue-deep text-cream overflow-hidden">
-      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-cream to-jkblue-deep -translate-y-px" />
-      <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:py-32">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 py-28 md:py-40">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12">
           <div>
             <Reveal><p className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-4">OUR WORK</p></Reveal>

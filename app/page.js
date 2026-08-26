@@ -22,9 +22,8 @@ export default function Home() {
       <Clients />
 
       {/* Contact CTA */}
-      <section className="relative bg-cream text-ink overflow-hidden">
-        <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-jkblue-deep to-cream -translate-y-px" />
-        <div className="relative z-10 mx-auto max-w-3xl px-6 py-24 md:py-32 text-center">
+      <section className="bg-cream text-ink">
+        <div className="mx-auto max-w-3xl px-6 py-28 md:py-40 text-center">
           <Reveal>
             <h2 className="font-display font-extrabold" style={{ fontSize: "clamp(2.25rem,6vw,4.5rem)", letterSpacing: "-0.02em" }}>
               Ready to <span className="text-grad">be seen?</span>

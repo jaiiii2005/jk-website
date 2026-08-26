@@ -30,7 +30,7 @@ function FlipCard({ seed, active }) {
     return () => clearTimeout(t);
   }, [active, seed]);
 
-  const face = "absolute inset-0 flex items-center justify-center rounded-2xl bg-white p-5 sm:p-7 shadow-xl shadow-black/20";
+  const face = "absolute inset-0 flex items-center justify-center rounded-2xl bg-white p-5 sm:p-7 border border-ink/10 shadow-lg shadow-jkblue/10";
   return (
     <div className="relative aspect-square" style={{ perspective: "1000px" }}>
       <div
@@ -67,13 +67,13 @@ export default function Clients() {
   }, []);
 
   return (
-    <section id="clients" ref={ref} className="cv-auto relative overflow-hidden bg-jkblue-deep text-cream">
+    <section id="clients" ref={ref} className="cv-auto relative overflow-hidden bg-cream text-ink">
       {/* subtle rotating rays (desktop only) */}
-      <div className="pointer-events-none absolute -right-1/3 top-1/2 hidden -translate-y-1/2 opacity-[0.05] md:block">
-        <div className="spin-slow h-[120vh] w-[120vh] rounded-full" style={{ background: "repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 11deg)" }} />
+      <div className="pointer-events-none absolute -right-1/3 top-1/2 hidden -translate-y-1/2 opacity-[0.04] md:block">
+        <div className="spin-slow h-[120vh] w-[120vh] rounded-full" style={{ background: "repeating-conic-gradient(#211c84 0deg 5deg, transparent 5deg 11deg)" }} />
       </div>
 
-      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-24 md:py-32 lg:grid-cols-2 lg:gap-16">
+      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-28 md:py-40 lg:grid-cols-2 lg:gap-16">
         {/* left — heading */}
         <div>
           <Reveal><p className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-5">WHO WE WORK WITH</p></Reveal>
@@ -83,7 +83,7 @@ export default function Clients() {
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-6 max-w-md text-cream/70 leading-relaxed">
+            <p className="mt-6 max-w-md text-ink/60 leading-relaxed">
               Five decades of campaigns for the names that shape the market — from bold challengers to household giants.
             </p>
           </Reveal>

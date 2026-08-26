@@ -14,9 +14,8 @@ const SOL = [
 
 export default function HomeSolutions() {
   return (
-    <section className="relative bg-cream text-ink overflow-hidden">
-      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-jkblue-deep to-cream -translate-y-px" />
-      <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:py-32">
+    <section className="relative bg-white text-ink overflow-hidden">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 py-28 md:py-40">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12">
           <div>
             <Reveal><p className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-4">WHAT WE DO</p></Reveal>
