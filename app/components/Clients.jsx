@@ -68,8 +68,6 @@ export default function Clients() {
 
   return (
     <section id="clients" ref={ref} className="cv-auto relative overflow-hidden bg-jkblue-deep text-cream">
-      {/* deep-blue blend from Leadership */}
-      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-cream to-jkblue-deep -translate-y-px" />
       {/* subtle rotating rays (desktop only) */}
       <div className="pointer-events-none absolute -right-1/3 top-1/2 hidden -translate-y-1/2 opacity-[0.05] md:block">
         <div className="spin-slow h-[120vh] w-[120vh] rounded-full" style={{ background: "repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 11deg)" }} />
