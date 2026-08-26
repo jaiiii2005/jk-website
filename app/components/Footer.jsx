@@ -3,15 +3,13 @@
 import { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 
-// Replaceable billboard slots. Swap these paths for the real photos later
-// (e.g. "/images/billboards/bb-01.jpg") — the animation/layout stays the same.
+// Replaceable billboard slots. To use your own photos, just OVERWRITE these 4
+// files in public/images/billboards/ (same names) — no code change needed.
 const SLOTS = [
-  "/work/w-audi.jpg",
-  "/work-2.jpg",
-  "/work/w-stylebaazar.jpg",
-  "/work-3.jpg",
-  "/work/w-idee.jpg",
-  "/work-4.jpg",
+  "/images/billboards/bb-01.jpg",
+  "/images/billboards/bb-02.jpg",
+  "/images/billboards/bb-03.jpg",
+  "/images/billboards/bb-04.jpg",
 ];
 
 // Each billboard is an INDEPENDENT layer. TWO levels of scroll motion:
@@ -20,12 +18,14 @@ const SLOTS = [
 // Every layer has its own speed/direction (parallax depth). Values are large on
 // purpose so the movement is clearly visible while scrolling.
 const LAYERS = [
-  { src: SLOTS[0], pos: "left-[1%] top-[3%] w-[34%] h-[42%]",      fy: [110, -170], fx: [-26, 20], frot: [-2.5, 1.5], iy: [40, -40], iscale: [1.14, 1.24] },
-  { src: SLOTS[1], pos: "right-[1%] top-[1%] w-[30%] h-[36%]",     fy: [-80, 150],  fx: [18, -28], frot: [2.5, -1],   iy: [-30, 55], iscale: [1.2, 1.06], hideSm: true },
-  { src: SLOTS[2], pos: "left-[20%] top-[30%] w-[33%] h-[46%]",    fy: [160, -120], fx: [12, -18], frot: [-1.5, 2.5], iy: [55, -35], iscale: [1.06, 1.22] },
-  { src: SLOTS[3], pos: "right-[3%] bottom-[8%] w-[33%] h-[40%]",  fy: [-130, 100], fx: [-30, 18], frot: [1.5, -2.5], iy: [-45, 45], iscale: [1.22, 1.08], hideSm: true },
-  { src: SLOTS[4], pos: "left-[2%] bottom-[3%] w-[28%] h-[34%]",   fy: [90, -140],  fx: [-16, 28], frot: [-2, 1],     iy: [35, -55], iscale: [1.1, 1.24] },
-  { src: SLOTS[5], pos: "right-[22%] top-[46%] w-[26%] h-[32%]",   fy: [-100, 130], fx: [22, -22], frot: [2, 0],      iy: [-55, 35], iscale: [1.16, 1.04], hideSm: true },
+  // top-left → drifts strongly UP
+  { src: SLOTS[0], pos: "left-[2%] top-[5%] w-[32%] h-[40%]",     fy: [150, -200], fx: [-22, 14], frot: [-3, 1],  iy: [45, -45], iscale: [1.14, 1.24] },
+  // top-right → drifts DOWN
+  { src: SLOTS[1], pos: "right-[2%] top-[3%] w-[30%] h-[38%]",    fy: [-140, 190], fx: [22, -22], frot: [3, -1],  iy: [-40, 55], iscale: [1.22, 1.08], hideSm: true },
+  // bottom-left → diagonal UP-right
+  { src: SLOTS[2], pos: "left-[3%] bottom-[6%] w-[30%] h-[38%]",  fy: [120, -180], fx: [-16, 32], frot: [-2, 2],  iy: [40, -55], iscale: [1.1, 1.24] },
+  // bottom-right → diagonal DOWN-left
+  { src: SLOTS[3], pos: "right-[3%] bottom-[5%] w-[32%] h-[40%]", fy: [-160, 140], fx: [26, -18], frot: [2, -2],  iy: [-50, 45], iscale: [1.24, 1.1], hideSm: true },
 ];
 
 // One moving billboard layer — frame drifts + image moves inside the clipped frame.
