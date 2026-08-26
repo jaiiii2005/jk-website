@@ -14,33 +14,39 @@ const SLOTS = [
   "/work-4.jpg",
 ];
 
-// Each billboard is an INDEPENDENT layer with its own scroll-driven motion
-// (different speeds/directions/scale/tilt) → layered parallax, not a flat collage.
+// Each billboard is an INDEPENDENT layer. TWO levels of scroll motion:
+//   • the FRAME drifts through the page (fy/fx/frot)
+//   • the IMAGE also moves inside its clipped frame (iy/iscale) — a reveal
+// Every layer has its own speed/direction (parallax depth). Values are large on
+// purpose so the movement is clearly visible while scrolling.
 const LAYERS = [
-  { src: SLOTS[0], pos: "left-[1%] top-[6%] w-[34%] h-[40%]",            y: [-50, 55], x: [-18, 12], rot: [-2, 1], scale: [1.06, 1.14] },
-  { src: SLOTS[1], pos: "right-[2%] top-[3%] w-[30%] h-[34%]",           y: [40, -60], x: [12, -16], rot: [2, -1], scale: [1.12, 1.0], hideSm: true },
-  { src: SLOTS[2], pos: "left-[24%] top-[34%] w-[32%] h-[42%]",          y: [-80, 40], x: [6, -12],  rot: [-1, 2], scale: [1.02, 1.12] },
-  { src: SLOTS[3], pos: "right-[5%] bottom-[16%] w-[32%] h-[36%]",       y: [60, -40], x: [-22, 12], rot: [1, -2], scale: [1.1, 1.0], hideSm: true },
-  { src: SLOTS[4], pos: "left-[3%] bottom-[8%] w-[28%] h-[32%]",         y: [-36, 70], x: [-12, 22], rot: [-2, 1], scale: [1.05, 1.14] },
-  { src: SLOTS[5], pos: "right-[26%] top-[48%] w-[26%] h-[30%]",         y: [48, -48], x: [16, -16], rot: [2, 0],  scale: [1.0, 1.1], hideSm: true },
+  { src: SLOTS[0], pos: "left-[1%] top-[3%] w-[34%] h-[42%]",      fy: [110, -170], fx: [-26, 20], frot: [-2.5, 1.5], iy: [40, -40], iscale: [1.14, 1.24] },
+  { src: SLOTS[1], pos: "right-[1%] top-[1%] w-[30%] h-[36%]",     fy: [-80, 150],  fx: [18, -28], frot: [2.5, -1],   iy: [-30, 55], iscale: [1.2, 1.06], hideSm: true },
+  { src: SLOTS[2], pos: "left-[20%] top-[30%] w-[33%] h-[46%]",    fy: [160, -120], fx: [12, -18], frot: [-1.5, 2.5], iy: [55, -35], iscale: [1.06, 1.22] },
+  { src: SLOTS[3], pos: "right-[3%] bottom-[8%] w-[33%] h-[40%]",  fy: [-130, 100], fx: [-30, 18], frot: [1.5, -2.5], iy: [-45, 45], iscale: [1.22, 1.08], hideSm: true },
+  { src: SLOTS[4], pos: "left-[2%] bottom-[3%] w-[28%] h-[34%]",   fy: [90, -140],  fx: [-16, 28], frot: [-2, 1],     iy: [35, -55], iscale: [1.1, 1.24] },
+  { src: SLOTS[5], pos: "right-[22%] top-[46%] w-[26%] h-[32%]",   fy: [-100, 130], fx: [22, -22], frot: [2, 0],      iy: [-55, 35], iscale: [1.16, 1.04], hideSm: true },
 ];
 
-// One moving billboard layer — image drifts inside a clipped frame.
-function BillboardLayer({ progress, src, pos, y, x, rot, scale, hideSm }) {
-  const my = useTransform(progress, [0, 1], y);
-  const mx = useTransform(progress, [0, 1], x);
-  const rotate = useTransform(progress, [0, 1], rot);
-  const sc = useTransform(progress, [0, 1], scale);
+// One moving billboard layer — frame drifts + image moves inside the clipped frame.
+function BillboardLayer({ progress, src, pos, fy, fx, frot, iy, iscale, hideSm }) {
+  const frameY = useTransform(progress, [0, 1], fy);
+  const frameX = useTransform(progress, [0, 1], fx);
+  const frameR = useTransform(progress, [0, 1], frot);
+  const imgY = useTransform(progress, [0, 1], iy);
+  const imgS = useTransform(progress, [0, 1], iscale);
   return (
     <motion.div
-      className={`absolute overflow-hidden rounded-xl ${pos} ${hideSm ? "hidden md:block" : ""}`}
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+      className={`absolute overflow-hidden rounded-xl shadow-2xl shadow-black/50 ${pos} ${hideSm ? "hidden md:block" : ""}`}
+      style={{ y: frameY, x: frameX, rotate: frameR }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 1 }}
     >
+      {/* image is taller than the frame so it reveals different parts as it moves */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <motion.img src={src} alt="" style={{ y: my, x: mx, rotate, scale: sc }} className="h-full w-full object-cover will-change-transform" />
+      <motion.img src={src} alt="" style={{ y: imgY, scale: imgS }} className="absolute left-0 top-[-18%] h-[136%] w-full object-cover will-change-transform" />
     </motion.div>
   );
 }
@@ -105,7 +111,7 @@ export default function Footer() {
           <BillboardLayer key={i} progress={scrollYProgress} {...l} />
         ))}
       </div>
-      <div className="pointer-events-none absolute inset-0 bg-jkblue-deep/68" />
+      <div className="pointer-events-none absolute inset-0 bg-jkblue-deep/58" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-jkblue-deep/40 via-jkblue-deep/70 to-jkblue-deep" />
 
       {/* CTA */}
