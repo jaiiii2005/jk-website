@@ -135,6 +135,15 @@ html { scroll-behavior: smooth; }
 .caret { display: inline-block; width: 2px; margin-left: 3px; background: currentColor; animation: blink 1s step-end infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
+/* continuous billboard float — keeps the footer billboards drifting when idle */
+.bbfloat { animation-name: bbfloat; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+@keyframes bbfloat {
+  0%   { transform: translate3d(-2%, 2%, 0) scale(1.14); }
+  50%  { transform: translate3d(3%, -4%, 0) scale(1.2); }
+  100% { transform: translate3d(-2%, 2%, 0) scale(1.14); }
+}
+@media (prefers-reduced-motion: reduce) { .bbfloat { animation: none; } }
+
 /* flowing gradient text */
 .grad-flow {
   background: linear-gradient(90deg, #b5713f, #e11b2e, #211c84, #00a8d6, #b5713f);

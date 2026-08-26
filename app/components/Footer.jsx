@@ -18,23 +18,19 @@ const SLOTS = [
 // Every layer has its own speed/direction (parallax depth). Values are large on
 // purpose so the movement is clearly visible while scrolling.
 const LAYERS = [
-  // top-left → drifts strongly UP
-  { src: SLOTS[0], pos: "left-[2%] top-[5%] w-[32%] h-[40%]",     fy: [150, -200], fx: [-22, 14], frot: [-3, 1],  iy: [45, -45], iscale: [1.14, 1.24] },
-  // top-right → drifts DOWN
-  { src: SLOTS[1], pos: "right-[2%] top-[3%] w-[30%] h-[38%]",    fy: [-140, 190], fx: [22, -22], frot: [3, -1],  iy: [-40, 55], iscale: [1.22, 1.08], hideSm: true },
-  // bottom-left → diagonal UP-right
-  { src: SLOTS[2], pos: "left-[3%] bottom-[6%] w-[30%] h-[38%]",  fy: [120, -180], fx: [-16, 32], frot: [-2, 2],  iy: [40, -55], iscale: [1.1, 1.24] },
-  // bottom-right → diagonal DOWN-left
-  { src: SLOTS[3], pos: "right-[3%] bottom-[5%] w-[32%] h-[40%]", fy: [-160, 140], fx: [26, -18], frot: [2, -2],  iy: [-50, 45], iscale: [1.24, 1.1], hideSm: true },
+  // frame drifts with scroll (fy/fx/frot) + image floats continuously (fdur/rev)
+  { src: SLOTS[0], pos: "left-[2%] top-[5%] w-[32%] h-[40%]",     fy: [150, -200], fx: [-22, 14], frot: [-3, 1], fdur: 12, fdelay: 0,   rev: false },
+  { src: SLOTS[1], pos: "right-[2%] top-[3%] w-[30%] h-[38%]",    fy: [-140, 190], fx: [22, -22], frot: [3, -1], fdur: 15, fdelay: 1.4, rev: true, hideSm: true },
+  { src: SLOTS[2], pos: "left-[3%] bottom-[6%] w-[30%] h-[38%]",  fy: [120, -180], fx: [-16, 32], frot: [-2, 2], fdur: 11, fdelay: 0.8, rev: false },
+  { src: SLOTS[3], pos: "right-[3%] bottom-[5%] w-[32%] h-[40%]", fy: [-160, 140], fx: [26, -18], frot: [2, -2], fdur: 14, fdelay: 2.2, rev: true, hideSm: true },
 ];
 
-// One moving billboard layer — frame drifts + image moves inside the clipped frame.
-function BillboardLayer({ progress, src, pos, fy, fx, frot, iy, iscale, hideSm }) {
+// One billboard layer — the FRAME drifts with scroll (parallax) AND the IMAGE
+// floats continuously inside its clipped frame (keeps moving when scroll stops).
+function BillboardLayer({ progress, src, pos, fy, fx, frot, fdur, fdelay, rev, hideSm }) {
   const frameY = useTransform(progress, [0, 1], fy);
   const frameX = useTransform(progress, [0, 1], fx);
   const frameR = useTransform(progress, [0, 1], frot);
-  const imgY = useTransform(progress, [0, 1], iy);
-  const imgS = useTransform(progress, [0, 1], iscale);
   return (
     <motion.div
       className={`absolute overflow-hidden rounded-xl shadow-2xl shadow-black/50 ${pos} ${hideSm ? "hidden md:block" : ""}`}
@@ -44,9 +40,14 @@ function BillboardLayer({ progress, src, pos, fy, fx, frot, iy, iscale, hideSm }
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 1 }}
     >
-      {/* image is taller than the frame so it reveals different parts as it moves */}
+      {/* oversized image floats continuously inside the clipped frame */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <motion.img src={src} alt="" style={{ y: imgY, scale: imgS }} className="absolute left-0 top-[-18%] h-[136%] w-full object-cover will-change-transform" />
+      <img
+        src={src}
+        alt=""
+        className="bbfloat absolute left-[-10%] top-[-18%] h-[136%] w-[120%] object-cover will-change-transform"
+        style={{ animationDuration: `${fdur}s`, animationDelay: `${fdelay}s`, animationDirection: rev ? "reverse" : "normal" }}
+      />
     </motion.div>
   );
 }
