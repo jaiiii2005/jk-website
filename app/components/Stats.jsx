@@ -56,7 +56,7 @@ function Stat({ to, suffix, label }) {
 
 export default function Stats() {
   return (
-    <section id="stats" className="relative bg-[#f3eee2] text-ink">
+    <section id="stats" className="relative bg-white text-ink">
       <div className="mx-auto max-w-7xl px-6 py-24 md:py-36">
         <motion.p
           initial={{ opacity: 0, y: 16 }}

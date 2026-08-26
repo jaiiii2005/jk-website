@@ -49,11 +49,19 @@ html.lenis, html.lenis body { height: auto; }
 .h-mega { font-size: clamp(2.5rem, 8vw, 7rem); line-height: 0.95; letter-spacing: -0.02em; }
 .h-xl   { font-size: clamp(2rem, 5vw, 4rem);   line-height: 1.02; letter-spacing: -0.02em; }
 
-/* Gradient text (copper -> red -> blue, like the 50 logo) */
+/* Premium brand gradient text (copper -> red -> magenta -> violet -> indigo) */
 .text-grad {
-  background: linear-gradient(100deg, var(--color-copper), var(--color-jkred) 45%, var(--color-jkblue));
+  background: linear-gradient(100deg, #c8763f, #e11b2e 34%, #ff2d6b 56%, #7b2ff7 78%, #211c84);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
+
+/* Living premium gradient PANEL (for the bold Solutions block) — slowly shifts */
+.grad-panel {
+  background: linear-gradient(120deg, #ff3d5a, #e11b2e 22%, #b5153f 44%, #7b1d63 64%, #3a1f8c 84%, #e11b2e);
+  background-size: 300% 300%;
+  animation: jkgrad 20s ease infinite;
+}
+@media (prefers-reduced-motion: reduce) { .grad-panel { animation: none; } }
 
 /* Vignette for dark hero */
 .vignette::after {

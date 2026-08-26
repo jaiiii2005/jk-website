@@ -22,7 +22,7 @@ export default function Home() {
       <Clients />
 
       {/* Contact CTA */}
-      <section className="bg-cream text-ink">
+      <section className="bg-white text-ink">
         <div className="mx-auto max-w-3xl px-6 py-28 md:py-40 text-center">
           <Reveal>
             <h2 className="font-display font-extrabold" style={{ fontSize: "clamp(2.25rem,6vw,4.5rem)", letterSpacing: "-0.02em" }}>
