@@ -33,21 +33,27 @@ function BillboardLayer({ progress, src, pos, fy, fx, frot, fdur, fdelay, rev, h
   const frameR = useTransform(progress, [0, 1], frot);
   return (
     <motion.div
-      className={`absolute overflow-hidden rounded-xl shadow-2xl shadow-black/50 ${pos} ${hideSm ? "hidden md:block" : ""}`}
+      className={`absolute ${pos} ${hideSm ? "hidden md:block" : ""}`}
       style={{ y: frameY, x: frameX, rotate: frameR }}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 1 }}
     >
-      {/* oversized image floats continuously inside the clipped frame */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt=""
-        className="bbfloat absolute left-[-10%] top-[-18%] h-[136%] w-[120%] object-cover will-change-transform"
-        style={{ animationDuration: `${fdur}s`, animationDelay: `${fdelay}s`, animationDirection: rev ? "reverse" : "normal" }}
-      />
+      {/* the FRAME floats continuously (drift + tilt) */}
+      <div
+        className="ffloat relative h-full w-full overflow-hidden rounded-xl shadow-2xl shadow-black/50 will-change-transform"
+        style={{ animationDuration: `${fdur * 1.35}s`, animationDelay: `${fdelay}s`, animationDirection: rev ? "reverse" : "normal" }}
+      >
+        {/* the IMAGE zooms/floats continuously inside the clipped frame */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={src}
+          alt=""
+          className="bbfloat absolute left-[-10%] top-[-18%] h-[136%] w-[120%] object-cover will-change-transform"
+          style={{ animationDuration: `${fdur}s`, animationDelay: `${fdelay}s`, animationDirection: rev ? "normal" : "reverse" }}
+        />
+      </div>
     </motion.div>
   );
 }

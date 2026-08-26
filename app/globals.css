@@ -144,6 +144,15 @@ html { scroll-behavior: smooth; }
 }
 @media (prefers-reduced-motion: reduce) { .bbfloat { animation: none; } }
 
+/* continuous FRAME float — the whole billboard card drifts + tilts when idle */
+.ffloat { animation-name: ffloat; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+@keyframes ffloat {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  50%  { transform: translate(2%, -3.5%) rotate(1.6deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce) { .ffloat { animation: none; } }
+
 /* flowing gradient text */
 .grad-flow {
   background: linear-gradient(90deg, #b5713f, #e11b2e, #211c84, #00a8d6, #b5713f);
