@@ -3,6 +3,8 @@ import "./globals.css";
 import SmoothScroll from "./components/SmoothScroll";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ScrollProgress from "./components/ScrollProgress";
+import Nav from "./components/Nav";
+import SiteFooter from "./components/SiteFooter";
 
 const sora = Sora({
   variable: "--font-sora",
@@ -45,7 +47,9 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${sora.variable} ${inter.variable}`}>
       <body>
         <ScrollProgress />
+        <Nav />
         <SmoothScroll>{children}</SmoothScroll>
+        <SiteFooter />
         <WhatsAppButton />
       </body>
     </html>
