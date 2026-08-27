@@ -4,6 +4,7 @@ import SmoothScroll from "./components/SmoothScroll";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ScrollProgress from "./components/ScrollProgress";
 import Nav from "./components/Nav";
+import ConnectFinale from "./components/ConnectFinale";
 import SiteFooter from "./components/SiteFooter";
 
 const sora = Sora({
@@ -49,6 +50,7 @@ export default function RootLayout({ children }) {
         <ScrollProgress />
         <Nav />
         <SmoothScroll>{children}</SmoothScroll>
+        <ConnectFinale />
         <SiteFooter />
         <WhatsAppButton />
       </body>
