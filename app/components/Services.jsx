@@ -1,205 +1,75 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useMotionValue, useSpring, useTransform, useMotionValueEvent } from "framer-motion";
+import Link from "next/link";
 import Reveal from "./Reveal";
 
-// Cursor-gated kinetic service switcher: hover the text and the wheel drives the
-// diagonal typography (page stays put); move off and the page scrolls normally.
-// At the ends of the list the wheel is released so you never get trapped.
+const svg = (children) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+    {children}
+  </svg>
+);
+
 const SERVICES = [
-  { tag: "OUTDOOR", name: "Outdoor Hoardings", desc: "Landmark hoardings & billboards across the East." },
-  { tag: "DIGITAL", name: "Digital OOH", desc: "LED & programmatic screens at prime junctions." },
-  { tag: "UNIPOLE", name: "Unipoles", desc: "High-rise landmark unipoles that own the skyline." },
-  { tag: "TRANSIT", name: "Transit & Airport", desc: "Media that moves with the crowd — metro, transit & airport." },
-  { tag: "RETAIL", name: "In-shop Branding", desc: "Point-of-sale visibility, right where buying happens." },
-  { tag: "RURAL", name: "Rural Promotions", desc: "Reaching audiences far beyond the metros." },
-  { tag: "INNOVATION", name: "Innovations", desc: "OOH firsts — like a live radio studio inside a billboard." },
+  { name: "Outdoor Hoardings", desc: "Landmark hoardings & billboards at high-impact sites across the East.", icon: svg(<><rect x="2.5" y="4" width="19" height="11" rx="1.5" /><path d="M7 15v6M17 15v6M4.5 21h5M14.5 21h5M6 8h12" /></>) },
+  { name: "Digital OOH", desc: "LED screens & programmatic digital displays at prime junctions.", icon: svg(<><rect x="2.5" y="4.5" width="19" height="12" rx="1.5" /><path d="M9 20h6M12 16.5V20M7.5 11l2.5 2 2-3 2 2.5 2.5-3.5" /></>) },
+  { name: "Unipoles", desc: "High-rise landmark unipoles that own the skyline at key crossings.", icon: svg(<><rect x="5" y="3" width="14" height="7.5" rx="1" /><path d="M12 10.5V21M8.5 21h7M8 6.5h8" /></>) },
+  { name: "Transit & Airport", desc: "Metro, transit and airport media that moves with the crowd.", icon: svg(<><rect x="4" y="4" width="12" height="12" rx="2" /><path d="M3 16h14M6 20v-1M14 20v-1M6.5 8h7" /><path d="M17 9l4 1.5v2l-4-.5" /></>) },
+  { name: "In-shop Branding", desc: "Point-of-sale visibility, right where the buying happens.", icon: svg(<><path d="M4 9.5V20h16V9.5" /><path d="M3 9.5 5 4.5h14l2 5" /><path d="M3 9.5a2.6 2.6 0 0 0 5.2 0 2.6 2.6 0 0 0 5.2 0 2.6 2.6 0 0 0 5.2 0" /><path d="M10 20v-5h4v5" /></>) },
+  { name: "Corporate Events", desc: "Launches & activations that make noise, end to end.", icon: svg(<><rect x="9" y="3" width="6" height="10" rx="3" /><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6" /></>) },
+  { name: "Rural Promotions", desc: "Reaching audiences far beyond the metros.", icon: svg(<><path d="M2.5 7h10v7.5h-10z" /><path d="M12.5 9.5h4l3 3v2h-7z" /><circle cx="7" cy="17" r="1.8" /><circle cx="16.5" cy="17" r="1.8" /></>) },
+  { name: "Printing", desc: "High-quality large-format production — all in-house.", icon: svg(<><path d="M7 8.5V3.5h10v5" /><rect x="4" y="8.5" width="16" height="7.5" rx="1.5" /><path d="M7 13.5h10V21H7z" /></>) },
+  { name: "Digital Wall Painting", desc: "Hand-crafted wall media, delivered at scale.", icon: svg(<><rect x="3" y="5" width="12" height="5" rx="1.5" /><path d="M15 7.5h3.5A1.5 1.5 0 0 1 20 9v1a1.5 1.5 0 0 1-1.5 1.5H12" /><path d="M10.5 12.5h3v3a1.5 1.5 0 0 1-3 0z" /><path d="M12 18.5V21" /></>) },
+  { name: "Innovations", desc: "First-of-its-kind OOH — like a live radio studio inside a billboard.", icon: svg(<><path d="M9.5 18h5M10.5 21h3" /><path d="M12 3a6 6 0 0 0-3.8 10.7c.6.5 1 1.2 1.1 2h5.4c.1-.8.5-1.5 1.1-2A6 6 0 0 0 12 3z" /></>) },
 ];
 
-const ITEM = 96;
-const N = SERVICES.length;
-const SENS = 0.0011; // wheel sensitivity
-
-const GRAD = {
-  fontSize: "clamp(2.25rem,4.5vw,4.25rem)",
-  letterSpacing: "-0.02em",
-  backgroundImage: "linear-gradient(90deg,#ffffff,#ffd9a8,#00a8d6,#5b52ff,#ffd9a8,#ffffff)",
-  backgroundSize: "220% 100%",
-  WebkitBackgroundClip: "text",
-  backgroundClip: "text",
-  color: "transparent",
-  animation: "jkslide 3.2s linear infinite",
-};
-const OUTLINE = {
-  fontSize: "clamp(2.25rem,4.5vw,4.25rem)",
-  letterSpacing: "-0.02em",
-  color: "transparent",
-  WebkitTextStroke: "1.4px rgba(246,239,223,0.5)",
-};
-
-function ServiceLine({ progress, i, total, name, active }) {
-  const center = (total - 1) / 2;
-  const lineX = useTransform(progress, [0, 1], [(i - center) * 34, -(i - center) * 34]);
-  return (
-    <motion.div className="flex items-center" style={{ height: ITEM, x: lineX }}>
-      <span className="font-display font-extrabold uppercase whitespace-nowrap leading-none pl-6" style={active ? GRAD : OUTLINE}>
-        {name}
-      </span>
-    </motion.div>
-  );
-}
-
 export default function Services() {
-  const wheelRef = useRef(null);
-  const [active, setActive] = useState(0);
-
-  const mp = useMotionValue(0); // raw progress 0..1 driven by wheel
-  const sp = useSpring(mp, { stiffness: 120, damping: 26, mass: 0.5 });
-
-  const listY = useTransform(sp, [0, 1], [-ITEM / 2, -ITEM / 2 - (N - 1) * ITEM]);
-  const rot = useTransform(sp, [0, 1], [-6, -1.5]);
-  const groupX = useTransform(sp, [0, 1], [40, -40]);
-  const scale = useTransform(sp, [0, 1], [0.93, 1.07]);
-
-  useMotionValueEvent(sp, "change", (p) => {
-    setActive(Math.min(N - 1, Math.max(0, Math.round(p * (N - 1)))));
-  });
-
-  // capture the wheel only while the cursor is over the text (and not at an end)
-  useEffect(() => {
-    const el = wheelRef.current;
-    if (!el) return;
-    const onWheel = (e) => {
-      const cur = mp.get();
-      const atEndDown = cur >= 0.999 && e.deltaY > 0;
-      const atStartUp = cur <= 0.001 && e.deltaY < 0;
-      if (atEndDown || atStartUp) return; // release to the page
-      e.preventDefault();
-      e.stopPropagation();
-      mp.set(Math.min(1, Math.max(0, cur + e.deltaY * SENS)));
-    };
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
-  }, [mp]);
-
-  const a = SERVICES[active];
-
   return (
-    <section id="services" className="relative bg-cream text-ink">
-      {/* ===== desktop: cursor-gated kinetic switcher ===== */}
-      <div className="hidden lg:flex items-center justify-center px-6 py-24">
-        <div className="relative grid h-[80vh] w-full max-w-7xl grid-cols-2 overflow-hidden rounded-3xl bg-jkred text-cream shadow-2xl shadow-jkred/25">
-          {/* left — active service */}
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 26 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col justify-between p-12 lg:p-16"
-          >
-            <div>
-              <p className="tracking-[0.4em] text-xs font-bold text-cream/70 mb-6">{a.tag}</p>
-              <h2
-                className="font-display font-extrabold leading-[0.95]"
-                style={{
-                  fontSize: "clamp(2.5rem,4vw,4rem)",
-                  letterSpacing: "-0.02em",
-                  backgroundImage: "linear-gradient(90deg,#ffffff,#ffd9a8,#00a8d6,#5b52ff,#ffd9a8,#ffffff)",
-                  backgroundSize: "220% 100%",
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  color: "transparent",
-                  animation: "jkslide 3.2s linear infinite",
-                }}
-              >
-                {a.name}
-              </h2>
-            </div>
-            <a href="#contact" className="group inline-flex items-center gap-4">
-              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-cream/50 text-lg transition-all duration-300 group-hover:bg-cream group-hover:text-jkred">→</span>
-              <span className="text-sm font-semibold tracking-wide">Read More</span>
-            </a>
-          </motion.div>
-
-          {/* right — wheel-driven kinetic stack (hover to explore) */}
-          <div ref={wheelRef} className="relative overflow-hidden cursor-ns-resize">
-            <div className="absolute inset-x-0 top-1/2">
-              <motion.div style={{ rotate: rot, x: groupX, scale }} className="origin-center will-change-transform">
-                <motion.div style={{ y: listY }}>
-                  {SERVICES.map((s, i) => (
-                    <ServiceLine key={s.name} progress={sp} i={i} total={N} name={s.name} active={i === active} />
-                  ))}
-                </motion.div>
-              </motion.div>
-            </div>
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-jkred to-transparent" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-jkred to-transparent" />
-            {/* hint */}
-            <div className="pointer-events-none absolute bottom-8 right-8 text-[10px] tracking-[0.3em] text-cream/50">SCROLL HERE TO EXPLORE ↕</div>
-          </div>
-
-          {/* progress dots */}
-          <div className="absolute bottom-8 left-12 lg:left-16 flex gap-2">
-            {SERVICES.map((_, i) => (
-              <span key={i} className="h-1.5 rounded-full transition-all duration-300" style={{ width: i === active ? 26 : 8, background: i === active ? "#f6efdf" : "rgba(246,239,223,0.4)" }} />
-            ))}
-          </div>
+    <section id="services" className="bg-white text-ink">
+      <div className="mx-auto max-w-7xl px-6 pt-40 md:pt-48 pb-28 md:pb-40">
+        {/* header */}
+        <div className="max-w-3xl mb-16 md:mb-20">
+          <Reveal><p className="text-jkred font-semibold tracking-wide text-sm mb-5">Our Services</p></Reveal>
+          <Reveal delay={0.05}>
+            <h1 className="font-display font-extrabold leading-[0.98]" style={{ fontSize: "clamp(2.5rem,6vw,5rem)", letterSpacing: "-0.03em" }}>
+              Outdoor media,<br /><span className="text-grad">end to end.</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-6 text-lg text-ink/60 leading-relaxed">
+              From a single landmark hoarding to a multi-city campaign across the East — with printing,
+              fabrication and monitoring all handled in-house. One partner, the whole spread.
+            </p>
+          </Reveal>
         </div>
-      </div>
 
-      {/* ===== mobile: scroll-driven kinetic switcher ===== */}
-      <MobileKinetic />
+        {/* grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {SERVICES.map((s, i) => (
+            <Reveal key={s.name} delay={(i % 3) * 0.06}>
+              <div className="group h-full rounded-2xl border border-ink/10 bg-white p-7 transition-all duration-300 hover:-translate-y-2 hover:border-jkred/40 hover:shadow-xl hover:shadow-jkblue/10">
+                <div className="mb-5 flex items-center justify-between">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-jkred/5 text-jkblue transition-colors duration-300 group-hover:bg-jkred/10 group-hover:text-jkred">
+                    {s.icon}
+                  </div>
+                  <span className="font-display text-sm font-bold text-ink/25">{String(i + 1).padStart(2, "0")}</span>
+                </div>
+                <h3 className="font-display text-lg font-bold group-hover:text-jkblue transition-colors">{s.name}</h3>
+                <p className="mt-2 text-sm text-ink/55 leading-relaxed">{s.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <Reveal delay={0.1}>
+          <div className="mt-16 flex flex-col sm:flex-row items-center justify-between gap-6 rounded-3xl bg-jkblue-deep text-cream px-8 py-10 sm:px-12">
+            <p className="font-display text-2xl sm:text-3xl font-bold text-center sm:text-left">Not sure which format fits? <span className="text-grad">Let&rsquo;s plan it.</span></p>
+            <Link href="/contact" className="shrink-0 rounded-full bg-jkred px-8 py-4 font-semibold text-white shadow-lg shadow-jkred/30 transition hover:bg-red-600">
+              Talk to us →
+            </Link>
+          </div>
+        </Reveal>
+      </div>
     </section>
-  );
-}
-
-// Mobile version: the page's own (touch) scroll cycles the services — each one
-// crossfades in with the flowing gradient. No wheel/cursor needed.
-function MobileKinetic() {
-  const ref = useRef(null);
-  const [active, setActive] = useState(0);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  useMotionValueEvent(scrollYProgress, "change", (p) => {
-    setActive(Math.min(N - 1, Math.max(0, Math.round(p * (N - 1)))));
-  });
-  const a = SERVICES[active];
-
-  return (
-    <div ref={ref} className="lg:hidden px-6" style={{ height: `${N * 55}vh` }}>
-      <div className="sticky top-0 flex h-screen items-center py-16">
-        <div className="flex min-h-[62vh] w-full flex-col justify-between overflow-hidden rounded-3xl bg-jkred text-cream p-8">
-          <p className="tracking-[0.4em] text-[11px] font-bold text-cream/60">OUR SERVICES</p>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -22 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <p className="tracking-[0.3em] text-[10px] font-bold text-cream/70 mb-3">{a.tag}</p>
-              <h3 className="font-display font-extrabold leading-[0.95]" style={{ ...GRAD, fontSize: "clamp(2.25rem,11vw,3.5rem)" }}>
-                {a.name}
-              </h3>
-              <p className="mt-4 max-w-xs text-cream/80">{a.desc}</p>
-            </motion.div>
-          </AnimatePresence>
-
-          <div>
-            <div className="mb-6 flex gap-1.5">
-              {SERVICES.map((_, i) => (
-                <span key={i} className="h-1 rounded-full transition-all duration-300" style={{ width: i === active ? 24 : 8, background: i === active ? "#f6efdf" : "rgba(246,239,223,0.4)" }} />
-              ))}
-            </div>
-            <a href="#contact" className="inline-flex items-center gap-3 text-sm font-semibold">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/50">→</span>
-              Read More
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }
