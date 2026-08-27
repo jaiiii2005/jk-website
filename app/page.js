@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Intro from "./components/Intro";
 import Hero from "./components/Hero";
-import Stats from "./components/Stats";
 import HomeAbout from "./components/HomeAbout";
 import HomeSolutions from "./components/HomeSolutions";
 import HomeWorkStrip from "./components/HomeWorkStrip";
@@ -15,7 +14,6 @@ export default function Home() {
     <>
       <Intro />
       <Hero />
-      <Stats />
       <HomeAbout />
       <HomeSolutions />
       <HomeWorkStrip />
