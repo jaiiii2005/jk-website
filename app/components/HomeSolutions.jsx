@@ -32,15 +32,13 @@ export default function HomeSolutions() {
         </div>
 
         {/* right — tilted stacked words sliding up on scroll */}
-        <div className="relative h-[55vh] sm:h-[62vh] overflow-hidden">
-          {/* soft top/bottom fade so words emerge & vanish */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-20 z-10 bg-gradient-to-b from-black/10 to-transparent" />
-          <motion.div style={{ y, rotate: -4 }} className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex flex-col gap-4 lg:items-end origin-center">
+        <div className="relative h-[52vh] sm:h-[58vh] overflow-hidden">
+          <motion.div style={{ y, rotate: -3 }} className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex flex-col gap-4 origin-center">
             {SOL.map((s) => (
               <span
                 key={s}
-                className="block font-display font-extrabold uppercase leading-[0.98] whitespace-nowrap lg:text-right"
-                style={{ fontSize: "clamp(2rem,4.5vw,4rem)", letterSpacing: "-0.01em" }}
+                className="block font-display font-extrabold uppercase leading-[1] whitespace-nowrap"
+                style={{ fontSize: "clamp(1.5rem,3.4vw,3rem)", letterSpacing: "-0.01em" }}
               >
                 {s}
               </span>
