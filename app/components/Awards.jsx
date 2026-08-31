@@ -64,17 +64,28 @@ export default function Awards() {
           {AWARDS.map((a, i) => (
             <Reveal key={a.tier} delay={i * 0.1}>
               <div className="group flex h-full flex-col text-center">
-                {/* trophy floats on the gradient with a soft spotlight, gently
-                    turning in 3D — never edge-on, so it stays looking solid */}
+                {/* trophy floats on the gradient, spinning a full 360°, with a soft spotlight */}
                 <div className="relative flex h-[26rem] items-center justify-center" style={{ perspective: "1100px" }}>
                   <div className="pointer-events-none absolute inset-0" style={{ background: a.glow }} />
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={a.img}
-                    alt={`${a.tier} — ${a.cat}`}
-                    className="award-sway relative h-full w-auto object-contain drop-shadow-2xl"
-                    style={{ animationDelay: `${i * 1.4}s` }}
-                  />
+                  {a.back ? (
+                    // two-sided full 360: real front + real back photo
+                    // (no filter on this div — a CSS filter flattens preserve-3d)
+                    <div className="award-turn" style={{ animationDelay: `${i * 1.6}s` }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <div className="award-face"><img src={a.img} alt={`${a.tier} — ${a.cat}`} /></div>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <div className="award-face award-back"><img src={a.back} alt="" /></div>
+                    </div>
+                  ) : (
+                    // single-sided (no back photo) — gentle solid turn
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={a.img}
+                      alt={`${a.tier} — ${a.cat}`}
+                      className="award-sway relative h-full w-auto object-contain drop-shadow-2xl"
+                      style={{ animationDelay: `${i * 1.6}s` }}
+                    />
+                  )}
                 </div>
 
                 {/* description */}
