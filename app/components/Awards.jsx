@@ -10,7 +10,7 @@ import Reveal from "./Reveal";
 const AWARDS = [
   {
     img: "/awards/gold.png",
-    dark: true,
+    glow: "radial-gradient(50% 46% at 50% 42%, rgba(229,150,60,0.30) 0%, rgba(229,150,60,0) 70%)",
     medal: "🥇",
     tier: "Gold",
     cat: "Traditional Billboards",
@@ -19,7 +19,7 @@ const AWARDS = [
   },
   {
     img: "/awards/bronze.png",
-    dark: true,
+    glow: "radial-gradient(50% 46% at 50% 42%, rgba(201,120,80,0.28) 0%, rgba(201,120,80,0) 70%)",
     medal: "🥉",
     tier: "Bronze",
     cat: "Activation",
@@ -28,7 +28,7 @@ const AWARDS = [
   },
   {
     img: "/awards/bengal.png",
-    dark: false,
+    glow: "radial-gradient(52% 50% at 50% 45%, rgba(214,220,244,0.26) 0%, rgba(214,220,244,0) 68%)",
     medal: "🌟",
     tier: "Bengal Business Honour",
     cat: "Award 2025",
@@ -61,26 +61,22 @@ export default function Awards() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {AWARDS.map((a, i) => (
             <Reveal key={a.tier} delay={i * 0.1}>
-              <div className="group flex h-full flex-col">
-                {/* display case with 3D auto-turn */}
-                <div
-                  className="relative overflow-hidden rounded-3xl border border-white/12 shadow-2xl shadow-black/40"
-                  style={{ perspective: "1000px", background: a.dark ? "radial-gradient(120% 100% at 50% 0%, #14122f 0%, #050510 100%)" : "linear-gradient(180deg, #f5f5f7 0%, #e3e3e8 100%)" }}
-                >
+              <div className="group flex h-full flex-col text-center">
+                {/* trophy floats on the gradient, spinning, with a soft spotlight */}
+                <div className="relative flex h-[26rem] items-center justify-center" style={{ perspective: "1100px" }}>
+                  <div className="pointer-events-none absolute inset-0" style={{ background: a.glow }} />
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={a.img}
                     alt={`${a.tier} — ${a.cat}`}
-                    className="award-turn mx-auto h-[24rem] w-auto object-contain py-6"
-                    style={{ animationDelay: `${i * 1.1}s` }}
+                    className="award-turn relative h-full w-auto object-contain drop-shadow-2xl"
+                    style={{ animationDelay: `${i * 1.6}s` }}
                   />
-                  {/* soft floor glow */}
-                  <div className="pointer-events-none absolute inset-x-8 bottom-0 h-10 rounded-full bg-jkred/10 blur-2xl" />
                 </div>
 
                 {/* description */}
-                <div className="mt-6">
-                  <div className="flex items-center gap-2">
+                <div className="mt-8">
+                  <div className="flex items-center justify-center gap-2">
                     <span className="text-xl leading-none">{a.medal}</span>
                     <h3 className="font-display text-xl font-bold">{a.tier}</h3>
                   </div>
