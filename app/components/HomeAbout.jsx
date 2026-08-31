@@ -9,7 +9,6 @@ export default function HomeAbout() {
       <div className="mx-auto max-w-7xl px-6 py-28 md:py-44 grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
         {/* big statement */}
         <div>
-          <Reveal><p className="text-jkred font-semibold tracking-wide text-sm mb-6">Who we are</p></Reveal>
           <Reveal delay={0.05}>
             <h2 className="font-display font-extrabold leading-[0.95]" style={{ fontSize: "clamp(2.75rem,6vw,5.5rem)", letterSpacing: "-0.03em" }}>
               We make<br /><span className="text-grad">brands converse.</span>
