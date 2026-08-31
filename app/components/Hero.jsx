@@ -78,9 +78,6 @@ export default function Hero() {
           <a href="#work" className="rounded-full bg-jkred px-7 py-3.5 font-semibold text-white hover:bg-red-600 transition shadow-lg shadow-jkred/30">
             Explore our work
           </a>
-          <a href="#contact" className="rounded-full border border-cream/30 px-7 py-3.5 font-semibold text-cream hover:bg-cream/10 transition">
-            Talk to us
-          </a>
         </motion.div>
       </motion.div>
 
