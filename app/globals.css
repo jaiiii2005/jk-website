@@ -182,6 +182,42 @@ html { scroll-behavior: smooth; }
 .award-turn:hover { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .award-turn { animation: none; } }
 
+/* rotating spotlight rays behind each trophy */
+.award-rays {
+  background: conic-gradient(from 0deg,
+    rgba(255,255,255,0.12), transparent 11%, transparent 25%,
+    rgba(255,255,255,0.09) 36%, transparent 50%,
+    rgba(255,255,255,0.12) 61%, transparent 75%,
+    rgba(255,255,255,0.08) 86%, transparent 100%);
+  -webkit-mask: radial-gradient(closest-side, #000 42%, transparent 76%);
+  mask: radial-gradient(closest-side, #000 42%, transparent 76%);
+  animation: rayspin 26s linear infinite;
+}
+@keyframes rayspin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .award-rays { animation: none; } }
+
+/* drifting aurora glow for the awards backdrop */
+.award-aurora {
+  background:
+    radial-gradient(40% 55% at 20% 30%, rgba(225,27,46,0.16), transparent 70%),
+    radial-gradient(45% 55% at 82% 68%, rgba(33,28,132,0.5), transparent 72%),
+    radial-gradient(35% 45% at 60% 15%, rgba(181,113,63,0.14), transparent 70%);
+  animation: auroradrift 18s ease-in-out infinite alternate;
+}
+@keyframes auroradrift {
+  0%   { transform: translate3d(-2%, -1%, 0) scale(1.05); }
+  100% { transform: translate3d(3%, 2%, 0) scale(1.12); }
+}
+@media (prefers-reduced-motion: reduce) { .award-aurora { animation: none; } }
+
+/* giant watermark word slowly drifts */
+.award-drift { animation: worddrift 22s ease-in-out infinite alternate; }
+@keyframes worddrift {
+  0%   { transform: translate(-52%, -50%); }
+  100% { transform: translate(-48%, -50%); }
+}
+@media (prefers-reduced-motion: reduce) { .award-drift { animation: none; } }
+
 /* trophy gently turns in 3D + floats — stays solid, never edge-on */
 .award-sway {
   animation: awardsway 8s ease-in-out infinite;

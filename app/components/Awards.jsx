@@ -1,6 +1,7 @@
 "use client";
 
 import Reveal from "./Reveal";
+import Bokeh from "./Bokeh";
 
 // "Awards & Recognition" — three real trophies in framed display cards that
 // slowly turn in 3D on their own (see .award-turn in globals.css). Each card's
@@ -42,6 +43,17 @@ const AWARDS = [
 export default function Awards() {
   return (
     <section id="awards" className="cv-auto relative bg-jkblue-deep text-cream overflow-hidden">
+      {/* ambient depth: drifting aurora + floating orbs + giant watermark */}
+      <div className="award-aurora pointer-events-none absolute inset-0" />
+      <Bokeh tone="dark" />
+      <span
+        aria-hidden
+        className="award-drift pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none font-display font-extrabold leading-none text-white/[0.035] whitespace-nowrap"
+        style={{ fontSize: "18vw" }}
+      >
+        RECOGNISED
+      </span>
+
       <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:py-32">
         {/* header */}
         <div className="max-w-3xl mb-14 md:mb-20">
@@ -64,9 +76,12 @@ export default function Awards() {
           {AWARDS.map((a, i) => (
             <Reveal key={a.tier} delay={i * 0.1}>
               <div className="group flex h-full flex-col text-center">
-                {/* trophy floats on the gradient, spinning a full 360°, with a soft spotlight */}
-                <div className="relative flex h-[26rem] items-center justify-center" style={{ perspective: "1100px" }}>
-                  <div className="pointer-events-none absolute inset-0" style={{ background: a.glow }} />
+                {/* trophy on a lit stage — spins 360, scales up on hover to inspect */}
+                <div className="relative flex h-[26rem] items-center justify-center transition-transform duration-500 ease-out group-hover:scale-[1.06]" style={{ perspective: "1100px" }}>
+                  {/* rotating spotlight rays */}
+                  <div className="award-rays pointer-events-none absolute left-1/2 top-1/2 h-[26rem] w-[26rem] -translate-x-1/2 -translate-y-1/2" style={{ animationDelay: `${i * -3}s` }} />
+                  {/* soft coloured spotlight (brightens on hover) */}
+                  <div className="pointer-events-none absolute inset-0 opacity-90 transition-opacity duration-500 group-hover:opacity-100" style={{ background: a.glow }} />
                   {a.back ? (
                     // two-sided full 360: real front + real back photo
                     // (no filter on this div — a CSS filter flattens preserve-3d)
@@ -86,6 +101,8 @@ export default function Awards() {
                       style={{ animationDelay: `${i * 1.6}s` }}
                     />
                   )}
+                  {/* glowing floor pool */}
+                  <div className="pointer-events-none absolute bottom-3 left-1/2 h-6 w-44 -translate-x-1/2 rounded-[100%] bg-white/20 blur-2xl transition-all duration-500 group-hover:w-52 group-hover:bg-white/30" />
                 </div>
 
                 {/* description */}
