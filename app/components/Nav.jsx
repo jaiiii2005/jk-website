@@ -43,7 +43,7 @@ export default function Nav() {
         <nav className="mx-auto max-w-7xl px-5 flex items-center justify-between">
           <Link href="/" aria-label="JK Advertising — home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-light.png" alt="JK Advertising — 50 Years" className="h-9 w-auto" />
+            <img src="/logo-light.png" alt="JK Advertising — 50 Years" className="h-12 md:h-14 w-auto" />
           </Link>
 
           <div className="hidden lg:flex items-center gap-6 xl:gap-8">
