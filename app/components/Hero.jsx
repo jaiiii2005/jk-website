@@ -38,7 +38,7 @@ export default function Hero() {
           transition={{ delay: 0.1, duration: 0.7 }}
           className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-6"
         >
-          50 YEARS · FORGING AHEAD
+          50 YEARS+ · FORGING AHEAD
         </motion.p>
 
         <h1
