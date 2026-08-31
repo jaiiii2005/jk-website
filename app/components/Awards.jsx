@@ -1,93 +1,97 @@
 "use client";
 
 import Reveal from "./Reveal";
-import Bokeh from "./Bokeh";
 
-// Placeholder award data — replace title / body / year with JK's real awards.
+// "Awards & Recognition" — three real trophies in framed display cards that
+// slowly turn in 3D on their own (see .award-turn in globals.css). Each card's
+// inner background matches its image so the trophy sits seamlessly.
+// Gold + Bronze were both won for the Red FM billboard (OAA 2014); the Bengal
+// Business Honour (2025) is a company-level recognition.
 const AWARDS = [
   {
-    tier: "GOLD",
-    face: "linear-gradient(145deg,#f7dc84,#c99a2e)",
-    ring: "#c99a2e",
-    title: "Award title",
-    body: "Awarding body · year",
+    img: "/awards/gold.png",
+    dark: true,
+    medal: "🥇",
+    tier: "Gold",
+    cat: "Traditional Billboards",
+    body: "OAA Outdoor Advertising Awards 2014",
+    note: "For the Red FM 93.5 live-radio billboard — “Ab Suno Mat, Dekho Bhi.”",
   },
   {
-    tier: "SILVER",
-    face: "linear-gradient(145deg,#eef0f6,#9fa3b3)",
-    ring: "#9fa3b3",
-    title: "Award title",
-    body: "Awarding body · year",
+    img: "/awards/bronze.png",
+    dark: true,
+    medal: "🥉",
+    tier: "Bronze",
+    cat: "Activation",
+    body: "OAA Outdoor Advertising Awards 2014",
+    note: "Won for the very same landmark Red FM campaign.",
   },
   {
-    tier: "BRONZE",
-    face: "linear-gradient(145deg,#e7ab79,#a5642f)",
-    ring: "#a5642f",
-    title: "Award title",
-    body: "Awarding body · year",
+    img: "/awards/bengal.png",
+    dark: false,
+    medal: "🌟",
+    tier: "Bengal Business Honour",
+    cat: "Award 2025",
+    body: "Presented by Priyanka Ghosh Entertainment",
+    note: "Recognising JK Advertising’s leadership in Eastern India.",
   },
 ];
 
-function Medallion({ face, ring }) {
-  return (
-    <div style={{ perspective: "900px" }} className="mx-auto h-32 w-32">
-      <div className="coin relative h-full w-full">
-        {/* front */}
-        <div
-          className="face flex items-center justify-center rounded-full shadow-xl"
-          style={{ background: face, boxShadow: `0 10px 30px ${ring}55, inset 0 0 0 5px rgba(255,255,255,0.35)` }}
-        >
-          <span className="text-4xl" style={{ filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.25))" }}>★</span>
-        </div>
-        {/* back */}
-        <div
-          className="face back flex flex-col items-center justify-center rounded-full bg-jkblue-deep text-cream"
-          style={{ boxShadow: `inset 0 0 0 5px ${ring}` }}
-        >
-          <span className="font-display font-extrabold text-2xl leading-none">JK</span>
-          <span className="text-copper text-[10px] tracking-[0.2em] mt-0.5">50</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function Awards() {
   return (
-    <section id="awards" className="relative bg-cream text-ink overflow-hidden">
-      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-jkblue-deep to-cream -translate-y-px" />
-      <Bokeh tone="light" />
+    <section id="awards" className="cv-auto relative bg-jkblue-deep text-cream overflow-hidden">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:py-32">
+        {/* header */}
+        <div className="max-w-3xl mb-14 md:mb-20">
+          <Reveal><p className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-5">AWARDS &amp; RECOGNITION</p></Reveal>
+          <Reveal delay={0.05}>
+            <h2 className="font-display font-extrabold leading-[1.02]" style={{ fontSize: "clamp(2rem,5.5vw,4rem)", letterSpacing: "-0.02em" }}>
+              Recognised on the <span className="text-grad">national stage.</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-6 text-lg text-cream/70 leading-relaxed">
+              Two national OAA awards for a single landmark campaign — and a 2025 honour
+              for five decades of the work.
+            </p>
+          </Reveal>
+        </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 py-28 md:py-36 text-center">
-        <Reveal>
-          <p className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-5">RECOGNITION</p>
-        </Reveal>
-        <Reveal delay={0.05}>
-          <h2 className="font-display h-xl font-extrabold">
-            Honoured for <span className="text-grad">the work.</span>
-          </h2>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="mt-6 max-w-xl mx-auto text-ink/60">
-            Five decades of standout out-of-home has earned its share of industry recognition.
-          </p>
-        </Reveal>
-
-        <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* trophy cards */}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {AWARDS.map((a, i) => (
-            <Reveal key={a.tier} delay={0.1 + i * 0.12}>
-              <div className="group rounded-3xl border border-ink/10 bg-white/60 p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-jkblue/10 hover:border-copper/50">
-                <Medallion face={a.face} ring={a.ring} />
-                <p className="mt-6 font-display font-extrabold tracking-[0.3em] text-sm" style={{ color: a.ring }}>
-                  {a.tier}
-                </p>
-                <h3 className="mt-2 font-display text-lg font-bold text-ink">{a.title}</h3>
-                <p className="mt-1 text-sm text-ink/55">{a.body}</p>
+            <Reveal key={a.tier} delay={i * 0.1}>
+              <div className="group flex h-full flex-col">
+                {/* display case with 3D auto-turn */}
+                <div
+                  className="relative overflow-hidden rounded-3xl border border-white/12 shadow-2xl shadow-black/40"
+                  style={{ perspective: "1000px", background: a.dark ? "radial-gradient(120% 100% at 50% 0%, #14122f 0%, #050510 100%)" : "linear-gradient(180deg, #f5f5f7 0%, #e3e3e8 100%)" }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={a.img}
+                    alt={`${a.tier} — ${a.cat}`}
+                    className="award-turn mx-auto h-[24rem] w-auto object-contain py-6"
+                    style={{ animationDelay: `${i * 1.1}s` }}
+                  />
+                  {/* soft floor glow */}
+                  <div className="pointer-events-none absolute inset-x-8 bottom-0 h-10 rounded-full bg-jkred/10 blur-2xl" />
+                </div>
+
+                {/* description */}
+                <div className="mt-6">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl leading-none">{a.medal}</span>
+                    <h3 className="font-display text-xl font-bold">{a.tier}</h3>
+                  </div>
+                  <p className="mt-1 text-copper text-sm font-semibold tracking-wide">{a.cat}</p>
+                  <p className="mt-2 text-cream/75">{a.body}</p>
+                  <p className="mt-1 text-sm text-cream/50 leading-relaxed">{a.note}</p>
+                </div>
               </div>
             </Reveal>
           ))}
         </div>
-
       </div>
     </section>
   );

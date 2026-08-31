@@ -161,6 +161,19 @@ html { scroll-behavior: smooth; }
 }
 @media (prefers-reduced-motion: reduce) { .ffloat { animation: none; } }
 
+/* awards — trophies slowly turn on their own in 3D (no flat flip) */
+.award-turn {
+  animation: awardturn 7s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+@keyframes awardturn {
+  0%   { transform: rotateY(-14deg) translateY(0); }
+  50%  { transform: rotateY(14deg) translateY(-8px); }
+  100% { transform: rotateY(-14deg) translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) { .award-turn { animation: none; } }
+
 /* flowing gradient text */
 .grad-flow {
   background: linear-gradient(90deg, #b5713f, #e11b2e, #211c84, #00a8d6, #b5713f);
