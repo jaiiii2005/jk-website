@@ -161,8 +161,9 @@ html { scroll-behavior: smooth; }
 }
 @media (prefers-reduced-motion: reduce) { .ffloat { animation: none; } }
 
-/* awards — trophies spin a full 360° on their own */
+/* awards — two-sided trophies spin a full 360° (real front + real back) */
 .award-turn {
+  position: relative; height: 100%; width: 100%;
   animation: awardturn 16s linear infinite;
   transform-style: preserve-3d;
   will-change: transform;
@@ -171,8 +172,27 @@ html { scroll-behavior: smooth; }
   from { transform: rotateY(0deg); }
   to   { transform: rotateY(360deg); }
 }
+.award-face {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  -webkit-backface-visibility: hidden; backface-visibility: hidden;
+}
+.award-face img { height: 100%; width: auto; object-fit: contain; }
+.award-back { transform: rotateY(180deg); }
 .award-turn:hover { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .award-turn { animation: none; } }
+
+/* single-sided trophy (no back photo) — gentle readable turn */
+.award-sway {
+  animation: awardsway 7s ease-in-out infinite;
+  transform-style: preserve-3d; will-change: transform;
+}
+@keyframes awardsway {
+  0%, 100% { transform: rotateY(-14deg); }
+  50%      { transform: rotateY(14deg); }
+}
+.award-sway:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .award-sway { animation: none; } }
 
 /* flowing gradient text */
 .grad-flow {

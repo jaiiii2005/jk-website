@@ -10,6 +10,7 @@ import Reveal from "./Reveal";
 const AWARDS = [
   {
     img: "/awards/gold.png",
+    back: "/awards/gold_back.png",
     glow: "radial-gradient(50% 46% at 50% 42%, rgba(229,150,60,0.30) 0%, rgba(229,150,60,0) 70%)",
     medal: "🥇",
     tier: "Gold",
@@ -19,6 +20,7 @@ const AWARDS = [
   },
   {
     img: "/awards/bronze.png",
+    back: "/awards/bronze_back.png",
     glow: "radial-gradient(50% 46% at 50% 42%, rgba(201,120,80,0.28) 0%, rgba(201,120,80,0) 70%)",
     medal: "🥉",
     tier: "Bronze",
@@ -65,13 +67,24 @@ export default function Awards() {
                 {/* trophy floats on the gradient, spinning, with a soft spotlight */}
                 <div className="relative flex h-[26rem] items-center justify-center" style={{ perspective: "1100px" }}>
                   <div className="pointer-events-none absolute inset-0" style={{ background: a.glow }} />
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={a.img}
-                    alt={`${a.tier} — ${a.cat}`}
-                    className="award-turn relative h-full w-auto object-contain drop-shadow-2xl"
-                    style={{ animationDelay: `${i * 1.6}s` }}
-                  />
+                  {a.back ? (
+                    // two-sided: real front + real back photo -> genuine 360 turn
+                    <div className="award-turn drop-shadow-2xl" style={{ animationDelay: `${i * 1.6}s` }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <div className="award-face"><img src={a.img} alt={`${a.tier} — ${a.cat}`} /></div>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <div className="award-face award-back"><img src={a.back} alt="" /></div>
+                    </div>
+                  ) : (
+                    // single-sided: gentle readable turn
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={a.img}
+                      alt={`${a.tier} — ${a.cat}`}
+                      className="award-sway relative h-full w-auto object-contain drop-shadow-2xl"
+                      style={{ animationDelay: `${i * 1.6}s` }}
+                    />
+                  )}
                 </div>
 
                 {/* description */}
