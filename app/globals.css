@@ -177,7 +177,7 @@ html { scroll-behavior: smooth; }
   display: flex; align-items: center; justify-content: center;
   -webkit-backface-visibility: hidden; backface-visibility: hidden;
 }
-.award-face img { height: 100%; width: auto; object-fit: contain; }
+.award-face img { height: 100%; width: auto; object-fit: contain; filter: drop-shadow(0 22px 30px rgba(0,0,0,0.45)); }
 .award-back { transform: rotateY(180deg); }
 .award-turn:hover { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .award-turn { animation: none; } }

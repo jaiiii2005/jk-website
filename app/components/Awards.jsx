@@ -69,7 +69,8 @@ export default function Awards() {
                   <div className="pointer-events-none absolute inset-0" style={{ background: a.glow }} />
                   {a.back ? (
                     // two-sided: real front + real back photo -> genuine 360 turn
-                    <div className="award-turn drop-shadow-2xl" style={{ animationDelay: `${i * 1.6}s` }}>
+                    // (no filter here — a CSS filter flattens transform-style: preserve-3d)
+                    <div className="award-turn" style={{ animationDelay: `${i * 1.6}s` }}>
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <div className="award-face"><img src={a.img} alt={`${a.tier} — ${a.cat}`} /></div>
                       {/* eslint-disable-next-line @next/next/no-img-element */}
