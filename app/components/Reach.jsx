@@ -14,15 +14,8 @@ const HUB = { n: "Kolkata", x: 50, y: 60 };
 const CITIES = [
   { n: "Gangtok", x: 48, y: 14, pos: "t" },
   { n: "Siliguri", x: 42, y: 22, pos: "l" },
-  // North-East
-  { n: "Itanagar", x: 86, y: 16, pos: "t" },
-  { n: "Guwahati", x: 76, y: 27, pos: "l" },
-  { n: "Kohima", x: 94, y: 30, pos: "r" },
-  { n: "Shillong", x: 80, y: 35, pos: "l" },
-  { n: "Imphal", x: 96, y: 43, pos: "r" },
-  { n: "Agartala", x: 82, y: 47, pos: "l" },
-  { n: "Aizawl", x: 92, y: 52, pos: "r" },
-  // East & central
+  { n: "Guwahati", x: 74, y: 25, pos: "t" },
+  { n: "Agartala", x: 80, y: 43, pos: "r" },
   { n: "Patna", x: 19, y: 35, pos: "l" },
   { n: "Ranchi", x: 21, y: 53, pos: "l" },
   { n: "Jamshedpur", x: 29, y: 64, pos: "l" },
@@ -31,7 +24,7 @@ const CITIES = [
   { n: "Bhubaneswar", x: 30, y: 83, pos: "b" },
 ];
 
-const REGIONS = ["West Bengal", "Odisha", "Bihar", "Jharkhand", "Sikkim", "Assam", "Meghalaya", "Tripura", "Manipur", "Mizoram", "Nagaland", "Arunachal"];
+const REGIONS = ["West Bengal", "Odisha", "Bihar", "Jharkhand", "Assam", "Sikkim", "Tripura", "North-East"];
 
 function labelPos(c, hub) {
   if (hub) return { x: c.x, y: c.y + 6.4, anchor: "middle" };
@@ -127,12 +120,12 @@ export default function Reach() {
             <Reveal delay={0.12}>
               <div className="mt-8 flex items-center gap-8">
                 <div>
-                  <div className="font-display text-3xl md:text-4xl font-extrabold text-grad leading-none">15+</div>
+                  <div className="font-display text-3xl md:text-4xl font-extrabold text-grad leading-none">10+</div>
                   <div className="mt-1 text-xs tracking-wide text-cream/55">cities &amp; growing</div>
                 </div>
                 <div className="h-10 w-px bg-white/15" />
                 <div>
-                  <div className="font-display text-3xl md:text-4xl font-extrabold text-grad leading-none">12</div>
+                  <div className="font-display text-3xl md:text-4xl font-extrabold text-grad leading-none">8</div>
                   <div className="mt-1 text-xs tracking-wide text-cream/55">states covered</div>
                 </div>
               </div>
@@ -152,7 +145,7 @@ export default function Reach() {
           {/* map side */}
           <Reveal delay={0.1} dir="left">
             <div className="relative">
-              <svg viewBox="0 0 112 92" className="w-full h-auto" style={{ filter: "drop-shadow(0 10px 40px rgba(0,0,0,0.4))" }}>
+              <svg viewBox="0 0 100 92" className="w-full h-auto" style={{ filter: "drop-shadow(0 10px 40px rgba(0,0,0,0.4))" }}>
                 <defs>
                   <pattern id="grid" width="8" height="8" patternUnits="userSpaceOnUse">
                     <path d="M8 0H0V8" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="0.3" />
@@ -168,7 +161,7 @@ export default function Reach() {
                 </defs>
 
                 {/* faint reference grid */}
-                <rect x="0" y="0" width="112" height="92" fill="url(#grid)" rx="4" />
+                <rect x="0" y="0" width="100" height="92" fill="url(#grid)" rx="4" />
 
                 {/* soft glow behind the Kolkata hub */}
                 <circle cx={HUB.x} cy={HUB.y} r="16" fill="url(#hubGlow)" />
