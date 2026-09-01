@@ -39,30 +39,45 @@ export default function WhatsAppButton() {
         <AnimatePresence>
           {open && (
             <>
-              {/* Voice call */}
+              {/* header */}
+              <motion.div
+                key="head"
+                custom={2} variants={option} initial="hidden" animate="show" exit="exit"
+                className="mb-1 rounded-full bg-jkblue-deep/95 px-4 py-1.5 text-xs font-semibold tracking-wide text-cream shadow-lg backdrop-blur"
+              >
+                How can we help?
+              </motion.div>
+
+              {/* Call us — real phone call (JK red so it clearly reads as a call) */}
               <motion.a
                 key="call"
                 custom={1} variants={option} initial="hidden" animate="show" exit="exit"
                 href={`tel:${TEL}`}
-                className="flex items-center gap-3 rounded-full bg-white py-2 pl-5 pr-2 shadow-xl"
+                className="flex items-center gap-3 rounded-full bg-white py-2 pl-5 pr-2 shadow-xl ring-1 ring-black/5 transition-transform hover:scale-[1.03]"
               >
-                <span className="text-sm font-semibold text-jkblue-deep">Voice call</span>
-                <span className="flex h-10 w-10 items-center justify-center rounded-full" style={{ background: "#25D366" }}>
+                <span className="flex flex-col leading-tight">
+                  <span className="text-sm font-bold text-jkblue-deep">Call us</span>
+                  <span className="text-[10px] text-ink/50">Talk to us now</span>
+                </span>
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-jkred">
                   <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
                   </svg>
                 </span>
               </motion.a>
 
-              {/* Message */}
+              {/* WhatsApp Chat */}
               <motion.a
                 key="msg"
                 custom={0} variants={option} initial="hidden" animate="show" exit="exit"
                 href={`https://wa.me/${PHONE}?text=${MSG}`}
                 target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 rounded-full bg-white py-2 pl-5 pr-2 shadow-xl"
+                className="flex items-center gap-3 rounded-full bg-white py-2 pl-5 pr-2 shadow-xl ring-1 ring-black/5 transition-transform hover:scale-[1.03]"
               >
-                <span className="text-sm font-semibold text-jkblue-deep">Message</span>
+                <span className="flex flex-col leading-tight">
+                  <span className="text-sm font-bold text-jkblue-deep">WhatsApp Chat</span>
+                  <span className="text-[10px] text-ink/50">Message us anytime</span>
+                </span>
                 <span className="flex h-10 w-10 items-center justify-center rounded-full" style={{ background: "#25D366" }}>
                   <WhatsAppGlyph className="h-6 w-6" />
                 </span>
