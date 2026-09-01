@@ -1,7 +1,6 @@
 import AboutHero from "../components/AboutHero";
 import AboutStory from "../components/AboutStory";
 import BrandCity from "../components/BrandCity";
-import Stats from "../components/Stats";
 import Milestones from "../components/Milestones";
 import Reach from "../components/Reach";
 import Values from "../components/Values";
@@ -15,7 +14,6 @@ export default function AboutPage() {
       <AboutHero />
       <AboutStory />
       <BrandCity src="/jk-kolkata.png" />
-      <Stats />
       <Milestones />
       <Reach />
       <Values />
