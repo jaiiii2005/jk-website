@@ -1,160 +1,96 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Reveal from "./Reveal";
 import Bokeh from "./Bokeh";
 
+const CONIC = "conic-gradient(from 0deg, #b5713f, #e11b2e, #5b52ff, #00a8d6, #b5713f)";
+
+// Bright-style leadership: a large framed portrait beside a rich, well-written
+// bio (no bullet points). The two leaders alternate sides for rhythm.
 const LEADERS = [
   {
     name: "Jogesh Kumar Shah",
     role: "Founder & Proprietor",
-    tagline: "The Legacy",
     photo: "/founder-jogesh.jpg",
-    initials: "JKS",
-    bio: "The founder of JK Advertising. Over five decades, Jogesh Kumar Shah built the company from the ground up — turning a single-minded belief in honesty, service and value into the East's most trusted out-of-home network.",
-    points: ["Founded JK Advertising", "50 years shaping OOH in the East", "Built on trust, service & value"],
+    objPos: "50% 22%",
+    bio: [
+      "JK Advertising is the vision of Jogesh Kumar Shah — a self-made pioneer of out-of-home advertising in Eastern India. From a single-minded belief in honesty, service and value, he built JK from the ground up into the region's largest and most trusted outdoor media network.",
+      "Every landmark hoarding, every decades-long client relationship and every net-discounted, no-brokering deal carries his founding principles. His journey is one of patience, integrity and an unwavering standard of quality — the foundation on which JK still stands today.",
+    ],
   },
   {
     name: "Nimesh Shah",
     role: "Chief Executive Officer",
-    tagline: "Forging Ahead",
     photo: "/ceo-nimesh.jpg",
-    initials: "NS",
-    bio: "As CEO, Nimesh Shah drives JK Advertising's next chapter — pairing the firm's five-decade legacy with digital OOH, first-of-their-kind innovations and a value-first approach that keeps clients ahead of the curve.",
-    points: ["Leads strategy & operations", "Champions digital OOH & innovation", "Client-first, value-driven growth"],
+    objPos: "50% 24%",
+    bio: [
+      "As Chief Executive Officer, Nimesh Shah is writing JK Advertising's next chapter. Building on a fifty-year legacy, he pairs the firm's deep roots with a forward-looking vision — expanding into digital OOH and championing first-of-their-kind ideas, like a live radio studio built inside a billboard.",
+      "His approach stays relentlessly value-first: transparent rates, in-house execution and campaigns engineered to keep clients ahead of the curve. Under his leadership, JK holds true to its founding trust while continually redefining what outdoor media can do in the East.",
+    ],
   },
 ];
 
-const CONIC = "conic-gradient(from 0deg, #b5713f, #e11b2e, #5b52ff, #00a8d6, #b5713f)";
-
-function Circle({ photo, initials, size = "h-64 w-64" }) {
+function LeaderRow({ l, i }) {
+  const flip = i % 2 === 1;
   return (
-    <div className={`relative ${size} shrink-0`}>
-      {/* pulsing glow */}
-      <motion.div
-        aria-hidden
-        className="absolute -inset-5 rounded-full blur-2xl"
-        style={{ background: CONIC, opacity: 0.35 }}
-        animate={{ opacity: [0.25, 0.5, 0.25], scale: [1, 1.05, 1] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      />
-      {/* rotating gradient ring */}
-      <div className="absolute inset-0 rounded-full spin-slow" style={{ background: CONIC }} />
-      {/* photo */}
-      <div className="absolute inset-[6px] rounded-full overflow-hidden bg-jkblue-deep">
-        <span className="absolute inset-0 flex items-center justify-center font-display font-extrabold text-cream/25 text-5xl">
-          {initials}
-        </span>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={photo}
-          alt=""
-          className="relative h-full w-full object-cover object-top saturate-[0.9] transition-all duration-700 hover:scale-105 hover:saturate-100"
-          onError={(e) => { e.currentTarget.style.display = "none"; }}
-        />
-        <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
-      </div>
+    <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      {/* portrait */}
+      <Reveal dir={flip ? "right" : "left"} className={flip ? "lg:order-2" : ""}>
+        <div className="relative mx-auto w-full max-w-sm">
+          <div aria-hidden className="absolute -inset-5 rounded-[2.2rem] opacity-30 blur-3xl" style={{ background: CONIC }} />
+          <div className="relative rounded-[1.7rem] p-[3px]" style={{ background: CONIC }}>
+            <div className="overflow-hidden rounded-[1.55rem] bg-jkblue-deep">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={l.photo}
+                alt={l.name}
+                className="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-out hover:scale-105"
+                style={{ objectPosition: l.objPos }}
+              />
+            </div>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* bio */}
+      <Reveal dir={flip ? "left" : "right"} delay={0.08} className={flip ? "lg:order-1" : ""}>
+        <div>
+          <div className="mb-5 h-1 w-12 rounded-full" style={{ background: CONIC }} />
+          <p className="mb-3 text-xs tracking-[0.35em] text-copper">{l.role.toUpperCase()}</p>
+          <h3 className="font-display font-extrabold leading-[1.02]" style={{ fontSize: "clamp(2rem,4vw,3.25rem)", letterSpacing: "-0.02em" }}>
+            {l.name}
+          </h3>
+          {l.bio.map((p, k) => (
+            <p key={k} className="mt-5 max-w-xl leading-relaxed text-cream/70">{p}</p>
+          ))}
+        </div>
+      </Reveal>
     </div>
   );
 }
 
-function LeaderBlock({ l, index, onOpen }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: index * 0.15 }}
-      className={`flex flex-col items-center text-center ${index === 1 ? "md:mt-16" : ""}`}
-    >
-      <motion.div
-        animate={{ y: [0, -14, 0] }}
-        transition={{ duration: 7 + index, repeat: Infinity, ease: "easeInOut" }}
-        className="group cursor-pointer"
-        onClick={() => onOpen(index)}
-      >
-        <Circle photo={l.photo} initials={l.initials} />
-      </motion.div>
-
-      <p className="text-copper text-xs tracking-[0.35em] mt-8 mb-2">{l.tagline.toUpperCase()}</p>
-      <h3 className="font-display text-3xl font-extrabold">{l.name}</h3>
-      <p className="text-cream/60 text-sm mt-1">{l.role}</p>
-      <button
-        onClick={() => onOpen(index)}
-        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-jkred hover:gap-3 transition-all"
-      >
-        Know more <span>→</span>
-      </button>
-    </motion.div>
-  );
-}
-
 export default function Leadership() {
-  const [open, setOpen] = useState(null);
-  const active = open != null ? LEADERS[open] : null;
-
   return (
-    <section id="leadership" className="relative bg-jkblue-deep text-cream overflow-hidden">
-      <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-cream to-jkblue-deep -translate-y-px" />
+    <section id="leadership" className="relative overflow-hidden bg-jkblue-deep text-cream">
+      <div className="absolute inset-x-0 top-0 h-40 -translate-y-px bg-gradient-to-b from-cream to-jkblue-deep" />
       <Bokeh tone="dark" />
 
-      <div className="relative z-10 mx-auto max-w-5xl px-6 py-28 md:py-36">
-        <Reveal><p className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-5 text-center">THE LEADERSHIP</p></Reveal>
-        <Reveal delay={0.05}>
-          <h2 className="font-display h-xl font-extrabold text-center">
-            The people <span className="text-grad">behind the legacy.</span>
-          </h2>
-        </Reveal>
+      <div className="relative z-10 mx-auto max-w-6xl px-6 py-28 md:py-36">
+        <div className="mb-20 text-center md:mb-28">
+          <Reveal><p className="mb-5 text-xs tracking-[0.4em] text-copper sm:text-sm">THE LEADERSHIP</p></Reveal>
+          <Reveal delay={0.05}>
+            <h2 className="font-display h-xl font-extrabold">
+              The people <span className="text-grad">behind the legacy.</span>
+            </h2>
+          </Reveal>
+        </div>
 
-        <div className="mt-20 grid sm:grid-cols-2 gap-16 sm:gap-10 place-items-center">
+        <div className="space-y-24 md:space-y-36">
           {LEADERS.map((l, i) => (
-            <LeaderBlock key={l.name} l={l} index={i} onOpen={setOpen} />
+            <LeaderRow key={l.name} l={l} i={i} />
           ))}
         </div>
       </div>
-
-      <AnimatePresence>
-        {active && (
-          <motion.div
-            className="fixed inset-0 z-[90] flex items-center justify-center p-4"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            onClick={() => setOpen(null)}
-          >
-            <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
-            <motion.div
-              className="relative z-10 w-full max-w-2xl overflow-hidden rounded-3xl bg-jkblue-deep border border-white/15 shadow-2xl p-8 text-center sm:text-left sm:flex sm:gap-8"
-              initial={{ scale: 0.92, y: 30, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.92, y: 30, opacity: 0 }}
-              transition={{ type: "spring", damping: 24, stiffness: 240 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button onClick={() => setOpen(null)} className="absolute top-4 right-4 text-cream/60 hover:text-white text-xl">✕</button>
-              <div className="mx-auto sm:mx-0 mb-6 sm:mb-0">
-                <Circle photo={active.photo} initials={active.initials} size="h-40 w-40" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-copper text-xs tracking-[0.3em] mb-2">{active.tagline.toUpperCase()}</p>
-                <h3 className="font-display text-2xl sm:text-3xl font-extrabold">{active.name}</h3>
-                <p className="text-cream/60 text-sm mt-1">{active.role}</p>
-                <p className="mt-4 text-cream/80 leading-relaxed text-sm">{active.bio}</p>
-                <ul className="mt-4 space-y-2">
-                  {active.points.map((p, k) => (
-                    <motion.li key={k}
-                      initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.15 + k * 0.08 }}
-                      className="flex items-start gap-3 text-sm text-cream/75">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-jkred shrink-0" />
-                      {p}
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }
