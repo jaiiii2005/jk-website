@@ -18,13 +18,6 @@ const PinIcon = (color) => (
     <circle cx="12" cy="9" r="2.6" fill="#fff" />
   </svg>
 );
-const BikeIcon = (
-  <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="#111" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-    <circle cx="5.5" cy="17" r="3" /><circle cx="18.5" cy="17" r="3" />
-    <path d="M5.5 17l3.5-6h5l2 3M9 11l-1-3H6M14 11l3-.5" />
-  </svg>
-);
-
 export default function GetHere() {
   const [open, setOpen] = useState(false);
   const [mobile, setMobile] = useState(false);
@@ -66,9 +59,6 @@ export default function GetHere() {
     { show: mobile, label: "Apple Maps", href: `https://maps.apple.com/?daddr=${Q}`, box: "bg-white ring-1 ring-black/10", icon: PinIcon("#1a73e8") },
     { show: mobile, label: "Uber", href: `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[formatted_address]=${Q}&dropoff[nickname]=${NICK}`, box: "bg-black text-white",
       icon: (<span className="text-sm font-bold tracking-tight">Uber</span>) },
-    { show: mobile, label: "Ola", href: `https://book.olacabs.com/?serviceType=p2p&drop_name=${NICK}&drop_address=${Q}`, box: "text-white", style: { background: "#4CB050" },
-      icon: (<span className="text-base font-extrabold lowercase">ola</span>) },
-    { show: mobile, label: "Rapido", href: "https://rapido.bike/", box: "", style: { background: "#FFD200" }, icon: BikeIcon },
     { show: true, label: copied ? "Copied!" : "Copy", onClick: copy, box: "bg-ink/5 text-ink ring-1 ring-black/10",
       icon: (<svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>) },
   ].filter((t) => t.show);
