@@ -80,16 +80,6 @@ export default function Hero() {
           </a>
         </motion.div>
       </motion.div>
-
-      {/* scroll cue */}
-      <motion.a
-        href="#stats"
-        style={{ opacity: fade }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-cream/60 text-xs tracking-[0.3em]"
-      >
-        SCROLL
-        <span className="block h-10 w-px bg-gradient-to-b from-cream/60 to-transparent animate-pulse" />
-      </motion.a>
     </section>
   );
 }
