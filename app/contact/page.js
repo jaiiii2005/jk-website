@@ -22,6 +22,30 @@ export default function ContactPage() {
             Tell us your brand, your audience and your goal — our team recommends the right sites
             and sends a plan. Transparent rates, no brokering.
           </p>
+
+          {/* location map */}
+          <div className="mt-10">
+            <p className="text-copper text-[11px] tracking-[0.25em] mb-3">FIND US</p>
+            <div className="overflow-hidden rounded-2xl border border-ink/10 shadow-sm">
+              <iframe
+                title="JK Advertising — 12C Sarat Bose Road, Kolkata"
+                src="https://www.google.com/maps?q=12C%20Sarat%20Bose%20Road%2C%20Kolkata%20700020&output=embed"
+                className="block h-72 w-full md:h-80"
+                style={{ border: 0 }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=12C%20Sarat%20Bose%20Road%2C%20Kolkata%20700020"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-jkred hover:underline"
+            >
+              Get directions &rarr;
+            </a>
+          </div>
         </div>
 
         <div className="grid gap-4">
