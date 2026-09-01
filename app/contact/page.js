@@ -1,3 +1,5 @@
+import GetHere from "../components/GetHere";
+
 export const metadata = { title: "Contact — JK Advertising" };
 
 const CONTACT = {
@@ -37,14 +39,7 @@ export default function ContactPage() {
                 allowFullScreen
               />
             </div>
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=12C%20Sarat%20Bose%20Road%2C%20Kolkata%20700020"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-jkred hover:underline"
-            >
-              Get directions &rarr;
-            </a>
+            <GetHere />
           </div>
         </div>
 
