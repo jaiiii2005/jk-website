@@ -30,7 +30,7 @@ function Fifty() {
   }, [inView]);
   return (
     <span ref={ref} className="text-grad font-display font-extrabold leading-none" style={{ fontSize: "clamp(5rem,14vw,12rem)" }}>
-      {n}
+      {n}+
     </span>
   );
 }
