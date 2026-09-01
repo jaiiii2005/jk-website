@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 const ADDR = "12C Sarat Bose Road, Kolkata – 700020";
 const Q = encodeURIComponent("12C Sarat Bose Road, Kolkata 700020");
 const NICK = encodeURIComponent("JK Advertising");
+const MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${Q}`;
 
 export default function GetHere() {
   const [open, setOpen] = useState(false);
@@ -32,6 +33,19 @@ export default function GetHere() {
     }
   };
 
+  // Native OS share sheet (real app icons) on mobile; opens Maps as a fallback.
+  const share = async () => {
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({ title: "JK Advertising", text: `JK Advertising — ${ADDR}`, url: MAPS_URL });
+        return;
+      } catch {
+        /* user dismissed — ignore */
+      }
+    }
+    window.open(MAPS_URL, "_blank", "noopener");
+  };
+
   const links = [
     { show: true, label: "Google Maps", sub: "Directions", emoji: "🗺️", href: `https://www.google.com/maps/dir/?api=1&destination=${Q}` },
     { show: mobile, label: "Apple Maps", sub: "Directions", emoji: "🍎", href: `https://maps.apple.com/?daddr=${Q}` },
@@ -53,7 +67,20 @@ export default function GetHere() {
 
       {open && (
         <>
-          <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {/* native share sheet (real app icons on mobile) */}
+          <button
+            type="button"
+            onClick={share}
+            className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-jkblue-deep px-4 py-3 text-sm font-semibold text-cream shadow-sm transition hover:bg-jkblue"
+          >
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
+              <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" />
+            </svg>
+            Share / Open location
+          </button>
+
+          <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
             {links.map((l) => (
               <a
                 key={l.label}
