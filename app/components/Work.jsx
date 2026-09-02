@@ -17,7 +17,7 @@ const FEATURE = {
 };
 
 const ITEMS = [
-  { src: "/work/w-stylebaazar.jpg", brand: "High-Street Fashion", meta: "Kolkata", cat: "Hoardings" },
+  { src: "/work/w-stylebaazar.jpg", brand: "Film Promotion", meta: "Kolkata", cat: "Hoardings" },
   { src: "/work/w-joi-clean.jpg", brand: "JOI Yogurt", meta: "Kolkata", cat: "Hoardings" },
   { src: "/work/w-idee.jpg", brand: "IDEE Eyewear", meta: "Kolkata", cat: "Transit & Airport" },
 ];
