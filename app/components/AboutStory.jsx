@@ -14,7 +14,7 @@ export default function AboutStory() {
           </Reveal>
         </div>
 
-        <div className="lg:pt-4 space-y-6 text-lg text-ink/65 leading-relaxed">
+        <div className="lg:pt-4 space-y-6 text-lg text-ink/65 leading-relaxed text-justify">
           <Reveal delay={0.1}>
             <p>
               JK Advertising stands for vision, service and value in Eastern India&rsquo;s
