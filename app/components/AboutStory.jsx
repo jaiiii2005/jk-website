@@ -25,9 +25,9 @@ export default function AboutStory() {
           </Reveal>
           <Reveal delay={0.15}>
             <p>
-              From landmark hoardings and digital OOH to unipoles, transit &amp; airport media,
-              in-shop branding, rural promotions and events — with printing, fabrication and
-              monitoring all handled <strong className="text-ink">in-house</strong>. One partner, the whole spread,
+              From landmark hoardings to transit media, corporate events, festival branding
+              and more — with printing, fabrication and monitoring all handled
+              <strong className="text-ink"> in-house</strong>. One partner, the whole spread,
               putting brands exactly where the East looks.
             </p>
           </Reveal>

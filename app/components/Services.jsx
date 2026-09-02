@@ -20,13 +20,6 @@ const FLAGSHIP = [
     points: ["Prime arterial, flyover & market locations", "Long-term sites and campaign buys", "Post-buy photo proof on every site"],
   },
   {
-    name: "Transit & Airport",
-    tag: "On the move",
-    img: "/work-4.jpg",
-    desc: "Media that travels with your audience — airport terminals, metro, buses and transit hubs with captive dwell time.",
-    points: ["Airport terminals & lounges", "Metro, bus & transit media", "High-dwell, captive audiences"],
-  },
-  {
     name: "Innovations",
     tag: "First-of-its-kind",
     img: "/work-3.jpg",
