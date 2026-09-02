@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Reveal from "./Reveal";
 
@@ -152,15 +151,6 @@ export default function Services() {
             ))}
           </div>
 
-          {/* CTA */}
-          <Reveal delay={0.1}>
-            <div className="mt-16 flex flex-col sm:flex-row items-center justify-between gap-6 rounded-3xl bg-jkblue-deep text-cream px-8 py-10 sm:px-12">
-              <p className="font-display text-2xl sm:text-3xl font-bold text-center sm:text-left">Not sure which format fits? <span className="text-grad">Let&rsquo;s plan it.</span></p>
-              <Link href="/contact" className="shrink-0 rounded-full bg-jkred px-8 py-4 font-semibold text-white shadow-lg shadow-jkred/30 transition hover:bg-red-600">
-                Talk to us →
-              </Link>
-            </div>
-          </Reveal>
         </div>
       </section>
     </>
