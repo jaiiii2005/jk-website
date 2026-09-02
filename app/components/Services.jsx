@@ -20,13 +20,6 @@ const FLAGSHIP = [
     points: ["Prime arterial, flyover & market locations", "Long-term sites and campaign buys", "Post-buy photo proof on every site"],
   },
   {
-    name: "Digital OOH",
-    tag: "High-impact",
-    img: "/work-1.jpg",
-    desc: "LED and programmatic screens at the junctions that never sleep — dynamic creative, changed in real time.",
-    points: ["Premium LED screens at prime junctions", "Dayparted, dynamic creative", "Update campaigns on the fly"],
-  },
-  {
     name: "Transit & Airport",
     tag: "On the move",
     img: "/work-4.jpg",

@@ -11,7 +11,6 @@ const svg = (children) => (
 
 const SOL = [
   { name: "Outdoor Hoardings", desc: "Landmark hoardings & billboards across the East.", icon: svg(<><rect x="2.5" y="4" width="19" height="11" rx="1.5" /><path d="M7 15v6M17 15v6M4.5 21h5M14.5 21h5M6 8h12" /></>) },
-  { name: "Digital OOH", desc: "LED & programmatic screens at prime junctions.", icon: svg(<><rect x="2.5" y="4.5" width="19" height="12" rx="1.5" /><path d="M9 20h6M12 16.5V20M7.5 11l2.5 2 2-3 2 2.5 2.5-3.5" /></>) },
   { name: "Unipoles", desc: "High-rise landmark unipoles that own the skyline.", icon: svg(<><rect x="5" y="3" width="14" height="7.5" rx="1" /><path d="M12 10.5V21M8.5 21h7M8 6.5h8" /></>) },
   { name: "Transit & Airport", desc: "Metro, transit & airport media that moves with the crowd.", icon: svg(<><rect x="4" y="4" width="12" height="12" rx="2" /><path d="M3 16h14M6 20v-1M14 20v-1M6.5 8h7" /><path d="M17 9l4 1.5v2l-4-.5" /></>) },
   { name: "In-shop Branding", desc: "Point-of-sale visibility, right where buying happens.", icon: svg(<><path d="M4 9.5V20h16V9.5" /><path d="M3 9.5 5 4.5h14l2 5" /><path d="M3 9.5a2.6 2.6 0 0 0 5.2 0 2.6 2.6 0 0 0 5.2 0 2.6 2.6 0 0 0 5.2 0" /><path d="M10 20v-5h4v5" /></>) },
