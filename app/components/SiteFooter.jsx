@@ -23,7 +23,7 @@ export default function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 py-14 grid gap-10 md:grid-cols-2 lg:grid-cols-5">
         <div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-light.png" alt="JK Advertising — 50 Years" className="h-10 w-auto" />
+          <img src="/logo-light.png" alt="JK Advertising — 50 Years" className="h-16 w-auto" />
           <p className="mt-4 max-w-xs text-sm text-cream/55 leading-relaxed">
             The largest OOH media owner in the East — making brands converse for 50 years.
           </p>
