@@ -7,7 +7,6 @@ export default function AboutStory() {
     <section className="bg-white text-ink">
       <div className="mx-auto max-w-7xl px-6 py-28 md:py-40 grid lg:grid-cols-2 gap-14 lg:gap-20">
         <div>
-          <Reveal><p className="text-jkred font-semibold tracking-wide text-sm mb-6">Who we are</p></Reveal>
           <Reveal delay={0.05}>
             <h2 className="font-display font-extrabold leading-[0.98]" style={{ fontSize: "clamp(2.25rem,5vw,4.25rem)", letterSpacing: "-0.02em" }}>
               We don&rsquo;t put up displays. We make <span className="text-grad">brands converse.</span>
