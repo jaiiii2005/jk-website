@@ -68,17 +68,6 @@ export default function Hero() {
         >
           The largest OOH network in the East.
         </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.1, duration: 0.8 }}
-          className="mt-9 flex flex-wrap gap-4"
-        >
-          <a href="#work" className="rounded-full bg-jkred px-7 py-3.5 font-semibold text-white hover:bg-red-600 transition shadow-lg shadow-jkred/30">
-            Explore our work
-          </a>
-        </motion.div>
       </motion.div>
     </section>
   );
