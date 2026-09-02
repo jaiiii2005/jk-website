@@ -23,8 +23,8 @@ export default function BrandCity({ src = "/jk-kolkata.png" }) {
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream/70">
-            From the biggest hoardings to the bus you take home — across Kolkata,
-            JK Advertising is impossible to miss.
+            The East&rsquo;s most widespread outdoor media network — putting your brand
+            wherever the audience looks, and making it impossible to miss.
           </p>
         </Reveal>
       </div>
