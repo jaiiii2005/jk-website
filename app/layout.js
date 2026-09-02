@@ -20,13 +20,13 @@ const inter = Inter({
 
 export const metadata = {
   metadataBase: new URL("https://jk-website-dun.vercel.app"),
-  title: "JK Advertising — 50 Years, Forging Ahead",
+  title: "JK Advertising — 50+ Years, Forging Ahead",
   description:
     "The largest OOH media owner in the East. 50 years of trust, service and innovation — we make Brands Converse. Hoardings, digital OOH, unipoles, events & more across Eastern India.",
   keywords: ["JK Advertising", "OOH", "outdoor advertising", "hoardings", "billboards", "Kolkata", "digital OOH", "Brands Converse"],
   openGraph: {
     title: "JK Advertising — We make Brands Converse",
-    description: "The largest OOH media owner in the East. 50 years, forging ahead.",
+    description: "The largest OOH media owner in the East. 50+ years, forging ahead.",
     siteName: "JK Advertising",
     type: "website",
     locale: "en_IN",
@@ -34,7 +34,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "JK Advertising — We make Brands Converse",
-    description: "The largest OOH media owner in the East. 50 years, forging ahead.",
+    description: "The largest OOH media owner in the East. 50+ years, forging ahead.",
   },
 };
 

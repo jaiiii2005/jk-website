@@ -25,7 +25,7 @@ export default function SiteFooter() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo-light.png" alt="JK Advertising — 50 Years" className="h-16 w-auto" />
           <p className="mt-4 max-w-xs text-sm text-cream/55 leading-relaxed">
-            The largest OOH media owner in the East — making brands converse for 50 years.
+            The largest OOH media owner in the East — making brands converse for 50+ years.
           </p>
         </div>
 
@@ -78,7 +78,7 @@ export default function SiteFooter() {
 
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-cream/45">
-          <p>© {new Date().getFullYear()} JK Advertising. 50 Years · Forging Ahead.</p>
+          <p>© {new Date().getFullYear()} JK Advertising. 50+ Years · Forging Ahead.</p>
           <p>Brands Converse<span className="text-jkred">.</span></p>
         </div>
       </div>

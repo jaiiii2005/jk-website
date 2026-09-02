@@ -20,7 +20,7 @@ export default function HomeAbout() {
         <div className="lg:pt-6">
           <Reveal delay={0.1}>
             <h3 className="font-display text-2xl sm:text-3xl font-bold leading-snug">
-              Trust, service and value — for fifty years.
+              Trust, service and value — for fifty+ years.
             </h3>
           </Reveal>
           <Reveal delay={0.15}>
