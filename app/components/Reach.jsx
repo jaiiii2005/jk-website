@@ -24,7 +24,7 @@ const CITIES = [
   { n: "Bhubaneswar", x: 30, y: 83, pos: "b" },
 ];
 
-const REGIONS = ["West Bengal", "Odisha", "Bihar", "Jharkhand", "Assam", "Sikkim", "Tripura", "North-East"];
+const REGIONS = ["West Bengal", "Odisha", "Bihar", "Jharkhand", "Assam", "Sikkim", "Tripura"];
 
 function labelPos(c, hub) {
   if (hub) return { x: c.x, y: c.y + 6.4, anchor: "middle" };
