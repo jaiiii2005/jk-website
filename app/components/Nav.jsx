@@ -9,7 +9,6 @@ const LINKS = [
   ["About", "/about"],
   ["Services", "/services"],
   ["Work", "/work"],
-  ["Contact", "/contact"],
 ];
 
 export default function Nav() {
