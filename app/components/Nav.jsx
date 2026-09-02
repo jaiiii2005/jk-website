@@ -56,7 +56,7 @@ export default function Nav() {
               );
             })}
             <Link href="/contact" className="rounded-full bg-jkred px-5 py-2 text-sm font-semibold text-white hover:bg-red-600 transition">
-              Enquire
+              Contact us
             </Link>
           </div>
 
@@ -78,7 +78,7 @@ export default function Nav() {
               </Link>
             ))}
             <Link href="/contact" onClick={() => setOpen(false)} className="mt-2 rounded-full bg-jkred px-5 py-2.5 text-center text-sm font-semibold text-white">
-              Enquire
+              Contact us
             </Link>
           </div>
         )}
