@@ -5,7 +5,7 @@ import Reveal from "./Reveal";
 
 const W = [
   ["Audi A4", "/work/w-audi.jpg", "Front and centre on Kolkata's busiest flyover — seen by lakhs every day."],
-  ["Style Baazar", "/work/w-stylebaazar.jpg", "Fashion, larger than life across the city's arterial roads."],
+  ["High-Street Fashion", "/work/w-stylebaazar.jpg", "Fashion, larger than life across the city's arterial roads."],
   ["JOI Yogurt", "/work/w-joi-clean.jpg", "Launched India's first Nolen Gur probiotic — entirely outdoors."],
 ];
 
