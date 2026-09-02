@@ -24,7 +24,7 @@ export default function HomeAbout() {
             </h3>
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-6 text-lg text-ink/60 leading-relaxed max-w-lg">
+            <p className="mt-6 text-lg text-ink/60 leading-relaxed max-w-lg text-justify">
               JK Advertising turns the East&rsquo;s streets, stations and skylines into the stage
               where brands and people meet. From landmark hoardings to digital OOH — the largest
               outdoor network in the region, built on honesty and impeccable service.
