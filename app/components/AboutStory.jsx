@@ -26,7 +26,7 @@ export default function AboutStory() {
           <Reveal delay={0.15}>
             <p>
               From landmark hoardings to transit media, corporate events, festival branding
-              and more — with printing, fabrication and monitoring all handled
+              and more — with printing and fabrication all handled
               <strong className="text-ink"> in-house</strong>. One partner, the whole spread,
               putting brands exactly where the East looks.
             </p>

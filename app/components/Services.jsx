@@ -97,7 +97,7 @@ export default function Services() {
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.8 }} className="mt-6 max-w-xl text-lg text-cream/75 leading-relaxed">
             From a single landmark hoarding to a multi-city campaign across the East —
-            with printing, fabrication and monitoring all handled in-house. One partner, the whole spread.
+            with printing and fabrication all handled in-house. One partner, the whole spread.
           </motion.p>
         </div>
       </section>
