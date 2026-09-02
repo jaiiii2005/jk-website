@@ -61,7 +61,7 @@ function LeaderRow({ l, i }) {
             {l.name}
           </h3>
           {l.bio.map((p, k) => (
-            <p key={k} className="mt-5 max-w-xl leading-relaxed text-cream/70">{p}</p>
+            <p key={k} className="mt-5 max-w-xl leading-relaxed text-cream/70 text-justify">{p}</p>
           ))}
         </div>
       </Reveal>
