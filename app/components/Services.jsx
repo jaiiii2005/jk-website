@@ -53,13 +53,6 @@ const MORE = [
   { name: "Digital Wall Painting", desc: "Hand-crafted wall media, delivered at scale.", icon: svg(<><rect x="3" y="5" width="12" height="5" rx="1.5" /><path d="M15 7.5h3.5A1.5 1.5 0 0 1 20 9v1a1.5 1.5 0 0 1-1.5 1.5H12" /><path d="M10.5 12.5h3v3a1.5 1.5 0 0 1-3 0z" /><path d="M12 18.5V21" /></>) },
 ];
 
-const STATS = [
-  { n: "3,800+", l: "media sites" },
-  { n: "8", l: "states covered" },
-  { n: "100%", l: "in-house" },
-  { n: "50", l: "years" },
-];
-
 function FeatureImage({ src, alt }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
@@ -130,22 +123,6 @@ export default function Services() {
       <section className="bg-white text-ink">
         <div className="mx-auto max-w-7xl px-6 py-24 md:py-32 space-y-24 md:space-y-36">
           {FLAGSHIP.map((s, i) => <FeatureRow key={s.name} s={s} i={i} />)}
-        </div>
-      </section>
-
-      {/* ── Stat band ── */}
-      <section className="bg-jkblue-deep text-cream">
-        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {STATS.map((st) => (
-              <Reveal key={st.l}>
-                <div>
-                  <div className="font-display font-extrabold text-grad leading-none" style={{ fontSize: "clamp(2.25rem,4vw,3.5rem)" }}>{st.n}</div>
-                  <div className="mt-2 text-sm tracking-wide text-cream/60">{st.l}</div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
