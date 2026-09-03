@@ -10,7 +10,7 @@ export default function BrandCity() {
         <Reveal><p className="text-copper tracking-[0.4em] text-xs sm:text-sm mb-5">OUR WORLD</p></Reveal>
         <Reveal delay={0.05}>
           <h2 className="font-display font-extrabold mx-auto max-w-4xl" style={{ fontSize: "clamp(2rem,5vw,3.75rem)", letterSpacing: "-0.02em", lineHeight: 1.02 }}>
-            Five decades of being the name brands <span className="text-grad">count on.</span>
+            The name<br /><span className="text-grad">brands count on.</span>
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
