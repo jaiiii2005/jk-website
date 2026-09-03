@@ -82,25 +82,14 @@ export default function Awards() {
                   <div className="award-rays pointer-events-none absolute left-1/2 top-1/2 h-[26rem] w-[26rem] -translate-x-1/2 -translate-y-1/2" style={{ animationDelay: `${i * -3}s` }} />
                   {/* soft coloured spotlight (brightens on hover) */}
                   <div className="pointer-events-none absolute inset-0 opacity-90 transition-opacity duration-500 group-hover:opacity-100" style={{ background: a.glow }} />
-                  {a.back ? (
-                    // two-sided full 360: real front + real back photo
-                    // (no filter on this div — a CSS filter flattens preserve-3d)
-                    <div className="award-turn" style={{ animationDelay: `${i * 1.6}s` }}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <div className="award-face"><img src={a.img} alt={`${a.tier} — ${a.cat}`} /></div>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <div className="award-face award-back"><img src={a.back} alt="" /></div>
-                    </div>
-                  ) : (
-                    // single-sided (no back photo) — gentle solid turn
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={a.img}
-                      alt={`${a.tier} — ${a.cat}`}
-                      className="award-sway relative h-full w-auto object-contain drop-shadow-2xl"
-                      style={{ animationDelay: `${i * 1.6}s` }}
-                    />
-                  )}
+                  {/* gentle half-turn — stays solid, never edge-on (trophy sizes differ) */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={a.img}
+                    alt={`${a.tier} — ${a.cat}`}
+                    className="award-sway relative h-full w-auto object-contain drop-shadow-2xl"
+                    style={{ animationDelay: `${i * 1.4}s` }}
+                  />
                   {/* glowing floor pool */}
                   <div className="pointer-events-none absolute bottom-3 left-1/2 h-6 w-44 -translate-x-1/2 rounded-[100%] bg-white/20 blur-2xl transition-all duration-500 group-hover:w-52 group-hover:bg-white/30" />
                 </div>
