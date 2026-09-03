@@ -1,7 +1,7 @@
 import AboutHero from "../components/AboutHero";
 import AboutStory from "../components/AboutStory";
 import BrandCity from "../components/BrandCity";
-import Reach from "../components/Reach";
+import ReachMap from "../components/ReachMap";
 import Values from "../components/Values";
 import Leadership from "../components/Leadership";
 
@@ -13,7 +13,7 @@ export default function AboutPage() {
       <AboutHero />
       <AboutStory />
       <BrandCity />
-      <Reach />
+      <ReachMap />
       <Values />
       <Leadership />
     </>
