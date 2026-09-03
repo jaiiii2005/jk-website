@@ -35,7 +35,7 @@ const AWARDS = [
     medal: "🌟",
     tier: "Bengal Business Honour",
     cat: "Award 2025",
-    body: "Presented by Priyanka Ghosh Entertainment",
+    body: "",
     note: "Recognising JK Advertising’s leadership in Eastern India.",
   },
 ];
@@ -101,7 +101,7 @@ export default function Awards() {
                     <h3 className="font-display text-xl font-bold">{a.tier}</h3>
                   </div>
                   <p className="mt-1 text-copper text-sm font-semibold tracking-wide">{a.cat}</p>
-                  <p className="mt-2 text-cream/75">{a.body}</p>
+                  {a.body && <p className="mt-2 text-cream/75">{a.body}</p>}
                   <p className="mt-1 text-sm text-cream/50 leading-relaxed whitespace-pre-line">{a.note}</p>
                 </div>
               </div>
