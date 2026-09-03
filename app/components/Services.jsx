@@ -33,7 +33,7 @@ const MORE = [
   { name: "Corporate Events", desc: "Launches & activations that make noise, end to end.", icon: svg(<><rect x="9" y="3" width="6" height="10" rx="3" /><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6" /></>) },
   { name: "Printing", desc: "High-quality large-format production — all in-house.", icon: svg(<><path d="M7 8.5V3.5h10v5" /><rect x="4" y="8.5" width="16" height="7.5" rx="1.5" /><path d="M7 13.5h10V21H7z" /></>) },
   { name: "Transit Media", desc: "Buses, metro & transit that move with the crowd.", icon: svg(<><rect x="4" y="4" width="16" height="12" rx="2" /><path d="M4 11h16M7 16v2M17 16v2M8 8h8" /></>) },
-  { name: "Pooja Branding", desc: "High-impact branding for Durga Puja & festivals across Bengal.", icon: svg(<><path d="M12 3c1.2 3 4 4.4 4 7.5a4 4 0 0 1-8 0C8 7.4 10.8 6 12 3z" /><path d="M8 21h8M10 21v-2h4v2" /></>) },
+  { name: "Puja Branding", desc: "High-impact branding for Durga Puja & festivals across Bengal.", icon: svg(<><path d="M12 3c1.2 3 4 4.4 4 7.5a4 4 0 0 1-8 0C8 7.4 10.8 6 12 3z" /><path d="M8 21h8M10 21v-2h4v2" /></>) },
 ];
 
 function FeatureImage({ src, alt }) {
