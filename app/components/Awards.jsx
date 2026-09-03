@@ -16,8 +16,8 @@ const AWARDS = [
     medal: "🥇",
     tier: "Gold",
     cat: "Traditional Billboards",
-    body: "OAA Outdoor Advertising Awards 2014",
-    note: "For the Red FM 93.5 live-radio billboard — “Ab Suno Mat, Dekho Bhi.”",
+    body: "Outdoor Advertising Awards, India",
+    note: "Red FM 93.5 Live Radio Billboard\nAb Suno Mat, Dekho Bhi",
   },
   {
     img: "/awards/bronze.png",
@@ -26,8 +26,8 @@ const AWARDS = [
     medal: "🥉",
     tier: "Bronze",
     cat: "Activation",
-    body: "OAA Outdoor Advertising Awards 2014",
-    note: "Won for the very same landmark Red FM campaign.",
+    body: "Outdoor Advertising Awards, India",
+    note: "Red FM 93.5 Live Radio Billboard\nAb Suno Mat, Dekho Bhi",
   },
   {
     img: "/awards/bengal.png",
@@ -102,7 +102,7 @@ export default function Awards() {
                   </div>
                   <p className="mt-1 text-copper text-sm font-semibold tracking-wide">{a.cat}</p>
                   <p className="mt-2 text-cream/75">{a.body}</p>
-                  <p className="mt-1 text-sm text-cream/50 leading-relaxed">{a.note}</p>
+                  <p className="mt-1 text-sm text-cream/50 leading-relaxed whitespace-pre-line">{a.note}</p>
                 </div>
               </div>
             </Reveal>
