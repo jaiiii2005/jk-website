@@ -66,13 +66,6 @@ export default function SiteFooter() {
               </a>
             ))}
           </div>
-          <div className="mt-6">
-            <p className="text-[11px] tracking-[0.2em] text-cream/40 mb-2">EVENTS ARM</p>
-            <div className="inline-flex items-center rounded-xl bg-white px-3 py-2 shadow-lg">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/lets-eventuate.png" alt="Lets Eventuate" className="h-7 w-auto" />
-            </div>
-          </div>
         </div>
       </div>
 
