@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const EXPLORE = [["About", "/about"], ["Services", "/services"], ["Work", "/work"], ["Contact", "/contact"]];
-const COMPANY = [["Our Reach", "/about"], ["Leadership", "/about"], ["Partners", "/"]];
+const COMPANY = [["Our Reach", "/about#reach"], ["Leadership", "/about#leadership"], ["Partners", "/#clients"]];
 
 // Real details from Nimesh Shah's card. TODO(Sir): social profile URLs still needed.
 const CONTACT = {

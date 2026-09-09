@@ -17,6 +17,8 @@ export default function SmoothScroll({ children }) {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
+    // expose so cross-page hash links (e.g. /about#reach) can glide to a section
+    window.__lenis = lenis;
 
     let raf;
     const loop = (time) => {
@@ -41,6 +43,7 @@ export default function SmoothScroll({ children }) {
       cancelAnimationFrame(raf);
       document.removeEventListener("click", onClick);
       lenis.destroy();
+      window.__lenis = null;
     };
   }, []);
 

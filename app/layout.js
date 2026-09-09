@@ -1,6 +1,7 @@
 import { Sora, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "./components/SmoothScroll";
+import HashScroll from "./components/HashScroll";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ScrollProgress from "./components/ScrollProgress";
 import Nav from "./components/Nav";
@@ -48,6 +49,7 @@ export default function RootLayout({ children }) {
       <body>
         <ScrollProgress />
         <Nav />
+        <HashScroll />
         <SmoothScroll>{children}</SmoothScroll>
         <SiteFooter />
         <WhatsAppButton />
