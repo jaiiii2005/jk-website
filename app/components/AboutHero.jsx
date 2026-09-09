@@ -12,7 +12,7 @@ export default function AboutHero() {
   return (
     <section ref={ref} className="relative flex min-h-[85vh] items-end overflow-hidden bg-jkblue-deep text-cream">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <motion.img style={{ y }} src="/work-2.jpg" alt="JK Advertising outdoor media" className="absolute inset-0 h-[130%] w-full object-cover" />
+      <motion.img style={{ y }} src="/work/w-pritam.jpg" alt="JK Advertising outdoor media" className="absolute inset-0 h-[130%] w-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-t from-jkblue-deep via-jkblue-deep/55 to-jkblue-deep/30" />
 
       <motion.div style={{ opacity: fade }} className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-20 pt-40">

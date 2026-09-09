@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 // transform + opacity animate).
 const IMAGES = [
   { src: "/work/w-audi.jpg", kb: "kb0" },
-  { src: "/work/w-stylebaazar.jpg", kb: "kb1" },
+  { src: "/work/w-srmb.jpg", kb: "kb1" },
   { src: "/work/w-joi-clean.jpg", kb: "kb2" },
 ];
 

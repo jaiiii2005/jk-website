@@ -15,7 +15,7 @@ const FLAGSHIP = [
   {
     name: "Outdoor Hoardings",
     tag: "Flagship",
-    img: "/work-2.jpg",
+    img: "/work/w-srmb.jpg",
     desc: "Landmark hoardings and billboards at the East's highest-footfall sites — the formats that own a skyline.",
     points: ["Prime arterial, flyover & market locations", "Long-term sites and campaign buys", "Post-buy photo proof on every site"],
   },
