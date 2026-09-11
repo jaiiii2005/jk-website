@@ -40,7 +40,18 @@ export default function Nav() {
         }`}
       >
         <nav className="mx-auto max-w-7xl px-5 flex items-center justify-between">
-          <Link href="/" aria-label="JK Advertising — home">
+          <Link
+            href="/"
+            aria-label="JK Advertising — home"
+            onClick={(e) => {
+              // already on Home → glide smoothly to top instead of reloading
+              if (pathname === "/") {
+                e.preventDefault();
+                if (typeof window !== "undefined" && window.__lenis) window.__lenis.scrollTo(0, { duration: 1.2 });
+                else window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo-light.png" alt="JK Advertising — 50 Years" className="h-16 md:h-20 w-auto" />
           </Link>
