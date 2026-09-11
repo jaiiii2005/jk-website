@@ -1,7 +1,6 @@
 import Intro from "./components/Intro";
 import Hero from "./components/Hero";
 import HomeAbout from "./components/HomeAbout";
-import HomeSolutions from "./components/HomeSolutions";
 import HomeWorkStrip from "./components/HomeWorkStrip";
 import Clients from "./components/Clients";
 import Awards from "./components/Awards";
@@ -13,7 +12,6 @@ export default function Home() {
       <Intro />
       <Hero />
       <HomeAbout />
-      <HomeSolutions />
       <HomeWorkStrip />
       <Clients />
       <Awards />
