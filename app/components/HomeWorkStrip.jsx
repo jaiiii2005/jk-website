@@ -4,7 +4,7 @@ import Link from "next/link";
 import Reveal from "./Reveal";
 
 const W = [
-  ["Audi A4", "/work/w-audi.jpg", "Front and centre on Kolkata's busiest flyover — seen by lakhs every day."],
+  ["BMW", "/work/w-bmw.jpg", "The new BMW X1, commanding a prime city flyover."],
   ["RR Agarwal", "/work/w-rragarwal.jpg", "A landmark jewellery hoarding at the foot of the Howrah Bridge."],
   ["JOI Yogurt", "/work/w-joi-clean.jpg", "Launched India's first Nolen Gur probiotic — entirely outdoors."],
 ];
