@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+// Show the footer social icons? Off until we have real profile URLs (kept, not deleted).
+const SHOW_SOCIALS = false;
+
 const EXPLORE = [["About", "/about"], ["Services", "/services"], ["Work", "/work"], ["Contact", "/contact"]];
 const COMPANY = [["Our Reach", "/about#reach"], ["Leadership", "/about#leadership"], ["Partners", "/#clients"]];
 
@@ -56,17 +59,20 @@ export default function SiteFooter() {
           </ul>
         </div>
 
-        <div>
-          <p className="font-display font-bold text-sm tracking-wide mb-4">Follow</p>
-          <div className="flex gap-3">
-            {SOCIALS.map((s) => (
-              <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.name}
-                 className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-cream/70 transition hover:border-jkred hover:bg-jkred hover:text-white">
-                <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">{s.icon}</svg>
-              </a>
-            ))}
+        {/* Social icons hidden for now (no real profile URLs yet). Flip to true to show. */}
+        {SHOW_SOCIALS && (
+          <div>
+            <p className="font-display font-bold text-sm tracking-wide mb-4">Follow</p>
+            <div className="flex gap-3">
+              {SOCIALS.map((s) => (
+                <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.name}
+                   className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-cream/70 transition hover:border-jkred hover:bg-jkred hover:text-white">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">{s.icon}</svg>
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div className="border-t border-white/10">
