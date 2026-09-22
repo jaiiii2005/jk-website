@@ -92,7 +92,7 @@ export default function NotFound() {
           <a href="/" className="rounded-full bg-jkred px-7 py-3.5 font-semibold text-white shadow-lg shadow-jkred/30 transition hover:bg-red-600">
             ← Back home
           </a>
-          <a href="/#contact" className="rounded-full border border-cream/30 px-7 py-3.5 font-semibold text-cream transition hover:bg-cream/10">
+          <a href="/contact" className="rounded-full border border-cream/30 px-7 py-3.5 font-semibold text-cream transition hover:bg-cream/10">
             Talk to us
           </a>
         </motion.div>
