@@ -1,4 +1,3 @@
-import Intro from "./components/Intro";
 import Hero from "./components/Hero";
 import HomeAbout from "./components/HomeAbout";
 import HomeWorkStrip from "./components/HomeWorkStrip";
@@ -9,7 +8,6 @@ import Awards from "./components/Awards";
 export default function Home() {
   return (
     <>
-      <Intro />
       <Hero />
       <HomeAbout />
       <HomeWorkStrip />
