@@ -17,7 +17,7 @@ function Fifty() {
   const inView = useInView(ref, { amount: 0.5 });
   const [n, setN] = useState(0);
   useEffect(() => {
-    if (!inView) { setN(0); return; }
+    if (!inView) return;
     let raf;
     const t0 = performance.now();
     const tick = (t) => {
@@ -26,7 +26,8 @@ function Fifty() {
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    // Reset on leave so it replays from 0 the next time it scrolls into view.
+    return () => { cancelAnimationFrame(raf); setN(0); };
   }, [inView]);
   return (
     <span ref={ref} className="text-grad font-display font-extrabold leading-none" style={{ fontSize: "clamp(5rem,14vw,12rem)" }}>

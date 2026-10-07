@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import Bokeh from "./components/Bokeh";
 
 // On-brand 404: instead of a dead error page, it's an "empty billboard" — which
@@ -89,12 +90,12 @@ export default function NotFound() {
           transition={{ delay: 0.45, duration: 0.7 }}
           className="mt-9 flex flex-wrap justify-center gap-4"
         >
-          <a href="/" className="rounded-full bg-jkred px-7 py-3.5 font-semibold text-white shadow-lg shadow-jkred/30 transition hover:bg-red-600">
+          <Link href="/" className="rounded-full bg-jkred px-7 py-3.5 font-semibold text-white shadow-lg shadow-jkred/30 transition hover:bg-red-600">
             ← Back home
-          </a>
-          <a href="/contact" className="rounded-full border border-cream/30 px-7 py-3.5 font-semibold text-cream transition hover:bg-cream/10">
+          </Link>
+          <Link href="/contact" className="rounded-full border border-cream/30 px-7 py-3.5 font-semibold text-cream transition hover:bg-cream/10">
             Talk to us
-          </a>
+          </Link>
         </motion.div>
       </div>
     </main>

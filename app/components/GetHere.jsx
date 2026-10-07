@@ -24,6 +24,8 @@ export default function GetHere() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
+    // Client-only device check; must run after mount to avoid a hydration mismatch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMobile(
       /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
         window.matchMedia("(pointer: coarse)").matches

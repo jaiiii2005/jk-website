@@ -42,7 +42,6 @@ function FeatureImage({ src, alt }) {
   const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
   return (
     <div ref={ref} className="relative overflow-hidden rounded-3xl aspect-[4/3] shadow-xl shadow-jkblue/10">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <motion.img style={{ y }} src={src} alt={alt} className="absolute inset-0 h-[116%] w-full object-cover" />
     </div>
   );
